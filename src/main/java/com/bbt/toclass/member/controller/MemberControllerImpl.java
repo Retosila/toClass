@@ -63,13 +63,32 @@ public class MemberControllerImpl implements MemberController {
 			logOn = (boolean)session.getAttribute("logOn");
 		}
 		
-		// 바인딩된 회원 정보 있을 시 info.jsp를 출력
+		// 바인딩된 회원 정보 있을 시 회원유형에 따른 메인 페이지를 출력
 		MemberVO logOnMember = (MemberVO)session.getAttribute("member");
 		if (logOn) {
+			String member_type = logOnMember.getMember_type();
 			logger.info("logOn : " + logOn);
 			logger.info("이미 로그온된 회원 : " + logOnMember.getMember_email());
-			mav.setViewName("/member/info");
-			return mav;
+			logger.info("회원유형 : " + member_type);
+			
+			// 회원유형이 학생인 경우 main_student.jsp로 이동
+			if (member_type.equals("학생")) {
+				mav.setViewName("main_student");
+				return mav;
+			}
+			// 회원유형이 교사인 경우 main_teacher.jsp로 이동
+			else if (member_type.equals("교사")) {
+				mav.setViewName("main_teacher");
+				return mav;
+			} 
+			else if (member_type.equals("관리자")) {
+				mav.setViewName("admin");
+				return mav;
+			}
+			else {
+				mav.setViewName("/errors/undefined_error");
+				return mav;
+			}
 		}
 		else {
 			session.setAttribute("logOn", false);
@@ -191,7 +210,13 @@ public class MemberControllerImpl implements MemberController {
 		mav.addObject("member_email", member_email);
 		
 		return mav;
-
+		
+	}
+	
+	// 회원정보 페이지(/member/info.jsp)
+	@RequestMapping(value = "/member/info", method = {RequestMethod.GET, RequestMethod.POST})
+	public String info(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "/member/info";
 	}
 	
 	/*
@@ -227,8 +252,6 @@ public class MemberControllerImpl implements MemberController {
 		    String type = memberVO.getMember_type();
 		    logger.info("회원이름 : " + type);
 		    logger.info("회원유형 : " + name);
-		    
-		    //mav.setViewName("/member/info");	
 		    
 		    // 회원타입에 따라 다른 메인 페이지로 분기시킴
 		    if (type.equals("교사")) {
