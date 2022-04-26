@@ -43,5 +43,5 @@ public interface MemberController {
 	ModelAndView findPwDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	
 	// interwork test3
-	// 찐최종 연동 확인
+	// 찐찐최종 연동 확인
 }
