@@ -42,5 +42,5 @@ public interface MemberController {
 	ModelAndView findAccountDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	ModelAndView findPwDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	
-	// interwork test3
+	// interwork test4
 }
