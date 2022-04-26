@@ -13,19 +13,9 @@
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
    </definition>
 
-   <definition name="main_student" extends="baseLayout">
-      <put-attribute name="title" value="학생 메인페이지" />
-      <put-attribute name="body" value="/WEB-INF/views/main_student.jsp" />
-   </definition>
-   
-   <definition name="main_teacher" extends="baseLayout">
-      <put-attribute name="title" value="교사 메인페이지" />
-      <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
-   </definition>
-   
-   <definition name="/member/info" extends="baseLayout">
-      <put-attribute name="title" value="내 정보" />
-      <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
+   <definition name="calendar" extends="baseLayout">
+      <put-attribute name="title" value="학사 캘린더" />
+      <put-attribute name="body" value="/WEB-INF/views/schedule/calendar.jsp" />
    </definition>
    
 </tiles-definitions>
