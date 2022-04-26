@@ -43,4 +43,5 @@ public interface MemberController {
 	ModelAndView findPwDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	
 	// interwork test
+	//dkddkdk
 }
