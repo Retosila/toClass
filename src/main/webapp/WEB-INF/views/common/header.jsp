@@ -34,6 +34,7 @@ request.setCharacterEncoding("UTF-8");
 	rel="stylesheet" />
 </head>
 <body>
+<<<<<<< HEAD
 	<nav class="navbar navbar-expand-lg navbar-dark bg-default site-navbar" role="banner">
 		<div class="container">
 			<a class="navbar-brand" href="${contextPath}/main.do"
@@ -296,5 +297,12 @@ request.setCharacterEncoding("UTF-8");
 			application : "argon-design-system-pro"
 		});
 	</script>
+=======
+<p>i am a header!</p>
+<h3>${member.member_name}님 안녕하세요!</h3>
+<button id="logout" type="button" onclick="location.href='${contextPath}/login'">메인화면</button>
+<button id="logout" type="button" onclick="location.href='${contextPath}/member/info'">내정보</button>
+<button id="logout" type="button" onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button>
+>>>>>>> 1cbb38ed6269549d3b29a0645c8c649e91b45692
 </body>
 </html>

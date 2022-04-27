@@ -23,7 +23,7 @@
       <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
    </definition>
    
-      <definition name="/member/info" extends="baseLayout">
+   <definition name="/member/info" extends="baseLayout">
       <put-attribute name="title" value="내 정보" />
       <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
    </definition>
