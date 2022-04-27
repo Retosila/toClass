@@ -27,7 +27,10 @@ import com.bbt.toclass.member.vo.MemberVO;
 
 @Controller("memberController")
 public class MemberControllerImpl implements MemberController {
+	
+	// log4j 로깅용
 	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
+	
 	// 의존성 주입
 	@Autowired
 	private MemberService memberService;
@@ -216,7 +219,7 @@ public class MemberControllerImpl implements MemberController {
 	// 회원정보 페이지(/member/info.jsp)
 	@RequestMapping(value = "/member/info", method = {RequestMethod.GET, RequestMethod.POST})
 	public String info(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "/member/info";
+		return "info";
 	}
 	
 	/*
