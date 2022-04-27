@@ -108,6 +108,16 @@ public class MemberControllerImpl implements MemberController {
 		
 		return "/member/findPw";
 	}
+	// 성적 조회 페이지(/achievement/achievement.jsp)
+	@RequestMapping(value = "/achievement/achievement", method = RequestMethod.GET)
+	public String Achievement(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		logger.info("achievement.jsp 페이지 요청");
+		
+		return "/achievement/achievement";
+	}
 	
 	// 회원가입 페이지 : 0단계(/member/register_0.jsp)
 	@RequestMapping(value = "/member/register_0", method = RequestMethod.GET)
@@ -443,5 +453,6 @@ public class MemberControllerImpl implements MemberController {
 		}
 		return mav;
 	}
+	
 
 }
