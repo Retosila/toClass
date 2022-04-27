@@ -37,6 +37,5 @@ public interface MemberController {
 	ModelAndView unregisterDo(RedirectAttributes rAttr, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	ModelAndView findAccountDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	ModelAndView findPwDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
-	
 
 }
