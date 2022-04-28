@@ -155,9 +155,9 @@ request.setCharacterEncoding("UTF-8");
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/register_0">회원가입</a></li>
+							href="${contextPath}/register">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/login.do">로그인</a>
+							href="${contextPath}/login">로그인</a>
 					</c:otherwise>
 				</c:choose>
 

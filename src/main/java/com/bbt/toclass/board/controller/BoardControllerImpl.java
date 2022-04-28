@@ -50,6 +50,7 @@ public class BoardControllerImpl  implements BoardController{
 		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView("/board/listArticles");
 		mav.addObject("articlesList", articlesList);
+
 		return mav;
 
 	}
@@ -301,19 +302,25 @@ public class BoardControllerImpl  implements BoardController{
 	return resEnt;
   }
 
-*/
+*/@RequestMapping(value = "/board/articleForm.do", method =  RequestMethod.GET)
+	private ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	ModelAndView mav = new ModelAndView();
+	mav.setViewName("/board/articleForm");
+	return mav;
+}
 
 
 
-	@RequestMapping(value = "/board/*Form.do", method =  RequestMethod.GET)
+	/*@RequestMapping(value = "/board/*Form.do", method =  RequestMethod.GET)
 	private ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		return mav;
-	}
+	}*/
 
-	//�Ѱ� �̹��� ���ε��ϱ�
+
 	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception{
 		String imageFileName= null;
 		Iterator<String> fileNames = multipartRequest.getFileNames();

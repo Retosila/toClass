@@ -74,6 +74,8 @@ public class MemberControllerImpl implements MemberController {
 			logger.info("이미 로그온된 회원 : " + logOnMember.getMember_email());
 			logger.info("회원유형 : " + member_type);
 
+			session.setAttribute("LogOn", true);//헤더 전환용 변경필요
+
 			// 회원유형이 학생인 경우 main_student.jsp로 이동
 			if (member_type.equals("학생")) {
 				mav.setViewName("main_student");
@@ -435,7 +437,7 @@ public class MemberControllerImpl implements MemberController {
 		session.removeAttribute("logOn");
 
 		// 로그인 화면으로 리다이렉트
-		ModelAndView mav = new ModelAndView("redirect:/login");
+		ModelAndView mav = new ModelAndView("redirect:/");
 
 		return mav;
 	}
@@ -460,7 +462,7 @@ public class MemberControllerImpl implements MemberController {
 				session.removeAttribute("member");
 				session.removeAttribute("logOn");
 				rAttr.addFlashAttribute("result","unregistered");
-				mav.setViewName("redirect:/login");
+				mav.setViewName("redirect:/");
 			}
 			else {
 				logger.info("회원탈퇴 실패");

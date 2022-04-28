@@ -92,7 +92,7 @@ request.setCharacterEncoding("UTF-8");
 											href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
 									</c:otherwise>
 								</c:choose></td>
-							<td width="15%">${article.id }</td>
+							<td width="15%">${article.memver_email }</td>
 							<td width="15%">${article.writeDate}</td>
 							<td width="7%">${article.views }</td>
 							<td width="7%"></td>
@@ -119,7 +119,8 @@ request.setCharacterEncoding("UTF-8");
 
 			<div class="col-10" align="right">
 				<a
-					href="javascript:fn_articleForm('${isLogOn}','${contextPath}/board/articleForm.do','${contextPath}/member/loginForm.do')">
+					<%--href="javascript:fn_articleForm('${LogOn}','${contextPath}/board/articleForm.do','${contextPath}/member/loginForm.do')">--%>
+					href="javascript:fn_articleForm('${LogOn}','${contextPath}/board/articleForm.do')">
 					<button type="button" class="btn btn-default btn-round ">글쓰기</button>
 				</a>
 			</div>

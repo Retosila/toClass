@@ -29,7 +29,7 @@
     <link href="${contextPath}/assets/css/argon-design-system.css?v=1.2.2" rel="stylesheet"/>
 </head>
 <body>
-
+logOn=${LogOn}
 
 <script href="${contextPath}/assets/js/core/jquery.min.js" type="text/javascript"></script>
 <script href="${contextPath}/assets/js/core/popper.min.js" type="text/javascript"></script>

@@ -41,7 +41,8 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-	public ModelAndView achievement(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
+
 		ModelAndView mav = new ModelAndView("main");
 		return mav;
 	}

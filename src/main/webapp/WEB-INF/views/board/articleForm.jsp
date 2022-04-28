@@ -47,8 +47,9 @@ request.setCharacterEncoding("UTF-8");
     <table border="0" align="center" style="width: 800px;">
         <tr>
             <td><input style="display: none;" type="text"
-                       value="${member.name }" readonly />
+                       value="${member.member_name }" readonly />
             <td>
+            ${member.member_name }
         </tr>
         <tr>
             <td width="20%" style="text-align: center;" align="center">제목</td>

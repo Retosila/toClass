@@ -17,5 +17,7 @@
 </head>
 <body>
 <h3>${member.member_name} 선생님 환영합니다!</h3>
+logOn=${LogOn}
+${member.member_email}
 </body>
 </html>

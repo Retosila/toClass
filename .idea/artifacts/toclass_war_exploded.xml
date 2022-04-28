@@ -1,6 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="toclass:war exploded">
     <output-path>$PROJECT_DIR$/target/toclass-1.0.0-BUILD-SNAPSHOT</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>toclass</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -32,7 +39,6 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.1.0" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.1.0" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.29" />
-          <element id="library" level="module" name="Maven: jdbc.oracle:OracleDriver:12.1.0.2.0" module-name="toclass" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:2.2.2" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:2.2.2" />
           <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.0" />
@@ -59,6 +65,9 @@
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.1" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:1.4" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/toclass-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="toclass/web/웹" />
     </root>
