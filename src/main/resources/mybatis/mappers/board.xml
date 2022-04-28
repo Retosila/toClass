@@ -12,8 +12,8 @@
     <result property="writeDate" column="writeDate" />
     <result property="imageFileName" column="imageFileName" />
     <result property="views" column="views"/>
-  </resultMap> 
-  
+  </resultMap>
+
   <resultMap id="imgResult" type="imageVO">
 	  <result property="imageFileNO" column="imageFileNO" />
 	  <result property="articleNO" column="articleNO" />
@@ -25,50 +25,50 @@
       SELECT articleNO, parentNO, title, content, writeDate, imageFileName, member_email,views
       from t_board
       START WITH  parentNO=0
-      CONNECT BY PRIOR articleNO=parentNO 
-      ORDER SIBLINGS BY articleNO DESC		
+      CONNECT BY PRIOR articleNO=parentNO
+      ORDER SIBLINGS BY articleNO DESC
     ]]>
   </select>
-  
+
 	<!--단일이미지 추가  -->
-	 
+
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
 			INSERT into t_board(articleNO,  title, content, imageFileName, member_email)
 			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_email})
-		]]>      
+		]]>
 	</insert>
-	
+
   <select id="selectNewArticleNO" resultType="int"  >
 		<![CDATA[
-			SELECT  nvl(max(articleNO),0)+1 from t_board		
+			SELECT  nvl(max(articleNO),0)+1 from t_board
 		]]>
 	</select>
-	
+
   <select id="selectArticle" resultType="articleVO"   parameterType="int">
     <![CDATA[
       SELECT * from t_board
-      where articleNO = #{articleNO}		
+      where articleNO = #{articleNO}
     ]]>
   </select>
-  
+
   <update id="addViews"   parameterType="int">
 			update t_board
-			set views=views+1 	 
+			set views=views+1
 			where articleNO=#{articleNO}
 	</update>
-  
-  
+
+
   <update id="updateArticle"  parameterType="java.util.Map">
 			update t_board
-			set title=#{title},	 
+			set title=#{title},
 			content=#{content}
 			 <if test="imageFileName!='' and imageFileName!=null">
 			  , imageFileName=#{imageFileName}
 			</if>
 			where articleNO=#{articleNO}
 	</update>
-	
+
 	<delete id="deleteArticle"  parameterType="int">
     <![CDATA[
       delete from t_board
@@ -76,40 +76,40 @@
          SELECT articleNO FROM  t_board
          START WITH articleNO = #{articleNO}
          CONNECT BY PRIOR  articleNO = parentNO )
-    ]]>      
+    ]]>
   </delete>
 
- <!--다중 이미지 추가 SQL문 -->   
+ <!--다중 이미지 추가 SQL문 -->
   <!--
     <insert id="insertNewArticle"  parameterType="java.util.Map">
     <![CDATA[
       insert into t_board(articleNO, id, title, content, imageFileName)
       values(#{articleNO}, #{id}, #{title}, #{content}, null)
-    ]]>      
+    ]]>
   </insert>
 
- 
+
    <insert id="insertNewImage"  parameterType="java.util.Map">
-    <foreach item="item"  collection="list"   open="INSERT ALL" 
+    <foreach item="item"  collection="list"   open="INSERT ALL"
                   separator=" " close="SELECT * FROM DUAL" >
       INTO t_imageFile(imageFileNO, imageFileName, articleNO, regDate)
       VALUES (#{item.imageFileNO}, #{item.imageFileName}, #{item.articleNO}, sysdate)
     </foreach>
   </insert>
  -->
- 
+
   <select id="selectNewImageFileNO" resultType="int"  >
     <![CDATA[
-      SELECT  nvl(max(imageFileNO),0) from t_imageFile		
+      SELECT  nvl(max(imageFileNO),0) from t_imageFile
     ]]>
   </select>
-	
+
 
   <select  id="selectImageFileList" resultMap="imgResult" parameterType="int">
     <![CDATA[
       SELECT * from t_imageFile
-      where articleNO=#{articleNO}	
+      where articleNO=#{articleNO}
     ]]>
-  </select> 
-  
+  </select>
+
 </mapper>

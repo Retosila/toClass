@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public interface BoardController {
-	
+
 	public ModelAndView listArticles(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+
 	public ResponseEntity addNewArticle(MultipartHttpServletRequest multipartRequest,HttpServletResponse response) throws Exception;
-	
+
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
 			                        HttpServletRequest request, HttpServletResponse response) throws Exception;
 	//public ResponseEntity modArticle(MultipartHttpServletRequest multipartRequest,  HttpServletResponse response) throws Exception;

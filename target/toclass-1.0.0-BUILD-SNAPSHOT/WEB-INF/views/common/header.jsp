@@ -37,16 +37,16 @@ request.setCharacterEncoding("UTF-8");
 <nav id="navbar-main"
 	class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
 	<div class="container" stlye="text-align: left;">
-	
-	
+
+
 	<div class="navbar-brand " href="${contextPath}/main.do" style="color:#0065FF; font-family:'Product sans bold';">
-	
+
 	<i class="ni ni-chat-round"></i>
 	<a>to</a><a style="font-size:1px">Cla</a><a>ss</a>
-	
+
 	</div>
-	
-	
+
+
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbar_global" aria-controls="navbar_global"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -68,14 +68,14 @@ request.setCharacterEncoding("UTF-8");
 					</div>
 				</div>
 			</div>
-			
+
 
 				<ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
 					<li class="nav-item dropdown">
 					<a href="#" class="nav-link"
-						data-toggle="dropdown" href="#" role="button"> 
-						<i class="ni ni-collection d-lg-none"></i> 
+						data-toggle="dropdown" href="#" role="button">
+						<i class="ni ni-collection d-lg-none"></i>
 							<span class="nav-link-inner--text">출결</span>
 					</a>
 						<div class="dropdown-menu">
@@ -140,13 +140,13 @@ request.setCharacterEncoding("UTF-8");
 						</div></li>
 				</ul>
 
-				
-			
+
+
 
 <hr>
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
-					<c:when test="${isLogOn == true  && member!= null}">
+					<c:when test="${LogOn == true }">
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/logout.do">로그아웃 <span
 								class="sr-only">(current)</span>
@@ -155,9 +155,9 @@ request.setCharacterEncoding("UTF-8");
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/memberForm.do">회원가입</a></li>
+							href="${contextPath}/member/register_0">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/loginForm.do">로그인</a>
+							href="${contextPath}/login.do">로그인</a>
 					</c:otherwise>
 				</c:choose>
 
@@ -222,11 +222,11 @@ request.setCharacterEncoding("UTF-8");
 
 
 		setTimeout(function() {
-			
+
 			var counter = 0;
 	  $('.site-mobile-menu .has-children').each(function(){
 	    var $this = $(this);
-	    
+
 	    $this.prepend('<span class="arrow-collapse collapsed">');
 
 	    $this.find('.arrow-collapse').attr({
@@ -252,8 +252,8 @@ request.setCharacterEncoding("UTF-8");
 	  } else {
 	    $this.addClass('active');
 	  }
-	  e.preventDefault();  
-	  
+	  e.preventDefault();
+
 	});
 
 		$(window).resize(function() {
@@ -278,7 +278,7 @@ request.setCharacterEncoding("UTF-8");
 				$('body').addClass('offcanvas-menu');
 				$this.addClass('active');
 			}
-		}) 
+		})
 
 		// click outisde offcanvas
 		$(document).mouseup(function(e) {
@@ -289,7 +289,7 @@ request.setCharacterEncoding("UTF-8");
 				}
 	    }
 		});
-	}; 
+	};
 	siteMenuClone();*/
 </script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>

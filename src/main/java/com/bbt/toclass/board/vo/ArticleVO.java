@@ -20,8 +20,8 @@ public class ArticleVO {
 	private String id;
 	private Date  writeDate;
 	private int views;
-	
-	
+
+
 	public ArticleVO() {
 		System.out.println("ArticleVO 생성자호출");
 	}
@@ -80,8 +80,8 @@ public class ArticleVO {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 
 	public String getId() {
 		return id;
@@ -108,6 +108,6 @@ public class ArticleVO {
 	}
 
 
-	
-	
+
+
 }

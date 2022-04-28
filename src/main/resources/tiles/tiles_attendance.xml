@@ -3,10 +3,10 @@
 "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-	<definition name="achievement" extends="baseLayout">
-	      <put-attribute name="title" value="글목록창" />
-	      <put-attribute name="body" value="/WEB-INF/views/achievement/achievement.jsp" />
+	<definition name="/attendance/attendance" extends="baseLayout">
+	      <put-attribute name="title" value="attendance" />
+	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
 	</definition>
 
-	
+
 </tiles-definitions>

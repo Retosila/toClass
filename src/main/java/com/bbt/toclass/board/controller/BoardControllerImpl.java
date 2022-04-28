@@ -29,9 +29,9 @@ import java.util.*;
 
 @Controller("boardController")
 public class BoardControllerImpl  implements BoardController{
-	
-	private static final Logger logger = LoggerFactory.getLogger(BoardControllerImpl.class); 
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(BoardControllerImpl.class);
+
 	private static final String ARTICLE_IMAGE_REPO = "D:\\board\\article_image";
 	@Autowired
 	private BoardService boardService;
@@ -48,17 +48,17 @@ public class BoardControllerImpl  implements BoardController{
 		logger.debug("viewName :"+viewName);
 		logger.trace("viewName :"+viewName);
 		List articlesList = boardService.listArticles();
-		ModelAndView mav = new ModelAndView(viewName);
+		ModelAndView mav = new ModelAndView("/board/listArticles");
 		mav.addObject("articlesList", articlesList);
 		return mav;
-		
+
 	}
-	
+
 	 //�� �� �̹��� �۾���
 	@Override
 	@RequestMapping(value="/board/addNewArticle.do", method= {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public ResponseEntity addNewArticle(MultipartHttpServletRequest multipartRequest, 
+	public ResponseEntity addNewArticle(MultipartHttpServletRequest multipartRequest,
 	HttpServletResponse response) throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		Map<String,Object> articleMap = new HashMap<String, Object>();
@@ -68,7 +68,7 @@ public class BoardControllerImpl  implements BoardController{
 			String value=multipartRequest.getParameter(name);
 			articleMap.put(name,value);
 		}
-		
+
 		String imageFileName= upload(multipartRequest);
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
@@ -76,7 +76,7 @@ public class BoardControllerImpl  implements BoardController{
 		articleMap.put("parentNO", 0);
 		articleMap.put("id", id);
 		articleMap.put("imageFileName", imageFileName);
-		
+
 		String message;
 		ResponseEntity resEnt=null;
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -84,12 +84,12 @@ public class BoardControllerImpl  implements BoardController{
 		try {
 			int articleNO = boardService.addNewArticle(articleMap);
 			if(imageFileName!=null && imageFileName.length()!=0) {
-				File srcFile = new 
+				File srcFile = new
 				File(ARTICLE_IMAGE_REPO+"\\"+"temp"+"\\"+imageFileName);
 				File destDir = new File(ARTICLE_IMAGE_REPO+"\\"+articleNO);
 				FileUtils.moveFileToDirectory(srcFile, destDir,true);
 			}
-	
+
 			message = "<script>";
 			message += " alert('게시글이 등록되었습니다');";
 			message += " location.href='"+multipartRequest.getContextPath()+"/board/listArticles.do'; ";
@@ -98,7 +98,7 @@ public class BoardControllerImpl  implements BoardController{
 		}catch(Exception e) {
 			File srcFile = new File(ARTICLE_IMAGE_REPO+"\\"+"temp"+"\\"+imageFileName);
 			srcFile.delete();
-			
+
 			message = " <script>";
 			message +=" alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');');";
 			message +=" location.href='"+multipartRequest.getContextPath()+"/board/articleForm.do'; ";
@@ -108,8 +108,8 @@ public class BoardControllerImpl  implements BoardController{
 		}
 		return resEnt;
 	}
-	
-	
+
+
 	//�Ѱ��� �̹��� �����ֱ�
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
@@ -121,7 +121,7 @@ public class BoardControllerImpl  implements BoardController{
 		mav.addObject("article", articleVO);
 		return mav;
 	}
-	
+
 	/*
 	//���� �̹��� �����ֱ�
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
@@ -135,13 +135,13 @@ public class BoardControllerImpl  implements BoardController{
 		return mav;
 	}
    */
-	
 
-	
+
+
   //�� �� �̹��� ���� ���
   @RequestMapping(value="/board/modArticle.do" ,method = RequestMethod.POST)
   @ResponseBody
-  public ResponseEntity modArticle(MultipartHttpServletRequest multipartRequest,  
+  public ResponseEntity modArticle(MultipartHttpServletRequest multipartRequest,
     HttpServletResponse response) throws Exception{
     multipartRequest.setCharacterEncoding("utf-8");
 	Map<String,Object> articleMap = new HashMap<String, Object>();
@@ -151,14 +151,14 @@ public class BoardControllerImpl  implements BoardController{
 		String value=multipartRequest.getParameter(name);
 		articleMap.put(name,value);
 	}
-	
+
 	String imageFileName= upload(multipartRequest);
 	HttpSession session = multipartRequest.getSession();
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 	String id = memberVO.getMember_id();
 	articleMap.put("id", id);
 	articleMap.put("imageFileName", imageFileName);
-	
+
 	String articleNO=(String)articleMap.get("articleNO");
 	String message;
 	ResponseEntity resEnt=null;
@@ -170,11 +170,11 @@ public class BoardControllerImpl  implements BoardController{
          File srcFile = new File(ARTICLE_IMAGE_REPO+"\\"+"temp"+"\\"+imageFileName);
          File destDir = new File(ARTICLE_IMAGE_REPO+"\\"+articleNO);
          FileUtils.moveFileToDirectory(srcFile, destDir, true);
-         
+
          String originalFileName = (String)articleMap.get("originalFileName");
          File oldFile = new File(ARTICLE_IMAGE_REPO+"\\"+articleNO+"\\"+originalFileName);
          oldFile.delete();
-       }	
+       }
        message = "<script>";
 	   message += " alert('���� �����߽��ϴ�.');";
 	   message += " location.href='"+multipartRequest.getContextPath()+"/board/viewArticle.do?articleNO="+articleNO+"';";
@@ -191,7 +191,7 @@ public class BoardControllerImpl  implements BoardController{
     }
     return resEnt;
   }
-  
+
   @Override
   @RequestMapping(value="/board/removeArticle.do" ,method = RequestMethod.POST)
   @ResponseBody
@@ -206,13 +206,13 @@ public class BoardControllerImpl  implements BoardController{
 		boardService.removeArticle(articleNO);
 		File destDir = new File(ARTICLE_IMAGE_REPO+"\\"+articleNO);
 		FileUtils.deleteDirectory(destDir);
-		
+
 		message = "<script>";
 		message += " alert('���� �����߽��ϴ�.');";
 		message += " location.href='"+request.getContextPath()+"/board/listArticles.do';";
 		message +=" </script>";
 	    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
-	       
+
 	}catch(Exception e) {
 		message = "<script>";
 		message += " alert('�۾��� ������ �߻��߽��ϴ�.�ٽ� �õ��� �ּ���.');";
@@ -222,8 +222,8 @@ public class BoardControllerImpl  implements BoardController{
 	    e.printStackTrace();
 	}
 	return resEnt;
-  }  
-  
+  }
+
 /*
   //���� �̹��� �� �߰��ϱ�
   @Override
@@ -232,7 +232,7 @@ public class BoardControllerImpl  implements BoardController{
   public ResponseEntity  addNewArticle(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
 	multipartRequest.setCharacterEncoding("utf-8");
 	String imageFileName=null;
-	
+
 	Map articleMap = new HashMap();
 	Enumeration enu=multipartRequest.getParameterNames();
 	while(enu.hasMoreElements()){
@@ -240,14 +240,14 @@ public class BoardControllerImpl  implements BoardController{
 		String value=multipartRequest.getParameter(name);
 		articleMap.put(name,value);
 	}
-	
+
 	//�α��� �� ���ǿ� ����� ȸ�� �������� �۾��� ���̵� ���ͼ� Map�� �����մϴ�.
 	HttpSession session = multipartRequest.getSession();
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 	String id = memberVO.getId();
 	articleMap.put("id",id);
-	
-	
+
+
 	List<String> fileList =upload(multipartRequest);
 	List<ImageVO> imageFileList = new ArrayList<ImageVO>();
 	if(fileList!= null && fileList.size()!=0) {
@@ -273,14 +273,14 @@ public class BoardControllerImpl  implements BoardController{
 				FileUtils.moveFileToDirectory(srcFile, destDir,true);
 			}
 		}
-		    
+
 		message = "<script>";
 		message += " alert('������ �߰��߽��ϴ�.');";
 		message += " location.href='"+multipartRequest.getContextPath()+"/board/listArticles.do'; ";
 		message +=" </script>";
 	    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
-	    
-		 
+
+
 	}catch(Exception e) {
 		if(imageFileList!=null && imageFileList.size()!=0) {
 		  for(ImageVO  imageVO:imageFileList) {
@@ -290,7 +290,7 @@ public class BoardControllerImpl  implements BoardController{
 		  }
 		}
 
-		
+
 		message = " <script>";
 		message +=" alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');');";
 		message +=" location.href='"+multipartRequest.getContextPath()+"/board/articleForm.do'; ";
@@ -300,11 +300,11 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	return resEnt;
   }
-	
+
 */
 
-  
-  
+
+
 	@RequestMapping(value = "/board/*Form.do", method =  RequestMethod.GET)
 	private ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String)request.getAttribute("viewName");
@@ -312,12 +312,12 @@ public class BoardControllerImpl  implements BoardController{
 		mav.setViewName(viewName);
 		return mav;
 	}
-		
+
 	//�Ѱ� �̹��� ���ε��ϱ�
 	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception{
 		String imageFileName= null;
 		Iterator<String> fileNames = multipartRequest.getFileNames();
-		
+
 		while(fileNames.hasNext()){
 			String fileName = fileNames.next();
 			MultipartFile mFile = multipartRequest.getFile(fileName);
@@ -334,7 +334,7 @@ public class BoardControllerImpl  implements BoardController{
 		}
 		return imageFileName;
 	}
-	
+
 	/*
 	//���� �̹��� ���ε��ϱ�
 	private List<String> upload(MultipartHttpServletRequest multipartRequest) throws Exception{
@@ -358,26 +358,26 @@ public class BoardControllerImpl  implements BoardController{
 		return fileList;
 	}
 	*/
-	
+
 //	@RequestMapping("/board")
 //	public ModelAndView viewBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		String viewName = (String)request.getAttribute("viewName");
 //		ModelAndView mav = new ModelAndView(viewName);
 //		mav.addObject("msg", "I amd a Message!");
 //		return mav;
-		
+
 		// 서블릿/jsp방식에서 object.setAttribute("listMembers", listMembers); 했던거랑 같은 운리!
-	
+
 //	private JdbcTemplate jdbcTemplate;
-//	
+//
 //	public void setDataSource(DataSource dataSource) {
 //		this.jdbcTemplate = new JdbcTemplate(dataSource);
 //	}
-//	
+//
 //	public List selectAllMembers() throws Exception {
 //		String query = "select *from t_members";
 //		List membersList = new ArrayList();
-//		
+//
 //		membersList = this.jdbcTemplate.query(query, new RowMapper() {
 //			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 //				MemberVO memberVO = new MemberVO();
@@ -385,29 +385,29 @@ public class BoardControllerImpl  implements BoardController{
 //				memberVO.setPwd(rs.getString("pwd"));
 //				return memberVO;
 //			}
-//			
-//			
-//			
-//			
+//
+//
+//
+//
 //		});
-//				
+//
 //		return membersList;
 //	}
-//	
+//
 //	public int addMember(MemberVO memberVO) throws DataAccessException {
 //		String id = memberVO.getId();
 //		String query = "insert into t_member(id, pwd, name, email) values ("
-//				+ "'" + id + "'," 
+//				+ "'" + id + "',"
 //				+ "'" + pwd + "',"
 //				+ "'" + name + "')";
-//		
+//
 //		// 원래는 executeQuery, ,executeUpdate를 썼었는데,
 //		// 이제는 update만 써도 충분해짐!
 //		int result = jdbcTemplate.update(query);
-//		
+//
 //		return result;
 //	}
-//	
-	
-	
+//
+
+
 }

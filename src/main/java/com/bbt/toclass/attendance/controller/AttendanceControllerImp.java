@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AttendanceControllerImp implements AttendanceController{
 	@RequestMapping(value = { "/attendance/attendance"}, method = RequestMethod.GET)
 	public ModelAndView attendance(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("/attendance/attendance");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/attendance/attendance");
 		return mav;
-		
+
 	}
 
 }
