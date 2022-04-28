@@ -8,7 +8,6 @@
    <definition name="baseLayout"  template="/WEB-INF/views/common/layout.jsp">
       <put-attribute name="title" value="" />
       <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
-      <put-attribute name="side" value="/WEB-INF/views/common/side.jsp" />
       <put-attribute name="body" value="" />
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
    </definition>
@@ -17,15 +16,15 @@
       <put-attribute name="title" value="학생 메인페이지" />
       <put-attribute name="body" value="/WEB-INF/views/main_student.jsp" />
    </definition>
-   
+
    <definition name="main_teacher" extends="baseLayout">
       <put-attribute name="title" value="교사 메인페이지" />
       <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
    </definition>
-   
+
    <definition name="info" extends="baseLayout">
       <put-attribute name="title" value="내 정보" />
       <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
    </definition>
-    
+
 </tiles-definitions>
