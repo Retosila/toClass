@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.schedule">
+
+	<resultMap id="scheduleResult" type="scheduleVO">
+        <result property="id" column="id" />
+        <result property="member_email" column="member_email" />
+        <result property="writer" column="writer" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="allDay" column="allDay" />
+        <result property="start" column="startDate" />
+        <result property="end" column="endDate" />
+	</resultMap> 
+
+  <select id="getScheduleByEmail"  resultMap="scheduleResult" parameterType="String">
+	<![CDATA[
+		select id, title, 
+		to_char(startDate, 'YYYY-MM-DD"T"HH24:MI:SS') startDate,
+		to_char(endDate, 'YYYY-MM-DD"T"HH24:MI:SS') endDate,
+		allday
+		from sch_data
+		where member_email=#{member_email}
+
+	]]>
+  </select>
+  
+  
+</mapper>

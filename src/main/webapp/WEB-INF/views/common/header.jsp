@@ -39,7 +39,7 @@ request.setCharacterEncoding("UTF-8");
 	<div class="container" stlye="text-align: left;">
 	
 	
-	<div class="navbar-brand " href="${contextPath}/main.do" style="color:#0065FF; font-family:'Product sans bold';">
+	<div class="navbar-brand " onclick="location.href=${contextPath}/" style="color:#0065FF; font-family:'Product sans bold';">
 	
 	<i class="ni ni-chat-round"></i>
 	<a>to</a><a style="font-size:1px">Cla</a><a>ss</a>
@@ -146,7 +146,7 @@ request.setCharacterEncoding("UTF-8");
 <hr>
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
-					<c:when test="${isLogOn == true  && member!= null}">
+					<c:when test="${logOn == true  && member!= null}">
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/logout.do">로그아웃 <span
 								class="sr-only">(current)</span>
@@ -157,7 +157,7 @@ request.setCharacterEncoding("UTF-8");
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/memberForm.do">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/loginForm.do">로그인</a>
+							href="${contextPath}/login">로그인</a>
 					</c:otherwise>
 				</c:choose>
 
@@ -166,7 +166,6 @@ request.setCharacterEncoding("UTF-8");
 	</div>
 </nav>
 
-<h3>${member.member_name}님 안녕하세요!</h3>
 <button id="logout" type="button" onclick="location.href='${contextPath}/login'">메인화면</button>
 <button id="logout" type="button" onclick="location.href='${contextPath}/member/info'">내정보</button>
 <button id="logout" type="button" onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button>

@@ -12,7 +12,7 @@
       <put-attribute name="body" value="" />
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
    </definition>
-
+   
    <definition name="calendar" extends="baseLayout">
       <put-attribute name="title" value="학사 캘린더" />
       <put-attribute name="body" value="/WEB-INF/views/schedule/calendar.jsp" />

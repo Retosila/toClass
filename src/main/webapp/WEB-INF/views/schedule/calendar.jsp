@@ -1,305 +1,118 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Calendar"%>
+pageEncoding="UTF-8"
+isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"/> 
 <%
-  request.setCharacterEncoding("UTF-8");
-%> 
+request.setCharacterEncoding("UTF-8");
+%>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>일정 : 학사캘린더</title>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<meta charset="utf-8" />
+
+<!-- 외부 css -->
+<link href="${contextPath}/fullcalendar/main.css" rel="stylesheet" />
+
+<!-- 외부 js -->
+<script src="${contextPath}/fullcalendar/jquery-3.6.0.js"></script>
+<script src="${contextPath}/fullcalendar/main.js"></script>
+<script src="${contextPath}/fullcalendar/locales-all.js"></script>
+
+<!-- 메인 스크립트 -->
 <script>
 
+	$(document).ready(function() {
+		
+
+		
+		
+		// 캘린더 생성
+	    var calendarEl = $("#calendar")[0];
+    	var calendar = new FullCalendar.Calendar(calendarEl, {
+			// 달력의 초기 디스플레이 옵션 : 일반적인 테이블 달력
+      		initialView : 'dayGridMonth',
+      		// 초기 로딩 날짜 : 현재 날짜
+      		initialDate : new Date(),
+      		// 언어 설정 : 영어(일 표시로 인해 한글 사용 X)
+      		locale : 'en',
+      		// 상단부 툴바 설정 : 이전해/이전월 타이틀/현재일자로 다음월/다음해
+      		headerToolbar : {
+      			left : 'prevYear prev today',
+      			center : 'title',
+      			right : 'next nextYear'
+      		},
+      		// 타이틀 포맷 : 월 정보만 짧게
+			titleFormat : {
+				month : 'numeric'
+			},
+			// 버튼 출력 : today버튼의 텍스트를 '오늘의 일정'으로 설정
+      		buttonText : {
+      			today : '오늘의 일정'
+      		},
+      		// 일자 목록 표시(월화수목금)
+      		dayHeaders : true,
+      		// 캘린더 세로 길이 : 650 고정
+      		height : 650,
+      		// 일정 블록 수정 가능 여부 : 불가
+      		editable : false,
+      		// 일자 블록 선택 가능 여부 : 가능
+      		selectable : true,
+      		// 일자 블록 상의 날짜 클릭 가능 여부 : 불가
+      		navLinks : false,
+      		// 일자 블록의 크기보다 많은 일정이 등록되는 경우 more로 표시
+      		dayMaxEventRows : true,
+      		// 클릭 시 클릭한 일자 블록의 날짜 정보를 받아옴
+      		dateClick: function(info) {
+      			alert('Clicked on: ' + info.dateStr);
+      		},
+      		// 일정 정보 : json 데이터 ajax 요청
+			eventSources: [{
+				events: function(info, successCallback, failureCallback) {
+					$.ajax({
+						url :'${contextPath}/schedule/getSchedule.do', 
+						type: 'POST',
+						dataType: 'json',
+						data: {
+							"member_email" : "${member.member_email}"
+						},
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						success: function(data) {
+							successCallback(data);
+							console.log(data);					
+							console.log("스케쥴 로딩 완료 : ${member.member_email}");
+						},
+						error : function(error) {
+			            	console.log(JSON.stringify(error));
+			        	}			
+					});
+				}
+			}]
+      		
+    	});
+    	
+		// 풀캘린더 렌더
+    	calendar.render();
+		// en-numeric타입 월 표시에 "월" 추가
+		$(".fc-toolbar-title").append("월");
+		// dayHeaders 영->한 변환
+		$(".fc-col-header-cell-cushion[aria-label='Sunday']").text("일").css("color", "red");
+		$(".fc-col-header-cell-cushion[aria-label='Monday']").text("월");
+		$(".fc-col-header-cell-cushion[aria-label='Tuesday']").text("화");
+		$(".fc-col-header-cell-cushion[aria-label='Wednesday']").text("수");
+		$(".fc-col-header-cell-cushion[aria-label='Thursday']").text("목");
+		$(".fc-col-header-cell-cushion[aria-label='Friday']").text("금");
+		$(".fc-col-header-cell-cushion[aria-label='Saturday']").text("토").css("color", "blue");
+		
+  	});
+
 </script>
-	<style>
-		body {
-			scrollbar-face-color: #F6F6F6;
-			scrollbar-highlight-color: #bbbbbb;
-			scrollbar-3dlight-color: #FFFFFF;
-			scrollbar-shadow-color: #bbbbbb;
-			scrollbar-darkshadow-color: #FFFFFF;
-			scrollbar-track-color: #FFFFFF;
-			scrollbar-arrow-color: #bbbbbb;
-			margin-left:"0px"; margin-right:"0px"; margin-top:"0px"; margin-bottom:"0px";
-		}
-
-		td {
-			font-family: "돋움"; 
-			font-size: 9pt; 
-			color:#595959;}
-		th {
-			font-family: "돋움"; 
-			font-size: 9pt; 
-			color:#000000;}
-		
-		select {
-			font-family: "돋움"; 
-			font-size: 9pt; 
-			color:#595959;}
-
-		.divDotText {
-			overflow:hidden;
-			text-overflow:ellipsis;
-		}
-
-		a:link { 
-			font-size:9pt; 
-			font-family:"돋움";
-			color:#000000; 
-			text-decoration:none; 
-		}
-		
-		a:visited { 
-			font-size:9pt; 
-			font-family:"돋움";
-			color:#000000; 
-			text-decoration:none; 
-		}
-		
-		a:active { 
-			font-size:9pt; 
-			font-family:"돋움";
-			color:red; 
-			text-decoration:none; 
-		}
-		
-		a:hover { 
-			font-size:9pt; 
-			font-family:"돋움";
-			color:red;
-			text-decoration:none;
-		}
-		
-		.day{
-			width:100px; 
-			height:30px;
-			font-weight: bold;
-			font-size:15px;
-			font-weight:bold;
-			text-align: center;
-		}
-		.sat{
-			color:#529dbc;
-		}
-		
-		.sun{
-			color:red;
-		}
-		
-		.today_button_div{
-			float: right;
-		}
-		
-		.today_button{
-			width: 100px; 
-			height:30px;
-		}
-		
-		.calendar{
-			width:80%;
-			margin:auto;
-		}
-		
-		.navigation{
-			margin-top:100px;
-			margin-bottom:30px;
-			text-align: center;
-			font-size: 25px;
-			vertical-align: middle;
-		}
-		
-		.calendar_body{
-			width:100%;
-			background-color: #FFFFFF;
-			border:1px solid white;
-			margin-bottom: 50px;
-			border-collapse: collapse;
-		}
-		
-		.calendar_body .today{
-			border:1px solid white;
-			height:120px;
-			background-color:#c9c9c9;
-			text-align: left;
-			vertical-align: top;
-		}
-		
-		.calendar_body .date{
-			font-weight: bold;
-			font-size: 15px;
-			padding-left: 3px;
-			padding-top: 3px;
-		}
-		
-		.calendar_body .sat_day{
-			border:1px solid white;
-			height:120px;
-			background-color:#EFEFEF;
-			text-align:left;
-			vertical-align: top;
-		}
-		
-		.calendar_body .sat_day .sat{
-			color: #529dbc; 
-			font-weight: bold;
-			font-size: 15px;
-			padding-left: 3px;
-			padding-top: 3px;
-		}
-		
-		.calendar_body .sun_day{
-			border:1px solid white;
-			height:120px;
-			background-color:#EFEFEF;
-			text-align: left;
-			vertical-align: top;
-		}
-		
-		.calendar_body .sun_day .sun{
-			color: red; 
-			font-weight: bold;
-			font-size: 15px;
-			padding-left: 3px;
-			padding-top: 3px;
-		}
-		
-		.calendar_body .normal_day{
-			border:1px solid white;
-			height:120px;
-			background-color:#EFEFEF;
-			vertical-align: top;
-			text-align: left;
-		}
-		
-		.before_after_month{
-			margin: 10px;
-			font-weight: bold;
-		}
-		
-		.before_after_year{
-			font-weight: bold;
-		}
-		
-		.this_month{
-			margin: 10px;
-		}
-		
-	</style>
 </head>
 <body>
-<form name="calendarFrm" id="calendarFrm" action="" method="GET">
 
-<div class="calendar" >
+<!-- 학사 캘린더 -->
+<div id="calendar"></div>
 
-	<!-- &lt는 <를, &gt는 >를 의미한다. -->
-	<!--날짜 네비게이션  -->
-	<div class="navigation">
-		<a class="before_after_year" href="./calendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
-			&lt;&lt;
-		<!-- 이전해 -->
-		</a> 
-		<a class="before_after_month" href="./calendar.do?year=${today_info.before_year}&month=${today_info.before_month}">
-			&lt;
-		<!-- 이전달 -->
-		</a> 
-		<span class="this_month">
-			&nbsp;${today_info.search_year}. 
-			<c:if test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
-		</span>
-		<a class="before_after_month" href="/calendar.do?year=${today_info.after_year}&month=${today_info.after_month}">
-		<!-- 다음달 -->
-			&gt;
-		</a> 
-		<a class="before_after_year" href="/calendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
-			<!-- 다음해 -->
-			&gt;&gt;
-		</a>
-	</div>
-
-<!-- <div class="today_button_div"> -->
-<!-- <input type="button" class="today_button" onclick="javascript:location.href='/calendar.do'" value="go today"/> -->
-<!-- </div> -->
-<table class="calendar_body">
-
-<thead>
-	<tr bgcolor="#CECECE">
-		<td class="day sun" >
-			일
-		</td>
-		<td class="day" >
-			월
-		</td>
-		<td class="day" >
-			화
-		</td>
-		<td class="day" >
-			수
-		</td>
-		<td class="day" >
-			목
-		</td>
-		<td class="day" >
-			금
-		</td>
-		<td class="day sat" >
-			토
-		</td>
-	</tr>
-</thead>
-<tbody>
-	<tr>
-		<c:forEach var="dateList" items="${dateList}" varStatus="date_status"> 
-			<c:choose>
-				<c:when test="${dateList.value=='today'}">
-					<td class="today">
-						<div class="date">
-							${dateList.date}
-						</div>
-						<div>
-						</div>
-					</td>
-				</c:when>
-				<c:when test="${date_status.index%7==6}">
-					<td class="sat_day">
-						<div class="sat">
-							${dateList.date}
-						</div>
-						<div>
-						</div>
-					</td>
-				</c:when>
-				<c:when test="${date_status.index%7==0}">
-	</tr>
-	<tr>	
-		<td class="sun_day">
-			<div class="sun">
-				${dateList.date}
-			</div>
-			<div>
-			</div>
-		</td>
-				</c:when>
-				<c:otherwise>
-		<td class="normal_day">
-			<div class="date">
-				${dateList.date}
-			</div>
-			<div>
-			
-			</div>
-		</td>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-</tbody>
-
-</table>
-</div>
-</form>
 </body>
 </html>
