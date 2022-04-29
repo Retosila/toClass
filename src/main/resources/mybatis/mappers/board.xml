@@ -12,6 +12,7 @@
     <result property="writeDate" column="writeDate" />
     <result property="imageFileName" column="imageFileName" />
     <result property="views" column="views"/>
+    <result property="member_email" column="member_email"/>
   </resultMap>
 
   <resultMap id="imgResult" type="imageVO">

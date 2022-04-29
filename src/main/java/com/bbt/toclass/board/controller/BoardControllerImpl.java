@@ -41,14 +41,11 @@ public class BoardControllerImpl  implements BoardController{
 	@RequestMapping(value={"/board/listArticles.do"}, method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listArticles(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String)request.getAttribute("viewName");
-		//logger.info("viewName :"+viewName);
-		logger.error("viewName :"+viewName);
-		logger.warn("viewName :"+viewName);
-		logger.info("viewName :"+viewName);
-		logger.debug("viewName :"+viewName);
-		logger.trace("viewName :"+viewName);
 		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView(viewName);
+
+
+		System.out.println(articlesList);
 
 		mav.addObject("articlesList", articlesList);
 
@@ -56,7 +53,7 @@ public class BoardControllerImpl  implements BoardController{
 
 	}
 
-	 //�� �� �̹��� �۾���
+
 	@Override
 	@RequestMapping(value="/board/addNewArticle.do", method= {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
