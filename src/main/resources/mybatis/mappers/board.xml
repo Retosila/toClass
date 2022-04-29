@@ -35,7 +35,7 @@
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
 			INSERT into t_board(articleNO,  title, content, imageFileName, member_email)
-			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_email})
+			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_email,jdbcType=VARCHAR})
 		]]>
 	</insert>
 

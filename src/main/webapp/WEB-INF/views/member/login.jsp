@@ -81,7 +81,7 @@
 							</div>
 							<div class="text-center">
 
-								<button type="submit" class="btn btn-primary my-4" value="로그인" >로그인</button>
+								<button type="submit" class="btn btn-primary my-4" value="로그인" >로그인${LogOn=true}</button>
 							</div>
 						</form>
 					</div>

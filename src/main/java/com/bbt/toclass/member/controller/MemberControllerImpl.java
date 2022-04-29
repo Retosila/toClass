@@ -432,13 +432,12 @@ public class MemberControllerImpl implements MemberController {
 	@RequestMapping(value = "/member/logout.do", method = RequestMethod.GET)
 	public ModelAndView logoutDo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 세션에 바인딩된 데이터 제거
+		logger.info("로그아웃요청");
 		HttpSession session = request.getSession();
 		session.removeAttribute("member");
 		session.removeAttribute("logOn");
-
 		// 로그인 화면으로 리다이렉트
 		ModelAndView mav = new ModelAndView("redirect:/");
-
 		return mav;
 	}
 

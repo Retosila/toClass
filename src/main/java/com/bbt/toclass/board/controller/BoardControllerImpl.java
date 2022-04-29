@@ -48,7 +48,8 @@ public class BoardControllerImpl  implements BoardController{
 		logger.debug("viewName :"+viewName);
 		logger.trace("viewName :"+viewName);
 		List articlesList = boardService.listArticles();
-		ModelAndView mav = new ModelAndView("/board/listArticles");
+		ModelAndView mav = new ModelAndView(viewName);
+
 		mav.addObject("articlesList", articlesList);
 
 		return mav;
@@ -69,13 +70,13 @@ public class BoardControllerImpl  implements BoardController{
 			String value=multipartRequest.getParameter(name);
 			articleMap.put(name,value);
 		}
-
+		logger.info("글쓰기 요청");
 		String imageFileName= upload(multipartRequest);
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
-		String id = memberVO.getMember_id();
+		String email = memberVO.getMember_email();
 		articleMap.put("parentNO", 0);
-		articleMap.put("id", id);
+		articleMap.put("email", email);
 		articleMap.put("imageFileName", imageFileName);
 
 		String message;
@@ -85,9 +86,11 @@ public class BoardControllerImpl  implements BoardController{
 		try {
 			int articleNO = boardService.addNewArticle(articleMap);
 			if(imageFileName!=null && imageFileName.length()!=0) {
+				logger.info("threshold3");
 				File srcFile = new
 				File(ARTICLE_IMAGE_REPO+"\\"+"temp"+"\\"+imageFileName);
 				File destDir = new File(ARTICLE_IMAGE_REPO+"\\"+articleNO);
+				logger.info("threshold4");
 				FileUtils.moveFileToDirectory(srcFile, destDir,true);
 			}
 
@@ -156,8 +159,8 @@ public class BoardControllerImpl  implements BoardController{
 	String imageFileName= upload(multipartRequest);
 	HttpSession session = multipartRequest.getSession();
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
-	String id = memberVO.getMember_id();
-	articleMap.put("id", id);
+	String email = memberVO.getMember_email();
+	articleMap.put("email", email);
 	articleMap.put("imageFileName", imageFileName);
 
 	String articleNO=(String)articleMap.get("articleNO");

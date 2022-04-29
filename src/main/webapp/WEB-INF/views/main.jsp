@@ -30,6 +30,7 @@
 </head>
 <body>
 logOn=${LogOn}
+메인페이지
 
 <script href="${contextPath}/assets/js/core/jquery.min.js" type="text/javascript"></script>
 <script href="${contextPath}/assets/js/core/popper.min.js" type="text/javascript"></script>

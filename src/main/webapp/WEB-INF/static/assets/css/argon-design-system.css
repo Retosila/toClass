@@ -56,7 +56,7 @@ Coded by www.creative-tim.com
   --mycolor-back:#FDFAF6;
   --mycolor-nav:#FAF1E6;
   --mycolor-logoHover:#E4EFE7;
-  
+
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -100,7 +100,7 @@ body {
 
 
 
-  
+
 }
 
 [tabindex="-1"]:focus {
@@ -616,7 +616,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  
+
 }
 @font-face{
 	font-family: "Product sans bold";
@@ -4806,6 +4806,11 @@ input[type="button"].btn-block {
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+}
+.navbar-brand2 {
+  color:#0065FF;
+  font-family:'Product sans bold',serif;
+  display: inline; !important;
 }
 
 .navbar-brand:hover,
@@ -19523,7 +19528,7 @@ textarea[resize="horizontal"] {
 .navbar-brand {
   font-size: 0.875rem;
   font-weight: 600;
-  
+
   font-size: 1.6rem;
   letter-spacing: .05px;
 }
@@ -19745,7 +19750,7 @@ textarea[resize="horizontal"] {
     height: auto !important;
     opacity: 0;
   }
-	
+
   .navbar-collapse .navbar-toggler {
     width: 20px;
     height: 20px;
