@@ -157,7 +157,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 		// insert한 레코드의 개수값을 response해줌
 		if (result > 0) {
 			logger.info(result + " 개의 일정 추가 완료");
-			String msg = result + " 개의 일정 추가 완료";
+			String msg = "" + result + " 개의 일정 추가 완료";
 			return msg;
 		}
 		else {
