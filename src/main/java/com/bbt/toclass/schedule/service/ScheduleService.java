@@ -7,5 +7,13 @@ import com.bbt.toclass.schedule.vo.ScheduleVO;
 public interface ScheduleService {
 
 	
-	public List<ScheduleVO> getSchedule(String member_email) throws Exception;
+	List<ScheduleVO> getSchedule(String member_email) throws Exception;
+	
+	int addSchedule(ScheduleVO newSchedule) throws Exception;
+	
+	int delSchedule(String id) throws Exception;
+	
+	
+	
+	
 }

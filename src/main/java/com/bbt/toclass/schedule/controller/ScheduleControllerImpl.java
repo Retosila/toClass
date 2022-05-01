@@ -1,7 +1,5 @@
 package com.bbt.toclass.schedule.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbt.toclass.member.vo.MemberVO;
 import com.bbt.toclass.schedule.service.ScheduleService;
 import com.bbt.toclass.schedule.vo.ScheduleVO;
 
@@ -75,8 +75,9 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 *  
 	 */
 	
+	// ajax : 일정 정보 가져오기
 	// produces 속성은 한글 깨짐 방지용
-	@RequestMapping(value = {"/schedule/getSchedule.do"}, method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/text; charset=UTF-8")
+	@RequestMapping(value = {"/schedule/getSchedule.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String getScheduleDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String member_email = (String)param.get("member_email");
@@ -86,7 +87,6 @@ public class ScheduleControllerImpl implements ScheduleController {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		logger.info("ajax 요청 : " + member_email + "의 일정 정보");
-		//ModelAndView mav = new ModelAndView("jsonView");
 		// 서비스 객체를 통해 스케쥴 데이터를 list 방식으로 저장
 		List<ScheduleVO> schedule = scheduleService.getSchedule(member_email);
 		for (ScheduleVO s : schedule) {
@@ -100,9 +100,102 @@ public class ScheduleControllerImpl implements ScheduleController {
 		// list 형식의 일정 데이터 json 데이터로 변환
 		JSONArray result = JSONArray.fromObject(schedule);
 		// 배열 형식의 json 데이터를 한줄의 문자열로 변환
-		String data = result.toString();
-		logger.info(data);
-		return data;
+		String resp = result.toString();
+		logger.info(resp);
+		
+		// ajax 요청에 대해 resp 객체를 응답
+		return resp;
 	}
+	
+	// ajax : 일정 추가 하기
+	@RequestMapping(value = {"/schedule/addSchedule.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String addScheduleDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// 한글 깨짐 방지용
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		// ajax 요청 정보 변수에 저장
+		logger.info("일정 추가 요청");
+		String title = (String)param.get("title");
+		String start = (String)param.get("start");
+		String end = (String)param.get("end");
+		String schedule_content = (String)param.get("schedule_content");
+		String schedule_writer = (String)param.get("schedule_writer");
+		String member_email = (String)param.get("member_email");
+		boolean isForAll = false;
+		
+		if ((String)param.get("isForAll") != null) {
+			isForAll = true;
+		}
+		else {
+			isForAll = false;
+		}
+		
+		logger.info("요청자 : " + member_email);
+		logger.info("작성자 : " + schedule_writer);
+		logger.info("일정 제목 : " + title);
+		logger.info("일정 시작 : " + start);
+		logger.info("일정 종료 : " + end);
+		logger.info("일정 내용 : " + schedule_content);
+		logger.info("일괄추가여부 : " + isForAll);
+		
+		// ScheduleVO 변수에 값 할당
+		ScheduleVO newSchedule = new ScheduleVO();
+		newSchedule.setTitle(title);
+		newSchedule.setStart(start);
+		newSchedule.setEnd(end);
+		newSchedule.setSchedule_content(schedule_content);
+		newSchedule.setSchedule_writer(schedule_writer);
+		newSchedule.setMember_email(member_email);
+		newSchedule.setForAll(isForAll);
+		
+		// 일정 정보 추가 로직 실행
+		int result = scheduleService.addSchedule(newSchedule);
+		
+		// insert한 레코드의 개수값을 response해줌
+		if (result > 0) {
+			logger.info(result + " 개의 일정 추가 완료");
+			String msg = result + " 개의 일정 추가 완료";
+			return msg;
+		}
+		else {
+			logger.info("일정 추가 실패");
+			String msg = "일정 추가 실패";
+			return msg;
+		}
+	}
+	
+	// ajax : 일정 삭제하기
+	@RequestMapping(value = {"/schedule/delSchedule.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String delScheduleDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// 한글 깨짐 방지용
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		String id = (String)param.get("id");
+		logger.info("일정 삭제 요청 : " + id);
+		
+		// 일정 정보 삭제 로직 실행
+		int result = scheduleService.delSchedule(id);
+		
+		// delete한 레코드의 개수값을 response해줌
+		if (result > 0) {
+			logger.info(result + " 개의 일정 삭제 완료");
+			String msg = result + " 개의 일정 삭제 완료";
+			return msg;
+		}
+		else {
+			logger.info("일정 삭제 실패");
+			String msg = "일정 삭제 실패";
+			return msg;
+		}
+		
+	}
+	
+	
 	
 }

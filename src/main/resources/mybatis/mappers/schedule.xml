@@ -6,27 +6,67 @@
 <mapper namespace="mapper.schedule">
 
 	<resultMap id="scheduleResult" type="scheduleVO">
-        <result property="id" column="id" />
+        <result property="id" column="schedule_id" />
+        <result property="title" column="schedule_title" />
+        <result property="start" column="schedule_start" />
+        <result property="end" column="schedule_end" />
+        <result property="allDay" column="schedule_allday" />
+        <result property="schedule_content" column="schedule_content" />
+        <result property="schedule_writer" column="schedule_writer" />
         <result property="member_email" column="member_email" />
-        <result property="writer" column="writer" />
-        <result property="title" column="title" />
-        <result property="content" column="content" />
-        <result property="allDay" column="allDay" />
-        <result property="start" column="startDate" />
-        <result property="end" column="endDate" />
+        <result property="forAll" column="schedule_forall" />
 	</resultMap> 
 
   <select id="getScheduleByEmail"  resultMap="scheduleResult" parameterType="String">
 	<![CDATA[
-		select id, title, 
-		to_char(startDate, 'YYYY-MM-DD"T"HH24:MI:SS') startDate,
-		to_char(endDate, 'YYYY-MM-DD"T"HH24:MI:SS') endDate,
-		allday
-		from sch_data
+		select schedule_id, schedule_title, 
+			to_char(schedule_start, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_start,
+			to_char(schedule_end, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_end,
+			schedule_allday,
+			schedule_content, schedule_writer, member_email
+		from calendar_schedule
 		where member_email=#{member_email}
-
 	]]>
   </select>
+  
+  <select id="getClassIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select *
+		from (select class_id
+		      	from info
+		      	where member_email = #{member_email}
+		        order by info_regdate desc)
+		where rownum = 1
+	]]>
+  </select>
+  
+  <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_email
+		from (select m.member_email, class_id
+		        from member m, info i
+		        where m.member_email = i.member_email)
+		where class_id = #{class_id}
+	]]>
+  </select>
+  
+  <insert id="addScheduleByEmail"  parameterType="scheduleVO">
+	<![CDATA[
+		insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
+    		schedule_start, schedule_end, member_email, schedule_writer, schedule_forall)
+		values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
+    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
+    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
+    		#{member_email}, #{schedule_writer}, #{forAll})
+	]]>
+  </insert>
+  
+  <delete id="delScheduleByScheduleId"  parameterType="String">
+	<![CDATA[
+		delete from calendar_schedule
+		where schedule_id=#{id}
+	]]>
+  </delete>
   
   
 </mapper>
