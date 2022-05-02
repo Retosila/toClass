@@ -39,11 +39,12 @@ request.setCharacterEncoding("UTF-8");
 	<div class="container" stlye="text-align: left;">
 
 
-	<div class="navbar-brand " href="${contextPath}/main.do" style="color:#0065FF; font-family:'Product sans bold';">
+	<div class="navbar-brand " onclick="location.href='${contextPath}/'"  style="color:#0065FF; font-family:'Product sans bold'">
 
 	<i class="ni ni-chat-round"></i>
-	<a>to</a><a style="font-size:1px">Cla</a><a>ss</a>
-
+		<a>
+	<span>to</span><span style="font-size:1px">Cla</span><span>ss</span>
+		</a>
 	</div>
 
 
@@ -139,17 +140,18 @@ request.setCharacterEncoding("UTF-8");
 								href="./examples/register.html" class="dropdown-item">유머</a>
 						</div></li>
 				</ul>
-
+				logon=${logOn}
 
 
 
 <hr>
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
-					<c:when test="${LogOn == true }">
+					<c:when test="${logOn == true }">
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/logout.do">로그아웃 <span
 								class="sr-only">(current)</span>
+
 						</a></li>
 
 					</c:when>

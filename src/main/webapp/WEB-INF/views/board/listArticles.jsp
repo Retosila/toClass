@@ -51,7 +51,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th></th>
+            <th>번호</th>
 
             <th>제목</th>
             <th>작성자</th>
@@ -72,14 +72,14 @@
                 </tr>
             </c:when>
             <c:when test="${not empty articlesList}">
-                <c:forEach var="article" items="${articlesList }" varStatus="articleNum">
+                <c:forEach var="article" items="${articlesList}" varStatus="articleNum">
                     <tr align="center">
-                        <td width="5%">${articleNum.count}</td>
+                        <td width="7%">${article.articleNO}</td>
 
                         <td align='left' width="40%"><span
                                 style="padding-right: 30px"></span> <c:choose>
                             <c:when test='${article.level > 1 }'>
-                                <c:forEach begin="1" end="${article.level }" step="1">
+                                <c:forEach begin="1" end="${article.level}" step="1">
                                     <span style="padding-left: 20px"></span>
                                 </c:forEach>
                                 <span style="font-size: 12px;">[답변]</span>
@@ -95,6 +95,7 @@
                         <td width="15%">${article.writeDate}</td>
                         <td width="7%">${article.views }</td>
                         <td width="7%"></td>
+
                     </tr>
                 </c:forEach>
             </c:when>
@@ -107,7 +108,7 @@
 
 
     <div class="form-group row">
-        <div class="input-group input-group-alternative col-2">
+        <div class="input-group input-group-alternative col-2" style="padding-right: 0px;padding-left: 0px;">
             <div class="input-group-prepend">
 					<span class="input-group-text"><i
                             class="ni ni-zoom-split-in"></i></span>

@@ -35,10 +35,15 @@
 
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
-			INSERT into t_board(articleNO,  title, content, imageFileName, member_email)
+			INSERT into t_board(articleNO, title, content, imageFileName, member_email)
 			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_email,jdbcType=VARCHAR})
 		]]>
 	</insert>
+    <select id="articleCount" resultType="int"  >
+		<![CDATA[
+        SELECT count(*) from t_board
+        ]]>
+	</select>
 
   <select id="selectNewArticleNO" resultType="int"  >
 		<![CDATA[

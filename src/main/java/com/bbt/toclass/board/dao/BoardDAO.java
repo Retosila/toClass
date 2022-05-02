@@ -9,6 +9,7 @@ import java.util.Map;
 
 public interface BoardDAO {
 	public List selectAllArticlesList() throws DataAccessException;
+	public int articleCount()  throws DataAccessException;
 	public int insertNewArticle(Map articleMap) throws DataAccessException;
 	//public void insertNewImage(Map articleMap) throws DataAccessException;
 

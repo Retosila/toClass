@@ -22,7 +22,13 @@ public class BoardServiceImpl  implements BoardService{
 
 	public List<ArticleVO> listArticles() throws Exception{
 		List<ArticleVO> articlesList =  boardDAO.selectAllArticlesList();
+
         return articlesList;
+	}
+
+	@Override
+	public int articleCount() throws Exception {
+		return boardDAO.articleCount();
 	}
 
 	@Override

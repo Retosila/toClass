@@ -11,13 +11,13 @@ request.setCharacterEncoding("UTF-8");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+
         <title>
-            Argon Design System by Creative Tim
+
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -47,9 +47,9 @@ request.setCharacterEncoding("UTF-8");
     <table border="0" align="center" style="width: 800px;">
         <tr>
             <td><input style="display: none;" type="text"
-                       value="${member.member_name }" readonly />
+                       value="${member.member_email}" readonly />
             <td>
-            ${member.member_name }
+
         </tr>
         <tr>
             <td width="20%" style="text-align: center;" align="center">제목</td>
@@ -83,7 +83,6 @@ request.setCharacterEncoding("UTF-8");
     $('#summernote').summernote({
         placeholder : '공지사항 필독!',
         tabsize : 2,
-
         height : 300
     });
 </script>

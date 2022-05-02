@@ -18,10 +18,18 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List selectAllArticlesList() throws DataAccessException {
-		List articlesList = articlesList = sqlSession.selectList("mapper.board.selectAllArticlesList");
+
+		List<ArticleVO> articlesList = sqlSession.selectList("mapper.board.selectAllArticlesList");
+
 		return articlesList;
 	}
-
+	@Override
+	public int articleCount() throws DataAccessException {
+		System.out.println("DB에 articleCount 요청");
+		int result = sqlSession.selectOne("mapper.board.articleCount");
+		System.out.println("확인용 : " + result);
+		return result;
+	}
 
 	@Override
 	public int insertNewArticle(Map articleMap) throws DataAccessException {

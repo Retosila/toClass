@@ -40,15 +40,17 @@ public class BoardControllerImpl  implements BoardController{
 	@Override
 	@RequestMapping(value={"/board/listArticles.do"}, method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listArticles(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int pageCount = 0;
 		String viewName = (String)request.getAttribute("viewName");
+		System.out.println(viewName);
 		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView(viewName);
 
+		int articleCount = boardService.articleCount();
 
-		System.out.println(articlesList);
 
 		mav.addObject("articlesList", articlesList);
-
+		mav.addObject("articleCount", articleCount);
 		return mav;
 
 	}
@@ -73,7 +75,7 @@ public class BoardControllerImpl  implements BoardController{
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String email = memberVO.getMember_email();
 		articleMap.put("parentNO", 0);
-		articleMap.put("email", email);
+		articleMap.put("member_email", email);
 		articleMap.put("imageFileName", imageFileName);
 
 		String message;
@@ -101,7 +103,7 @@ public class BoardControllerImpl  implements BoardController{
 			srcFile.delete();
 
 			message = " <script>";
-			message +=" alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');');";
+			message +=" alert('오류');');";
 			message +=" location.href='"+multipartRequest.getContextPath()+"/board/articleForm.do'; ";
 			message +=" </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -111,7 +113,7 @@ public class BoardControllerImpl  implements BoardController{
 	}
 
 
-	//�Ѱ��� �̹��� �����ֱ�
+
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
                                     HttpServletRequest request, HttpServletResponse response) throws Exception{
