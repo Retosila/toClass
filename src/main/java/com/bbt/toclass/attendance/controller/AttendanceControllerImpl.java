@@ -34,20 +34,32 @@ public class AttendanceControllerImpl implements AttendanceController{
 		 *   -> ex) neru@naver.com 선생이 관리하는 reto@naver.com, lala@naver.com....
 		 *   -> 해당 이메일 정보들은 List<String>의 형태로 저장해둔다.
 		 * 1. 현재 날짜를 기준으로 이번 주 월요일과 금요일 날짜를 받아온다.
-		 * 2. 
-		 * 3. List<String>의 size만큼 for문을 돌려 아래와 같은 방식으로 AttendDTO 객체를 만들고 
+		 * 2. List<String>의 size만큼 for문을 돌려 아래와 같은 방식으로 AttendDTO 객체를 만들고 List에 담는다.
+		 * 3. 배열 내의 AttendDTO 객체의 수만큼 for문을 돌려 attendanceService.getAttendanceInfo(attendDTO) 메소드를 실행한다.
+		 * 4. 메소드에서 return된 값을 List<ShowAttendVO>  배열 객체에 add한다.
+		 * 5. 바인딩된 데이터를 프론트단에 넘겨준다.
 		 * 
 		 */
 		
+		/*
+		 * 
+		 * 아래 로직은 임시로 AttendDTO 객체를 만들어서 실행해본 예시임.
+		 * 위 설명과 아래의 구현 예제를 통해 기능 구현을 할 것
+		 * 
+		 */
 		
-		
+		// 여러 개의 ShowAttendVO 객체를 담기 위한 배열 생성
+		// ShowAttendVO는 일주일 치의 AttendVO 객체를 하나로 압축해둔 VO 객체임(for문을 통한 배열 탐색을 위함) 
 		List<ShowAttendVO> savoList = new ArrayList<ShowAttendVO>();
 		
+		// AttendDTO 객체 생성 : 레토의 이번주 월~금 출결 정보 탐색을 위해 필요한 정보들 
 		AttendDTO attendDTO = new AttendDTO();
 		attendDTO.setMember_email("reto@naver.com");
 		attendDTO.setMonday("2022-04-25");
 		attendDTO.setFriday("2022-04-29");
+		// DB에서 데이터를 받아온 AttendVO들을 ShowAttendVO 하나로 압축한 후 할당
 		ShowAttendVO savo = attendanceService.getAttendanceInfo(attendDTO);
+		// 생성해둔 배열객체 savoList에 ShowAttendVO 객체 추가
 		savoList.add(savo);
 		
 		AttendDTO attendDTO2 = new AttendDTO();
@@ -58,7 +70,7 @@ public class AttendanceControllerImpl implements AttendanceController{
 		savoList.add(savo2);
 		
 		
-		
+		// 데이터 바인딩
 		mav.addObject("ShowAttendVOList", savoList);
 		
 		return mav;
