@@ -22,7 +22,10 @@ request.setCharacterEncoding("UTF-8");
 
 <!-- 메인 스크립트 -->
 <script>
-		
+
+	// DB에 요청한 이벤트 데이터 저장용
+	var myEvents;
+
 	$(document).ready(function() {
 		// 캘린더 생성
 	    var calendarEl = $("#calendar")[0];
@@ -61,18 +64,81 @@ request.setCharacterEncoding("UTF-8");
       		// 날짜 클릭 시 액션
       		// 일자 블록의 크기보다 많은 일정이 등록되는 경우 more로 표시
       		dayMaxEventRows : true,
-      		// 일자 블록 클릭 시 클릭한 일자 블록의 날짜 정보를 받아옴
+      		// 일자 블록 클릭 시
       		dateClick: function(info) {
-      			// 모달창 띄우기 
-    	        $("#addEventModal").show();
-    	        // 모달창 뒷배경
-    	        $("body").append('<div class="modalBackground"></div>');
+      			// 기존 모달창에 있던 데이터 제거
+      			$(".eventBlock").remove();
+      			// 클릭한 일자의 날짜 정보를 기반으로 일정 날짜 범위 내에 해당 일자가 들어가는 이벤트만 추출
+      			var thisDate = info.date; 
+      			console.log(thisDate);
+      			// 클릭한 일자의 일정 정보를 담을 배열 
+      			var thisEventList = [];
+      			// 이벤트 배열에서 해당 일자의 이벤트만 추출한 후, thisEventList 배열에 저장
+      			for (var i = 0; i < myEvents.length; i++) {
+	      			var thisStart = to_date(myEvents[i].start.substr(0,10));
+	      			var thisEnd = to_date(myEvents[i].end.substr(0,10));
+      				if (thisStart <= thisDate && thisEnd >= thisDate) {
+      					thisEventList.push(myEvents[i]);
+      					console.log("일정 추출 : " + myEvents[i].title);
+      				}
+      			}
+      			console.log((thisDate.getMonth()+1) + "월 " + thisDate.getDate() + "일자 일정 추출 완료");
+      			console.log(thisEventList);
+      			
+      			// 추출할 일정 eventBlock에 출력
+      			for (var i = 0; i < thisEventList.length; i++) {
+      				// start, end에서 HH24:MI 정보만 추출, HH24:MI - HH24:MI 형식으로 변환
+      				var start = thisEventList[i].start.substr(11, 5);
+      				var end = thisEventList[i].end.substr(11, 5);
+      				var time = start + " - " + end;
+      				console.log(time);
+      				
+      				// 
+	      			var eventBlock = $("<article class='eventBlock-'" + i + "style='height:auto;'></article>");
+	      			var details_title = $("<span class='details_title'>" + thisEventList[i].title + "</span><br>");
+	      			var details_time = $("<span class='details_title'>" + thisEventList[i].title + "</span><br>");
+	      			var details_writer = $("<span class='details_title'>" + thisEventList[i].schedule_writer + "</span><br>");
+	      			var details_content = $("<span class='details_title'>" + thisEventList[i].schedule_content + "</span><br>");
+	      			
+	      			var forAll = thisEventList[i].forAll;
+    	
+	      			$("#eventBlockContainer").append(eventBlock);
+	      			$(".eventBlock-"+i).append(details_title);
+      			
+      			}
+      			
+				var deleteButton = $("<button class='eventBlockClose'>삭제</button>");
+      			$(".eventBlock").append(deleteButton);
+      			
+      			// 선택된 일자 블록에 따라 일정 추가창의 날짜값 할당
       			$("#eventStartDate").val(info.dateStr);
       			$("#eventStartTime").val("09:00");
       			$("#eventEndDate").val(info.dateStr);
       			$("#eventEndTime").val("09:00");
+      			
+      			// #eventModalDate의 날짜값 할당
+      			$("#details_yyyy_mm").text(info.date.getFullYear() + "년 " + (info.date.getMonth()+1) + "월");
+      			$("#details_dd").text(info.date.getDate() + "일");
+      			
+      			// getDay값이 0~6으로 나오기에, switch문을 써서 한글날짜로 변환
+      			var day = info.date.getDay();
+      			switch (day)  {
+      			case 0 : $("#details_day").text("일요일"); break;
+      			case 1 : $("#details_day").text("월요일"); break;
+      			case 2 : $("#details_day").text("화요일"); break;
+      			case 3 : $("#details_day").text("수요일"); break;
+      			case 4 : $("#details_day").text("목요일"); break;
+      			case 5 : $("#details_day").text("금요일"); break;
+      			case 6 : $("#details_day").text("토요일"); break;
+      			default : console.log("알 수 없는 요일입니다");
+      			}
+      			
+      			// 모달창 띄우기 
+    	        $("#eventModal").show();
+    	        $("body").append('<div class="modalBackground"></div>');
+    	        
       		},
-      		// 일정 블록 클릭 시...
+      		// 일정 블록 클릭 시
       		eventClick : function(info) {
       			//$(this).closest(".fc-day").data("date");
       			var id = info.event.id;
@@ -110,7 +176,8 @@ request.setCharacterEncoding("UTF-8");
 					success: function(data) {
 						successCallback(data)
 						console.log("event fetch 완료");
-						console.log(data);					
+						console.log(data);
+						myEvents = data;
 					},
 					error : function(error) {
 		            	console.log(JSON.stringify(error));
@@ -144,16 +211,28 @@ request.setCharacterEncoding("UTF-8");
 		$(".fc-col-header-cell-cushion[aria-label='Friday']").text("금");
 		$(".fc-col-header-cell-cushion[aria-label='Saturday']").text("토").css("color", "blue");
 		
-		// 일정 추가 모달창 종료 로직
+        // X버튼 및 배경 클릭 시 모달 창 종료 
         $("body").on("click", function(event) {
-        	// X버튼 및 뒷배경 클릭 시 모달 창 종료 
-            if(event.target.className == 'modalClose' || event.target.className == 'modalBackground') {
-                $("#addEventModal").hide(); 
-                $(".modalBackground").hide();
-            }
-	   });
+        	if (event.target.id == "eventModalClose") {
+        		$("#eventModal").hide();
+                $(".modalBackground").remove();
+        	}
+        	else if (event.target.id == "addEventModalClose") {
+        		$("#addEventModal").hide();
+        	}
+        	else if (event.target.className == "modalBackground") {
+        		$("#eventModal").hide();
+        		$("#addEventModal").hide();
+                $(".modalBackground").remove();
+        	}
+	    });
 		
-    	// 일정 추가 버튼 클릭 시 실행
+		// 일정 모달창에서 "일정 추가창" 버튼 클릭 시 일정 추가 모달 창으로 전환
+		$("#addEvent").on("click", function() {
+	        $("#addEventModal").show();
+		});
+		
+    	// "일정 추가하기" 버튼 클릭 시 실행
     	$("#addEventButton").on("click", function() {
     		console.log("addEvent 메소드 실행");
     		
@@ -192,6 +271,7 @@ request.setCharacterEncoding("UTF-8");
     				calendar.refetchEvents();
     				// 모달창 종료
                     $("#addEventModal").hide(); 
+                    $("#eventModal").hide(); 
                     $(".modalBackground").hide();
     			},
     			error : function(error) {
@@ -200,23 +280,32 @@ request.setCharacterEncoding("UTF-8");
     		});
     		
     	});
-		
-    	
     	
   	});
+	
+	// 함수 정의
+	
+	function to_date(dateStr) {
+	    var yyyyMMdd = String(dateStr);
+	    var sYear = yyyyMMdd.substring(0,4);
+	    var sMonth = yyyyMMdd.substring(5,7);
+	    var sDate = yyyyMMdd.substring(8,10);
+	    return new Date(Number(sYear), Number(sMonth)-1, Number(sDate));
+	}
+	
 </script>
 
 <!-- 내부 스타일시트 -->
 <style>
-	.box {
-		width:400px; 
+	#eventModalDate {
+		width:360px; 
 		background-color:#E2E2E2; 
 		border:2px #868e96 solid;  
 		margin:20px auto;
 		text-align:center;
 	}
 	
-	.details_box {
+	.eventBlock {
 		width:360px; 
 		background-color:#F8F9FA; 
 		border:2px #868e96 solid;  
@@ -224,17 +313,23 @@ request.setCharacterEncoding("UTF-8");
 		text-align:center;
 	}
 	
-	#details {
-		width:500px; 
-		height:800px; 
-		float:left; 
-		background-color:#f9fafb;
-	}
-	
 	#calendar {
 		width:800px; 
 		height:800px; 
-		float:left;" 
+		margin:0 auto;
+	}
+	
+	#eventModal {
+    	display: none;
+		width: 400px;
+		height: 600px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -250px 0 0 -250px;
+		background-color: #f9fafb;
+		z-index: 2;
+		text-align:center;
 	}
 	
 	#addEventModal{
@@ -269,7 +364,15 @@ request.setCharacterEncoding("UTF-8");
 	    opacity: 0.5;
 	}
 	
-	.modalClose{
+	#eventModalClose{
+	  position:absolute;
+	  top:0px;
+	  right: 15px;
+	  cursor:pointer;
+	  font-size:2em;
+	}
+	
+	#addEventModalClose{
 	  position:absolute;
 	  top:0px;
 	  right: 15px;
@@ -290,45 +393,59 @@ request.setCharacterEncoding("UTF-8");
 </head>
 <body>
 
-<!-- 상세 일정 -->
-<div id="details">
-	<section class="box" style="height:100px;">
-		<span id="details_yyyy_mm">2022-05</span><br>
-		<span id="details_dd" >19일</span><br>
-		<span id="details_day" >목요일</span><br>
+<!-- 학사 캘린더 -->
+<div id="calendar"></div>
+
+<!-- 일정 모달창 -->
+<div id="eventModal">
+	<div id="eventModalClose">X</div>
+	<!-- 선택된 일정 블록 날짜 정보 -->
+	<section id="eventModalDate" style="height:80px; margin-top:50px;">
+		<span id="details_yyyy_mm"></span><br>
+		<span id="details_dd"></span><br>
+		<span id="details_day"></span><br>
 	</section>
-	<section class="box" style=" height:630px;">
-		<article class="details_box" style="height:auto;">
-			<span id="details_title">수학쪽지시험</span><br>
-			<span id="details_time">11:00 - 12:00</span><br>
-			<span id="details_write">레토</span><br>
-			<span id="details_content">
-			3교시에 시청각실에서 독서토론 대회있으니 필기구 챙겨서 늦지 않게 갈 것
-			</span><br>
-		</article>
-	
+	<!-- 일정블록 담는 창 -->
+	<section id="eventBlockContainer">
+		<!-- 일정 블록 -->
+		
+	</section>
+	<section>
+		<button id="addEvent">일정 추가창</button>
 	</section>
 
 </div>
 
-<!-- 학사 캘린더 -->
-<div id="calendar"></div>
-
 <!-- 일정 추가 모달창 -->
 <div id="addEventModal">
-    <div class="modalClose">X</div>
+    <div id="addEventModalClose">X</div>
     <br><br><br>
     <input id="eventTitle" type="text" placeholder="일정 제목"/><br><br>
     시작시간 : <input id="eventStartDate" type="date"/><input id="eventStartTime" type="time"/><br><br>
     종료시간 : <input id="eventEndDate" type="date"/><input id="eventEndTime" type="time"/><br><br>
     일정 내용<br>
     <textarea id="eventContent" placeholder="일정 내용"/></textarea><br><br>
-    <button id="addEventButton" type="button">일정 추가</button><br>
+    <button id="addEventButton" type="button">일정 추가하기</button><br>
     <!-- 교사 회원일 경우 일괄 추가 기능을 지원 -->
     <c:if test="${member.member_type eq '교사'}">
 	    일괄 추가<input id="isForAll" name="isForAll" value="true" type="checkbox" checked/>
     </c:if>
 </div>
+
+<!-- 
+		<article class="eventBlock" style="height:auto;">
+			<span class="details_title"></span><br>
+			<span class="details_time"></span><br>
+			<span class="details_writer"></span><br>
+			<span class="details_content"></span><br>
+			<!-- 교사회원 & 일괄추가기능을 사용하여 추가한 일정일 경우 일괄 삭제 기능을 지원 -->
+			<c:if test="${member.member_type eq '교사'}">
+				일괄 삭제<input id="isForAllDelete" name="isForAllDelete" value="true" type="checkbox" checked/>
+			</c:if>	
+			<button class="eventBlockClose">삭제</button>
+		</article>
+
+ -->
 
 </body>
 </html>
