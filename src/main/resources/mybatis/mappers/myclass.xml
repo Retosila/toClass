@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.myclass">
+	<resultMap id="classResult" type="myclassVO">
+        <result property="class_id" column="class_id" />
+        <result property="class_name" column="class_name" />
+        <result property="class_code" column="class_code" />
+        <result property="class_regdate" column="class_regdate" />
+        <result property="class_moddate" column="class_moddate" />
+        <result property="class_year" column="class_year" />
+	</resultMap> 
+
+  <select id="getStuCnt"  resultType="_int"   parameterType="string" >
+	<![CDATA[
+		select COUNT(*) 
+		from CLASS A LEFT JOIN TEACHER_INFO B ON A.CLASS_ID = B.CLASS_ID 
+		where B.MEMBER_EMAIL = #{email}
+	]]>
+  </select>
+  
+  <insert id="saveMyclass" parameterType="myclassVO" >
+	<![CDATA[
+		insert into CLASS(CLASS_ID, CLASS_NAME, CLASS_CODE, CLASS_REGDATE, CLASS_MODDATE, CLASS_YEAR)
+		values ((select NVL(TO_CHAR(MAX(CLASS_ID)+1), '000000') from CLASS), #{class_name}, (select NVL(TO_CHAR(MAX(CLASS_CODE)+1), '000000') from CLASS), SYSDATE, SYSDATE, #{class_year}) 
+	]]>
+  </insert>
+  
+</mapper>

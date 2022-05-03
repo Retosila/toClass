@@ -13,11 +13,21 @@
         <result property="member_type" column="member_type" />
         <result property="member_regdate" column="member_regdate" />
         <result property="member_moddate" column="member_moddate" />
+        <result property="member_myclass" column="member_myclass" />
 	</resultMap> 
 
   <select id="loginByEmail"  resultMap="memResult"   parameterType="memberVO" >
 	<![CDATA[
-		select * from member	
+		select MEMBER_ID as member_id, 
+				MEMBER_EMAIL as member_email,
+				MEMBER_PW as member_pw, 
+				MEMBER_NAME as member_name, 
+				MEMBER_PHONE as member_phone, 
+				MEMBER_TYPE as member_type, 
+				MEMBER_REGDATE as member_regdate, 
+				MEMBER_MODDATE as member_moddate, 
+				(select COUNT(*) from TEACHER_INFO where MEMBER_EMAIL = #{member_email}) as member_myclass
+		from member	
 		where member_email=#{member_email} and member_pw=#{member_pw}
 	]]>
   </select>

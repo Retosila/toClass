@@ -95,7 +95,12 @@ body {
   line-height: 1.5;
   color: #525f7f;
   text-align: left;
-  background-color: #FDFAF6;
+  background-color: #F9FAFB;
+  min-height: calc( 100vh - 100px );
+
+
+
+  
 }
 
 [tabindex="-1"]:focus {
@@ -257,7 +262,7 @@ caption {
 }
 
 th {
-  text-align: inherit;
+  text-align: center;
 }
 
 label {
@@ -611,8 +616,12 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  
 }
-
+@font-face{
+	font-family: "Product sans bold";
+	src:"C:\Users\User\Desktop\toClass--\springEx\src\main\webapp\WEB-INF\static\assets\fonts\Product Sans Bold.ttf"
+}
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
@@ -1645,14 +1654,14 @@ pre code {
 
 .table {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   color: #525f7f;
   background-color: transparent;
 }
 
 .table th,
 .table td {
-  padding: 1rem;
+  padding: 0.3rem;
   vertical-align: top;
   border-top: 0.0625rem solid #dee2e6;
 }
@@ -7415,6 +7424,9 @@ button.bg-default:focus {
   background-color: #0b1526 !important;
 }
 
+.bg-toss{
+	background-color: #0065FF !important;
+}
 .bg-white {
   background-color: #fff !important;
 }
@@ -18649,7 +18661,7 @@ a.btn-icon-only {
 }
 
 .footer {
-  background: #f4f5f7;
+  background: #191F28;
   padding: 1.5rem 0;
 }
 
@@ -19511,7 +19523,7 @@ textarea[resize="horizontal"] {
 .navbar-brand {
   font-size: 0.875rem;
   font-weight: 600;
-  text-transform: uppercase;
+  
   font-size: 1.6rem;
   letter-spacing: .05px;
 }
@@ -19733,7 +19745,7 @@ textarea[resize="horizontal"] {
     height: auto !important;
     opacity: 0;
   }
-
+	
   .navbar-collapse .navbar-toggler {
     width: 20px;
     height: 20px;

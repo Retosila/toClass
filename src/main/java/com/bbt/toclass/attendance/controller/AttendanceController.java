@@ -9,4 +9,7 @@ public interface AttendanceController {
 	
 	public ModelAndView attendance(HttpServletRequest request, HttpServletResponse response);
 	
+	public ModelAndView attendance2(HttpServletRequest request, HttpServletResponse response);
+
+	
 }

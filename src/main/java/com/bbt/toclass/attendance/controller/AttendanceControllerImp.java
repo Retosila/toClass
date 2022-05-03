@@ -18,5 +18,12 @@ public class AttendanceControllerImp implements AttendanceController{
 		return mav;
 		
 	}
+	
+	@RequestMapping(value = { "/attendance/attendance2"}, method = RequestMethod.GET)
+	public ModelAndView attendance2(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("/attendance/attendance2");
+		return mav;
+		
+	}
 }
 

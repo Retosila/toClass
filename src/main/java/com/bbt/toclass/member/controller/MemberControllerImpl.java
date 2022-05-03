@@ -65,7 +65,7 @@ public class MemberControllerImpl implements MemberController {
 		
 		// 바인딩된 회원 정보 있을 시 회원유형에 따른 메인 페이지를 출력
 		MemberVO logOnMember = (MemberVO)session.getAttribute("member");
-		if (logOn) {
+		if (logOn && (logOnMember != null)) {
 			String member_type = logOnMember.getMember_type();
 			logger.info("logOn : " + logOn);
 			logger.info("이미 로그온된 회원 : " + logOnMember.getMember_email());
@@ -252,7 +252,6 @@ public class MemberControllerImpl implements MemberController {
 		    String type = memberVO.getMember_type();
 		    logger.info("회원이름 : " + type);
 		    logger.info("회원유형 : " + name);
-		    
 		    // 회원타입에 따라 다른 메인 페이지로 분기시킴
 		    if (type.equals("교사")) {
 		    	mav.setViewName("main_teacher");
@@ -466,5 +465,7 @@ public class MemberControllerImpl implements MemberController {
 		}
 		return mav;
 	}
+	
+
 
 }

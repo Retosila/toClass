@@ -28,4 +28,9 @@
       <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
    </definition>
    
+   <definition name="main" extends="baseLayout">
+      <put-attribute name="title" value="메인페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/main.jsp" />
+   </definition>
+   
 </tiles-definitions>

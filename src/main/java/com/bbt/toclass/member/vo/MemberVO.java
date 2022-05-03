@@ -16,12 +16,13 @@ public class MemberVO {
 	private String member_type;
 	private Date member_regdate;
 	private Date member_moddate;
+	private String member_myclass;
 	
 	// 생성자
 	public MemberVO() {}
 
 	public MemberVO(String member_id, String member_email, String member_pw, String member_name,
-			String member_phone, String member_type, Date member_regdate, Date member_moddate) {
+			String member_phone, String member_type, Date member_regdate, Date member_moddate, String member_myclass) {
 		this.member_id = member_id;
 		this.member_email = member_email;
 		this.member_pw = member_pw;
@@ -30,6 +31,7 @@ public class MemberVO {
 		this.member_type = member_type;
 		this.member_regdate = member_regdate;
 		this.member_moddate = member_moddate;
+		this.member_myclass = member_myclass;
 	}
 	
 	// 메소드
@@ -96,6 +98,14 @@ public class MemberVO {
 	
 	public void setMember_moddate(Date member_moddate) {
 		this.member_moddate = member_moddate;
+	}
+	
+	public String getMember_myclass() {
+		return member_myclass;
+	}
+	
+	public void setMember_myclsss(String member_myclass) {
+		this.member_myclass = member_myclass;
 	}
 	
 

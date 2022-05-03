@@ -74,7 +74,7 @@ request.setCharacterEncoding("UTF-8");
 	<script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
 	<script src="${contextPath}/assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
 	
-	<div class="container">
+	<div class="container pt-lg-7">
 		<form action="achievement" align="left">
 			<label for="studyName">이름</label>
 			<input type="text" id="studyName">

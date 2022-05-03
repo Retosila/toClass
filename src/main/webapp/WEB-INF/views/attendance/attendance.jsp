@@ -273,7 +273,8 @@ th, td {
 				
 			</table>
 			<button type="button" id="append_row"
-				class="btn btn-outline-primary btn-lg" onclick=addRow()>추가</button><script type="text/javascript">
+				class="btn btn-outline-primary btn-lg" onclick=addRow()>추가</button>
+				<script type="text/javascript">
 		//버튼 클릭하면 추가
 		function fn_addFile() {
         $("#d_file").append(

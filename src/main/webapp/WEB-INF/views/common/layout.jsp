@@ -11,35 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <style>
-#container {
-	width: 100%;
-	margin: 0px auto;
-	text-align: center;
-	border: 0px solid white;
-}
 
-#header {
-	padding: 0px;
-	margin-bottom: 0px;
-	border: 0px solid;
-	background-color: white;
-}
+
+
 
 
 #content {
+	min-height: calc( 100vh - 100px );
 	
-	height: 900px;
-	padding: 5px;
-	margin-right: 5px;
-	float: center;
-	border: 0px solid;
 }
 
-#footer {
-	clear: both;
-	padding: 0px;
-	border: 0px solid;
-}
 
 
 </style>
@@ -50,9 +31,7 @@
       <div id="header">
          <tiles:insertAttribute name="header"/>
       </div>
-      <div id="sidebar-left">
-          <tiles:insertAttribute name="side"/> 
-      </div>
+      
       <div id="content">
           <tiles:insertAttribute name="body"/>
       </div>

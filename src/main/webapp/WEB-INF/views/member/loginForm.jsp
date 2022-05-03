@@ -52,8 +52,6 @@ request.setCharacterEncoding("UTF-8");
 	</c:when>
 </c:choose> 
 
-
-
 </head>
 <body>
 <form name="frmLogin" method="post"  action="${contextPath}/member/login.do">
@@ -71,13 +69,15 @@ request.setCharacterEncoding("UTF-8");
                         <a href="#" class="btn btn-neutral btn-icon" class="g-signin2" data-onsuccess="onSignIn">
                             <span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
                             <span class="btn-inner--text">Google</span>
-                            
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
                         </a>
                     </div>
                 </div>
+          
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                        <small>아이디와 비밀번호를 입력해주세요.</small>
+                        <small>Or sign in with credentials</small>
                     </div>
                     <form role="form">
                         <div class="form-group mb-3">
@@ -93,17 +93,16 @@ request.setCharacterEncoding("UTF-8");
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                 </div>
-                                <input class="form-control" placeholder="Password" type="password" name="pw" value="">
+                                <input class="form-control" placeholder="Password" type="password" name="pwd" value="">
                             </div>
                         </div>
-                        <!-- <div class="custom-control custom-control-alternative custom-checkbox">
+                        <div class="custom-control custom-control-alternative custom-checkbox">
                             <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                             <label class="custom-control-label" for=" customCheckLogin"><span>아이디 저장</span></label>
-                        </div> -->
+                        </div>
                         <div class="text-center">
                         
                            <button type="INPUT" class="btn btn-primary my-4"value="로그인" >로그인</button>
-                           <div class="g-signin2" data-onsuccess="onSignIn"></div>
                         </div>
                     </form>
                 </div>
@@ -119,9 +118,6 @@ request.setCharacterEncoding("UTF-8");
         </div>
     </div>
 </div>
-
-
-
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script href="${contextPath}/assets/js/core/jquery.min.js" type="text/javascript"></script>
@@ -159,276 +155,3 @@ request.setCharacterEncoding("UTF-8");
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    isELIgnored="false" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-<%
-   request.setCharacterEncoding("UTF-8");
-%> 
-
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-
-<!doctype html>
-<html lang="ko">
-    <head>
-      <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="651836858023-dl00vv6h7v8fq5321nr306j3el1jd4gn.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta
-            name="author"
-            content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.88.1">
-        <title>toClass.로그인</title>
-
-        <link
-            rel="canonical"
-            href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-        <!-- Bootstrap core CSS -->
-        <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-
-        <style>
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
-
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                    font-size: 3.5rem;
-                }
-            }
-        </style>
-
-        <!-- Custom styles for this template -->
-        <link href="${contextPath}/css/styles.css" rel="stylesheet">
-        
-    </head>
-    <body class="text-center">
-
-        <main class="form-signin">
-            <form action="index.html">
-                <img class="mb-4" src="/images/logo.png" alt="">
-
-
-                <div class="form-floating">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="floatingInput"
-                        placeholder="ID를 입력하세요."
-                        style="margin-top: 0px;margin-bottom: 10px;">
-
-                </div>
-                <div class="form-floating">
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="floatingPassword"
-                        placeholder="Password">
-
-                </div>
-
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me">
-                        아이디 저장
-                    </label>
-                </div>
-                <button class="w-50 mb-3 btn btn-lg btn-primary" id="loginBtn" type="submit">로그인</button>
-            </form>
-
-            <button class="mb-3 btn btn-sm btn-primary" id="findId" href="C:\Users\User\Desktop\toClass--\springEx\src\main\webapp\WEB-INF\views\member\google_login.html" >ID 찾기</button>
-            <button class="mb-3 btn btn-sm btn-primary" id="findPw" >PW 찾기</button>
-            <button class="mb-3 btn btn-sm btn-primary" onclick="location.href='signup.html';" >회원가입</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
-            
-            
-            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      }
-    </script>
-        </main>
-
-      <div class="modal fade" id="findIdModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">ID 찾기</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <label for="userNameById" class="col-3 control-label">이름</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control onlyHangul userName" id="userNameById" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label for="userPhoneNumById" class="col-3 control-label">휴대폰 번호</label>
-                            <div class="col-9">
-                                <input type="tel" class="form-control onlyNumber userPhoneNum" id="userPhoneNumById" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="findIdBtn">찾기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                    </div>
-                </div>/.modal-content
-            </div>/.modal-dialog
-        </div>/.modal -->
-
-        <div class="modal fade" id="findPwModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">PW 찾기</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <label for="userID" class="col-lg-3 control-label">아이디</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control onlyHangul" id="userID" data-rule-required="true" placeholder="아이디를 입력하세요." maxlength="15">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label for="userNameByPw" class="col-lg-3 control-label">이름</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control onlyHangul userName" id="userNameByPw" data-rule-required="true" placeholder="한글만 입력 가능합니다." maxlength="15">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <label for="userPhoneNumByPw" class="col-lg-3 control-label">휴대폰 번호</label>
-                            <div class="col-lg-9">
-                                <input type="tel" class="form-control onlyNumber userPhoneNum" id="userPhoneNumByPw" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="findPwBtn">찾기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-        <script src="http://code.jquery.com/jquery.js"></script>
-
-        <!--<script>
-            $(function() {
-                $("#findId").click(function() {
-                    $("#findIdModal").modal("show");
-                    $("#userNameById").val('');
-                    $("#userPhoneNumById").val('');
-                });
-
-                $("#findPw").click(function() {
-                    $("#findPwModal").modal("show");
-                    $("#userID").val('');
-                    $("#userNameByPw").val('');
-                    $("#userPhoneNumByPw").val('');
-                });
-
-                $("#findIdBtn").click(function() {
-                    var userNm = $("#userNameById").val();
-                    var userPhoneNum = $("#userPhoneNumById").val();
-                    alert("name:" + userNm + "\nnum:" + userPhoneNum);
-                });
-
-                $("#findPwBtn").click(function() {
-                    var userId = $("#userID").val();
-                    var userNm = $("#userNameByPw").val();
-                    var userPhoneNum = $("#userPhoneNumByPw").val();
-                    alert("Id: " + userId + "\nname: " + userNm + "\nnum: " + userPhoneNum);
-                });
-
-                $("#loginBtn").click(function() {
-                    var inputId = $("#floatingInput").val();
-                    var inputPw = $("#floatingPassword").val();
-
-                    if(inputId == '' || inputPw == '') {
-                        alert('ID / Password 를 확인해주세요.');
-                    } else {
-                        return;
-                    }
-                    event.preventDefault();
-                });
-            });
-        </script>-->
-
-    </body>
-    
-</html> 
-  
- --%>

@@ -9,4 +9,9 @@
 	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
 	</definition>
 	
+	<definition name="/attendance/attendance2" extends="baseLayout">
+	      <put-attribute name="title" value="출결입력" />
+	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance2.jsp" />
+	</definition>
+	
 </tiles-definitions>
