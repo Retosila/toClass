@@ -1,7 +1,10 @@
 package com.bbt.toclass.attendance.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,6 +79,25 @@ public class AttendanceControllerImpl implements AttendanceController{
 		return mav;
 	}
 	
-	
+	//오늘 날짜를 기준으로 월~금의 날짜 가져와서 arraylist에 값 넣기 
+		private ArrayList<String> WeekDay() {
+			
+			//오늘날짜
+			SimpleDateFormat sdf = new SimpleDateFormat("MM.dd",Locale.KOREAN);
+			String time = sdf.format(System.currentTimeMillis());
+			Calendar cal = Calendar.getInstance();
+			//cal.setTime(date);
+			ArrayList<String> day = new ArrayList<String>();
+			for(int i=2;i<7;i++) {
+				cal.add(Calendar.DATE, i- cal.get(Calendar.DAY_OF_WEEK));
+				String w_day = sdf.format(cal.getTime());
+				day.add(w_day);
+				//cal.add(Calendar.DATE, 6- cal.get(Calendar.DAY_OF_WEEK));
+				//return sdf.format(cal.getTime());			
+			}
+			System.out.println(day);
+			return day;
+
+		}
 
 }
