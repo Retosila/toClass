@@ -23,7 +23,7 @@
 			to_char(schedule_start, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_start,
 			to_char(schedule_end, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_end,
 			schedule_allday,
-			schedule_content, schedule_writer, member_email
+			schedule_content, schedule_writer, member_email, schedule_forall
 		from calendar_schedule
 		where member_email=#{member_email}
 	]]>
