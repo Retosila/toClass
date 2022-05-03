@@ -14,26 +14,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76"
-          href="./assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
-    <title></title>
-    <!--     Fonts and icons     -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
-            rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-          rel="stylesheet">
-    <!-- Nucleo Icons -->
-    <link href="${contextPath}/assets/css/nucleo-icons.css" rel="stylesheet"/>
-    <link href="${contextPath}/assets/css/nucleo-svg.css" rel="stylesheet"/>
-    <!-- Font Awesome Icons -->
-    <link href="${contextPath}/assets/css/font-awesome.css" rel="stylesheet"/>
-    <link href="${contextPath}/assets/css/nucleo-svg.css" rel="stylesheet"/>
-    <!-- CSS Files -->
-    <link href="${contextPath}/assets/css/argon-design-system.css?v=1.2.2"
-          rel="stylesheet"/>
 
+    <title>q</title>
+
+    <script src="${contextPath}/assets/js/paginate.js"
+            type="text/javascript"></script>
     <script>
         function fn_articleForm(logOn, articleForm, login) {
             if (logOn != '' && logOn != 'false') {
@@ -44,11 +29,16 @@
             }
         }
     </script>
-
+    <link href="${contextPath}/assets/css/ligne.css" rel="stylesheet"/>
+    <link href="${contextPath}/assets/css/paginate.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="container pt-lg-5 pb-lg-5" align="center">
-    <table class="table">
+
+
+<div class="container pt-lg-5 pb-lg-5">
+
+
+    <table class="myTable table hover">
         <thead>
         <tr>
             <th>번호</th>
@@ -61,6 +51,7 @@
 
         </tr>
         </thead>
+        <tbody>
         <c:choose>
             <c:when test="${empty articlesList  }">
                 <tr height="10">
@@ -101,78 +92,37 @@
             </c:when>
         </c:choose>
 
-
+        </tbody>
     </table>
 
-    <hr style="margin-top: 0px;margin-bottom: 3px;">
-
-
-    <div class="form-group row">
-        <div class="input-group input-group-alternative col-2" style="padding-right: 0px;padding-left: 0px;">
-            <div class="input-group-prepend">
-					<span class="input-group-text"><i
-                            class="ni ni-zoom-split-in"></i></span>
-            </div>
-            <input class="form-control" placeholder="검색" type="text">
-        </div>
-
-
-        <div class="col-10" align="right">
-            <a
-            <%--href="javascript:fn_articleForm('${LogOn}','${contextPath}/board/articleForm.do','${contextPath}/member/loginForm.do')">--%>
-                    href="javascript:fn_articleForm('${logOn}','${contextPath}/board/articleForm.do','${contextPath}/login')">
-                <button type="button" class="btn btn-default btn-round ">글쓰기</button>
-            </a>
-        </div>
+    <div class="input-group col-1">
+    <input type="search" id="searchBox" placeholder="검색">
     </div>
+    <div class="col-12" align="right">
 
-
-    <ul class="pagination pagination-sm col-3">
-        <li class="page-item"><a class="page-link" href="javascript:;"><i
-                class="fa fa-angle-left"></i></a></li>
-        <li class="page-item"><a class="page-link" href="javascript:;">1</a>
-        </li>
-        <li class="page-item active"><a class="page-link"
-                                        href="javascript:;">2</a></li>
-        <li class="page-item"><a class="page-link" href="javascript:;">3</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="javascript:;">4</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="javascript:;">5</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="javascript:;"><i
-                class="fa fa-angle-right"></i></a></li>
-    </ul>
+        <a href="javascript:fn_articleForm('${logOn}','${contextPath}/board/articleForm.do','${contextPath}/login')">
+            <button type="button" class="btn btn-default btn-round ">글쓰기</button>
+        </a>
+    </div>
 </div>
 
 
-<script href="${contextPath}/assets/js/core/jquery.min.js"
-        type="text/javascript"></script>
-<script href="${contextPath}/assets/js/core/popper.min.js"
-        type="text/javascript"></script>
-<script href="${contextPath}/assets/js/core/bootstrap.min.js"
-        type="text/javascript"></script>
-<script
-        href="${contextPath}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script href="${contextPath}/assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script href="${contextPath}/assets/js/plugins/nouislider.min.js"
-        type="text/javascript"></script>
-<script href="${contextPath}/assets/js/plugins/moment.min.js"></script>
-<script href="${contextPath}/assets/js/plugins/datetimepicker.js"
-        type="text/javascript"></script>
-<script
-        href="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
-<!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<script
-        href="${contextPath}/assets/js/argon-design-system.min.js?v=1.2.2"
-        type="text/javascript"></script>
 
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 
+<script>
+
+    let options = {
+        numberPerPage: 5, //Cantidad de datos por pagina
+        goBar: true, //Barra donde puedes digitar el numero de la pagina al que quiere ir
+        pageCounter: true, //Contador de paginas, en cual estas, de cuantas paginas
+    };
+
+    let filterOptions = {
+        el: '#searchBox' //Caja de texto para filtrar, puede ser una clase o un ID
+    };
+
+    paginate.init('.myTable', options, filterOptions);
+</script>
 </body>
 </html>
 

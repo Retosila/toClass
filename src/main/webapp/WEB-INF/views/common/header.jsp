@@ -13,10 +13,8 @@ request.setCharacterEncoding("UTF-8");
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="apple-touch-icon" sizes="76x76"
-	href="./assets/img/apple-icon.png">
-<link rel="icon" type="image/png" href="./assets/img/favicon.png">
-<title>Argon Design System by Creative Tim</title>
+
+<title>header</title>
 <!--     Fonts and icons     -->
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -195,111 +193,9 @@ request.setCharacterEncoding("UTF-8");
 <script
 	src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
 <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <script
 	src="${contextPath}/assets/js/argon-design-system.min.js?v=1.2.2"
 	type="text/javascript"></script>
-<script>
-	function scrollToDownload() {
 
-		if ($('.section-download').length != 0) {
-			$("html, body").animate({
-				scrollTop : $('.section-download').offset().top
-			}, 1000);
-		}
-	}
-	/*
-	var siteSticky = function() {
-		$(".js-sticky-header").sticky({topSpacing:0});
-	};
-	siteSticky();
-
-	var siteMenuClone = function() {
-
-		$('.js-clone-nav').each(function() {
-			var $this = $(this);
-			$this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
-		});
-
-
-		setTimeout(function() {
-
-			var counter = 0;
-	  $('.site-mobile-menu .has-children').each(function(){
-	    var $this = $(this);
-
-	    $this.prepend('<span class="arrow-collapse collapsed">');
-
-	    $this.find('.arrow-collapse').attr({
-	      'data-toggle' : 'collapse',
-	      'data-target' : '#collapseItem' + counter,
-	    });
-
-	    $this.find('> ul').attr({
-	      'class' : 'collapse',
-	      'id' : 'collapseItem' + counter,
-	    });
-
-	    counter++;
-
-	  });
-
-	}, 1000);
-
-		$('body').on('click', '.arrow-collapse', function(e) {
-	  var $this = $(this);
-	  if ( $this.closest('li').find('.collapse').hasClass('show') ) {
-	    $this.removeClass('active');
-	  } else {
-	    $this.addClass('active');
-	  }
-	  e.preventDefault();
-
-	});
-
-		$(window).resize(function() {
-			var $this = $(this),
-				w = $this.width();
-
-			if ( w > 768 ) {
-				if ( $('body').hasClass('offcanvas-menu') ) {
-					$('body').removeClass('offcanvas-menu');
-				}
-			}
-		})
-
-		$('body').on('click', '.js-menu-toggle', function(e) {
-			var $this = $(this);
-			e.preventDefault();
-
-			if ( $('body').hasClass('offcanvas-menu') ) {
-				$('body').removeClass('offcanvas-menu');
-				$this.removeClass('active');
-			} else {
-				$('body').addClass('offcanvas-menu');
-				$this.addClass('active');
-			}
-		})
-
-		// click outisde offcanvas
-		$(document).mouseup(function(e) {
-	    var container = $(".site-mobile-menu");
-	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-	      if ( $('body').hasClass('offcanvas-menu') ) {
-					$('body').removeClass('offcanvas-menu');
-				}
-	    }
-		});
-	};
-	siteMenuClone();*/
-</script>
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-<script>
-	window.TrackJS && TrackJS.install({
-		token : "ee6fab19c5a04ac1a32a645abde4613a",
-		application : "argon-design-system-pro"
-	});
-</script>
 </body>
 </html>

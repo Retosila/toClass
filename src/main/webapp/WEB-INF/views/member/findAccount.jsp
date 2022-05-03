@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>계정 찾기 페이지(/member/findAccount.jsp)</title>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <script>
 
 	var phoneRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;	// 핸드폰 번호 정규식

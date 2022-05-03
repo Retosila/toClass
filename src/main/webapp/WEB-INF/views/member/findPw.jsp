@@ -10,8 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기 페이지(/member/findPw.jsp)</title>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
+
 
 	var emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/; 	// 이메일 정규식
 	var member_email;	// 사용자가 입력한 이메일
