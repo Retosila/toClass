@@ -9,6 +9,7 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	 
 	<properties>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<java-version>1.8</java-version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
@@ -163,7 +164,7 @@
 			<artifactId>OracleDriver</artifactId>
 			<version>12.1.0.2.0</version>
 			<scope>system</scope>
-			<systemPath>D:\workspace\toClass\src\main\webapp\WEB-INF\lib\ojdbc6.jar</systemPath>
+			<systemPath>C:\Users\solvi\eclipse-workspace\toClass\src\main\webapp\WEB-INF\lib\ojdbc6.jar</systemPath>
 		</dependency>
 		
 		<!-- 타일즈 관련 라이브러리 -->

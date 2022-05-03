@@ -39,7 +39,9 @@
 <a href="${contextPath}/member/findAccount">계정 찾기</a>
 <a href="${contextPath}/member/findPw">비밀번호 찾기</a>
 <a href="${contextPath}/member/register_0">회원가입</a> 
-	
+
+
+
 </form>
 
 </body>
