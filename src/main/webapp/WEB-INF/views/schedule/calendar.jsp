@@ -153,9 +153,17 @@ request.setCharacterEncoding("UTF-8");
         	},
         	// 일정 블록 클릭 시 : dateClick과 동일한 로직
         	eventClick : function(info) {
+      			// 기존 모달창에 있던 데이터 제거
       			$(".eventBlock").remove();
-      			var thisDate = info.event.start;
+      			// 매개변수로부터 클릭한 일자블록의 날짜정보를 받아옴
+      			var temp = info.event.start;
+      			console.log(temp);
+      			var temp2 = temp.getFullYear() + "-" + ('00' + (temp.getMonth()+1)).slice(-2) + "-" + ('00' + temp.getDate()).slice(-2);
+      			console.log(temp2);
+      			var thisDate = to_date(temp2);
+      			// 클릭한 일자의 일정 정보를 담을 배열 
       			var thisEventList = [];
+      			// 이벤트 배열에서 해당 일자의 이벤트만 추출한 후, thisEventList 배열에 저장
       			for (var i = 0; i < myEvents.length; i++) {
           			var thisStart = to_date(myEvents[i].start.substr(0,10));
           			var thisEnd = to_date(myEvents[i].end.substr(0,10));
@@ -164,36 +172,58 @@ request.setCharacterEncoding("UTF-8");
       					console.log("일정 추출 : " + myEvents[i].title);
       				}
       			}
+      			console.log((thisDate.getMonth()+1) + "월 " + thisDate.getDate() + "일자 일정 추출 완료");
+      			console.log(thisEventList);
+      			
+      			// 추출할 일정 eventBlock에 출력
       			for (var i = 0; i < thisEventList.length; i++) {
+      				// start, end에서 HH24:MI 정보만 추출, HH24:MI - HH24:MI 형식으로 변환
       				var start = thisEventList[i].start.substr(11, 5);
       				var end = thisEventList[i].end.substr(11, 5);
       				var time = start + " - " + end;
+      				console.log(time);
+      				
+      				// eventBlock 객체 생성. eb-i로 채번
           			var eventBlock = $("<article class='eventBlock eb-" + i + "' style='height:auto;'></article>");
           			var details_title = $("<span class='details_title'>" + thisEventList[i].title + "</span><br>");
           			var details_time = $("<span class='details_time'>" + time + "</span><br>");
           			var details_writer = $("<span class='details_writer'>" + thisEventList[i].schedule_writer + "</span><br>");
           			var details_content = $("<span class='details_content'>" + thisEventList[i].schedule_content + "</span><br>");
     				var deleteButton = $("<button class='eventBlockClose'>삭제</button>");
-    				var deleteAll = $("<br>일괄삭제<input id='isForAllDelete' name='isForAllDelete' value='true' type='checkbox' checked/>");
+    				var deleteAll = $("<br>일괄삭제<input class='isForAllDelete' name='isForAllDelete' value='true' type='checkbox' checked/>");
+    				// 일정 id 저장용
+    				var eventId = $("<input class='eventId' value='" + thisEventList[i].id + "' style='display:none';/>");
+    				
+          			// 일정 세부 정보를 담은 eventBlock 추가
           			$("#eventBlockContainer").append(eventBlock);
           			$(".eb-"+i).append(details_title);
           			$(".eb-"+i).append(details_time);
           			$(".eb-"+i).append(details_writer);
+          			// 일정 내용이 존재하는 경우에만 append
           			if (thisEventList[i].schedule_content != "") {
     	      			$(".eb-"+i).append(details_content);
         			}
           			$(".eb-"+i).append(deleteButton);
+          			
+          			// 교사 회원 & forAll이 true일 시 일괄삭제 옵션 추가
           			var forAll = thisEventList[i].forAll;
           			if (forAll == true && ${member.member_type eq '교사'}) {
     	      			$(".eb-"+i).append(deleteAll);
           			}
+          			$(".eb-"+i).append(eventId);
       			}
-      			$("#eventStartDate").val(thisDate.toString());
+      			
+      			// 선택된 일자 블록에 따라 일정 추가창의 날짜값 할당
+      			$("#eventStartDate").val(info.dateStr);
       			$("#eventStartTime").val("09:00");
-      			$("#eventEndDate").val(thisDate.toString());
+      			$("#eventEndDate").val(info.dateStr);
       			$("#eventEndTime").val("09:00");
+      			
+      			// #eventModalDate의 날짜값 할당
       			$("#details_yyyy_mm").text(thisDate.getFullYear() + "년 " + (thisDate.getMonth()+1) + "월");
       			$("#details_dd").text(thisDate.getDate() + "일");
+      			
+      			// getDay값이 0~6으로 나오기에, switch문을 써서 한글날짜로 변환
       			var day = thisDate.getDay();
       			switch (day)  {
       			case 0 : $("#details_day").text("일요일"); break;
@@ -205,6 +235,8 @@ request.setCharacterEncoding("UTF-8");
       			case 6 : $("#details_day").text("토요일"); break;
       			default : console.log("알 수 없는 요일입니다");
       			}
+      			
+      			// 모달창 띄우기 
     	        $("#eventModal").show();
     	        $("body").append('<div class="modalBackground"></div>');
         	},
@@ -218,7 +250,8 @@ request.setCharacterEncoding("UTF-8");
 						"member_email" : "${member.member_email}"
 					},
 					success: function(data) {
-						successCallback(data)
+						
+						successCallback(data);
 						console.log("event fetch 완료");
 						console.log(data);
 						myEvents = data;
@@ -237,8 +270,11 @@ request.setCharacterEncoding("UTF-8");
 			},
 			// 일정 블록을 블럭모양으로 출력
 			eventDisplay : 'block',
-			// 일정 블록에 시간 표시 안함
-			displayEventTime : 'false'
+			// allDay시 날짜가 -1되는 이슈 해결을 위해 allDay의 default를 false로 두고, 이벤트 렌더링 후 일정시간 div을 없앰
+			eventDidMount : function() {
+				$(".fc-event-time").remove();
+			}
+
     	});
 		// 풀캘린더 렌더
     	calendar.render();
@@ -282,6 +318,8 @@ request.setCharacterEncoding("UTF-8");
     		var title = $("#eventTitle").val();
     		var start = $("#eventStartDate").val() + " " + $("#eventStartTime").val();
     		var end = $("#eventEndDate").val() + " " + $("#eventEndTime").val();
+    		console.log(start);
+    		console.log(end);
     		var schedule_content = $("#eventContent").val();
     		var schedule_writer = "${member.member_name}";
     		var member_email = "${member.member_email}";
@@ -325,9 +363,17 @@ request.setCharacterEncoding("UTF-8");
     	
     	// 일정 삭제 버튼은 동적으로 생성된 DOM이기에 아래와 같은 방식으로 써주지않으면 인식 못함
     	$(document).on("click", ".eventBlockClose", function() {
+    		var thisEventBlock = $(this).parent();
     		// 삭제버튼이 속한 eventBlock의 일정 id값을 추출
-    		var id = $(this).parent().children(".eventId").val();
+    		var id = thisEventBlock.children(".eventId").val();
+    		var isForAllDelete = thisEventBlock.children(".isForAllDelete").val();
+    		console.log(isForAllDelete);
+    		
+    		if (isForAllDelete == undefined) {
+    			isForAllDelete = "false";
+    		}
     		console.log(id);
+    		console.log(isForAllDelete);
      		var cmd = confirm("일정을 삭제하시겠습니까?");
      		if (cmd == true) {
     			$.ajax({
@@ -335,10 +381,13 @@ request.setCharacterEncoding("UTF-8");
     				type: 'POST',
     				dataType: 'text',
     				data: {
-    					"id" : id
+    					"id" : id,
+    					"isForAllDelete" : isForAllDelete 
     				},
     				success: function(msg) {
     					console.log(msg);
+    					// 삭제된 일정의 이벤트 블록 제거 
+    	    			thisEventBlock.remove();
     	    			// 캘린더 일정 정보 갱신
     	    			calendar.refetchEvents();
     				},
