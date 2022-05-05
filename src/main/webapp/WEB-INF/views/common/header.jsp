@@ -37,16 +37,13 @@ request.setCharacterEncoding("UTF-8");
 <nav id="navbar-main"
 	class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
 	<div class="container" stlye="text-align: left;">
-	
-	
-	<div class="navbar-brand " onclick="location.href=${contextPath}/" style="color:#0065FF; font-family:'Product sans bold';">
-	
+
+	<div class="navbar-brand " href="${contextPath}/main.do" style="color:#0065FF; font-family:'Product sans bold';">
+
 	<i class="ni ni-chat-round"></i>
 	<a>to</a><a style="font-size:1px">Cla</a><a>ss</a>
-	
+
 	</div>
-	
-	
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbar_global" aria-controls="navbar_global"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -68,14 +65,16 @@ request.setCharacterEncoding("UTF-8");
 					</div>
 				</div>
 			</div>
-			
+
 
 				<ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
 					<li class="nav-item dropdown">
 					<a href="#" class="nav-link"
+
 						data-toggle="dropdown" href="#" role="button"> 
 						<i class="ni ni-collection d-lg-none"></i> 
+
 							<span class="nav-link-inner--text">출결</span>
 					</a>
 						<div class="dropdown-menu">
@@ -116,7 +115,9 @@ request.setCharacterEncoding("UTF-8");
 							class="nav-link-inner--text">일정</span>
 					</a>
 						<div class="dropdown-menu">
+
 							<a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
+
 							<a href="./examples/profile.html" class="dropdown-item">수업시간표</a>
 							<a href="./examples/login.html" class="dropdown-item">알림장</a> <a
 								href="./examples/register.html" class="dropdown-item">식단표</a>
@@ -140,12 +141,11 @@ request.setCharacterEncoding("UTF-8");
 						</div></li>
 				</ul>
 
-				
-			
 
 <hr>
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
+
 					<c:when test="${logOn == true  && member!= null}">
 						<li class="nav-item">
 							<a class="nav-link" href="${contextPath}/member/info">내 정보
@@ -157,12 +157,15 @@ request.setCharacterEncoding("UTF-8");
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
+
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/memberForm.do">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/login">로그인</a>
+
+							href="${contextPath}/member/loginForm.do">로그인</a>
+
 					</c:otherwise>
 				</c:choose>
 
@@ -182,10 +185,12 @@ request.setCharacterEncoding("UTF-8");
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="${contextPath}/assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+
 <!-- 
 <script src="${contextPath}/assets/js/plugins/jquery.sticky.js"
 	type="text/javascript"></script>
 	 -->
+
 <script src="${contextPath}/assets/js/plugins/nouislider.min.js"
 	type="text/javascript"></script>
 <script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
@@ -193,6 +198,7 @@ request.setCharacterEncoding("UTF-8");
 	type="text/javascript"></script>
 <script
 	src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
+
 <script>
 	function scrollToDownload() {
 
@@ -202,6 +208,91 @@ request.setCharacterEncoding("UTF-8");
 			}, 1000);
 		}
 	}
+
+	/*
+	var siteSticky = function() {
+		$(".js-sticky-header").sticky({topSpacing:0});
+	};
+	siteSticky();
+
+	var siteMenuClone = function() {
+
+		$('.js-clone-nav').each(function() {
+			var $this = $(this);
+			$this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
+		});
+
+
+		setTimeout(function() {
+
+			var counter = 0;
+	  $('.site-mobile-menu .has-children').each(function(){
+	    var $this = $(this);
+
+	    $this.prepend('<span class="arrow-collapse collapsed">');
+
+	    $this.find('.arrow-collapse').attr({
+	      'data-toggle' : 'collapse',
+	      'data-target' : '#collapseItem' + counter,
+	    });
+
+	    $this.find('> ul').attr({
+	      'class' : 'collapse',
+	      'id' : 'collapseItem' + counter,
+	    });
+
+	    counter++;
+
+	  });
+
+	}, 1000);
+
+		$('body').on('click', '.arrow-collapse', function(e) {
+	  var $this = $(this);
+	  if ( $this.closest('li').find('.collapse').hasClass('show') ) {
+	    $this.removeClass('active');
+	  } else {
+	    $this.addClass('active');
+	  }
+	  e.preventDefault();
+
+	});
+
+		$(window).resize(function() {
+			var $this = $(this),
+				w = $this.width();
+
+			if ( w > 768 ) {
+				if ( $('body').hasClass('offcanvas-menu') ) {
+					$('body').removeClass('offcanvas-menu');
+				}
+			}
+		})
+
+		$('body').on('click', '.js-menu-toggle', function(e) {
+			var $this = $(this);
+			e.preventDefault();
+
+			if ( $('body').hasClass('offcanvas-menu') ) {
+				$('body').removeClass('offcanvas-menu');
+				$this.removeClass('active');
+			} else {
+				$('body').addClass('offcanvas-menu');
+				$this.addClass('active');
+			}
+		})
+
+		// click outisde offcanvas
+		$(document).mouseup(function(e) {
+	    var container = $(".site-mobile-menu");
+	    if (!container.is(e.target) && container.has(e.target).length === 0) {
+	      if ( $('body').hasClass('offcanvas-menu') ) {
+					$('body').removeClass('offcanvas-menu');
+				}
+	    }
+		});
+	};
+	siteMenuClone();*/
 
 </script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
