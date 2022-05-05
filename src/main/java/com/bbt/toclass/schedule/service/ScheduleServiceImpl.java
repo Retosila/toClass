@@ -1,6 +1,7 @@
 package com.bbt.toclass.schedule.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +48,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 	
-	public int delSchedule(String id) throws Exception{
+	public int delSchedule(Map<String, String> param) throws Exception{
 		logger.info("DAO에 일정 삭제 요청");
-		return scheduleDAO.delSchedule(id);
+		return scheduleDAO.delSchedule(param);
 	}
 	
 	

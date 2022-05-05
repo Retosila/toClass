@@ -15,6 +15,7 @@
         <result property="schedule_writer" column="schedule_writer" />
         <result property="member_email" column="member_email" />
         <result property="forAll" column="schedule_forall" />
+        <result property="schedule_parent_id" column="schedule_parent_id" />
 	</resultMap> 
 
   <select id="getScheduleByEmail"  resultMap="scheduleResult" parameterType="String">
@@ -43,30 +44,55 @@
   <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
 	<![CDATA[
 		select member_email
-		from (select m.member_email, class_id
+		from (select m.member_email, i.class_id, m.member_type
 		        from member m, info i
 		        where m.member_email = i.member_email)
-		where class_id = #{class_id}
+		where class_id = #{class_id} and member_type <> '교사'
+	]]>
+  </select>
+  
+  <select id="getRecentScheduleIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select schedule_id
+		from (select *from calendar_schedule where member_email = #{member_email} order by schedule_regdate desc)
+		where rownum = 1
 	]]>
   </select>
   
   <insert id="addScheduleByEmail"  parameterType="scheduleVO">
-	<![CDATA[
-		insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
-    		schedule_start, schedule_end, member_email, schedule_writer, schedule_forall)
-		values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
-    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
-    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
-    		#{member_email}, #{schedule_writer}, #{forAll})
-	]]>
+   		<choose>
+   			<when test="schedule_parent_id != null">
+  				insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
+	    			schedule_start, schedule_end, member_email, schedule_writer, schedule_forall, schedule_parent_id)
+				values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
+		    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
+		    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
+		    		#{member_email}, #{schedule_writer}, #{forAll}, #{schedule_parent_id})
+   			</when>
+			<otherwise>
+			  	insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
+		    		schedule_start, schedule_end, member_email, schedule_writer, schedule_forall)
+				values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
+		    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
+		    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
+		    		#{member_email}, #{schedule_writer}, #{forAll})
+			</otherwise>   			
+   		</choose>
   </insert>
   
-  <delete id="delScheduleByScheduleId"  parameterType="String">
-	<![CDATA[
+  <delete id="delScheduleByScheduleId" parameterType="hashMap">
 		delete from calendar_schedule
-		where schedule_id=#{id}
-	]]>
+		where schedule_id = #{id}
+		<if test="isForAllDelete eq 'true'">
+			OR schedule_parent_id = #{id}
+		</if>
   </delete>
   
+  <!--
+  id를 기준으로 등록시점이 같은 일정 일괄 선택 
+	select schedule_id
+  	from calendar_schedule
+  	where schedule_regdate = (select schedule_regdate from calendar_schedule where schedule_id = #{id})
+   -->
   
 </mapper>

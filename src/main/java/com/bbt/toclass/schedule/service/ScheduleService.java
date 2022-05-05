@@ -1,6 +1,7 @@
 package com.bbt.toclass.schedule.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bbt.toclass.schedule.vo.ScheduleVO;
 
@@ -11,7 +12,7 @@ public interface ScheduleService {
 	
 	int addSchedule(ScheduleVO newSchedule) throws Exception;
 	
-	int delSchedule(String id) throws Exception;
+	int delSchedule(Map<String, String> param) throws Exception;
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.bbt.toclass.schedule.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -42,11 +43,17 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		
 		// 조회된 학급 정보가 존재할 시 해당 회원과 class_id가 같은 회원들을 일괄 조회
 		if (class_id != null) {
-			int result = 0;
+			int result = 1;
+			// 먼저 교사 계정에서 일정 추가
+			addSchedule(newSchedule);
+			// 교사가 추가한 일정의 id 추출
+			String teacher_schedule_id = sqlSession.selectOne("mapper.schedule.getRecentScheduleIdByEmail", member_email);
+			// 교사가 담당하고 있는 학급의 학생 이메일 정보만 추출
 			List<String> list = sqlSession.selectList("mapper.schedule.getClassMemberEmailByClassId", class_id);
 			for (String email : list) {
 				ScheduleVO sch = newSchedule;
 				sch.setMember_email(email);
+				sch.setSchedule_parent_id(teacher_schedule_id);
 				addSchedule(sch);
 				result += 1;
 			}
@@ -59,9 +66,9 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		
 	}
 	
-	public int delSchedule(String id) throws DataAccessException {
-		logger.info("myBatis에게 쿼리 요청 : delScheduleByScheduleId : " + id);
-		int result = sqlSession.delete("mapper.schedule.delScheduleByScheduleId", id);
+	public int delSchedule(Map<String, String> param) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : delScheduleByScheduleId : " + param.get("id") + " : 일괄 삭제 여부 : " + param.get("isForAllDelete"));
+		int result = sqlSession.delete("mapper.schedule.delScheduleByScheduleId", param);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
 		logger.info(result + " 개의 일정 정보 삭제 완료");
 		return result;

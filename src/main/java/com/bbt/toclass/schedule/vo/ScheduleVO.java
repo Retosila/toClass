@@ -16,6 +16,7 @@ public class ScheduleVO {
 	private String schedule_content;
 	private String schedule_writer;
 	private String member_email;
+	private String schedule_parent_id;
 	
 	// getter ~ setter
 	
@@ -72,6 +73,12 @@ public class ScheduleVO {
 	}
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
+	}
+	public String getSchedule_parent_id() {
+		return schedule_parent_id;
+	}
+	public void setSchedule_parent_id(String schedule_parent_id) {
+		this.schedule_parent_id = schedule_parent_id;
 	}
 	
 }

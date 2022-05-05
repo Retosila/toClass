@@ -1,6 +1,7 @@
 package com.bbt.toclass.schedule.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -14,5 +15,5 @@ public interface ScheduleDAO {
 	
 	int addScheduleAll(ScheduleVO newSchedule) throws DataAccessException;
 	
-	int delSchedule(String id) throws DataAccessException;
+	int delSchedule(Map<String, String> param) throws DataAccessException;
 }

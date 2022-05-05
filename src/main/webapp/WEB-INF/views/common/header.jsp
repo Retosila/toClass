@@ -116,7 +116,7 @@ request.setCharacterEncoding("UTF-8");
 							class="nav-link-inner--text">일정</span>
 					</a>
 						<div class="dropdown-menu">
-							<a href="./examples/landing.html" class="dropdown-item">학사캘린더</a>
+							<a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
 							<a href="./examples/profile.html" class="dropdown-item">수업시간표</a>
 							<a href="./examples/login.html" class="dropdown-item">알림장</a> <a
 								href="./examples/register.html" class="dropdown-item">식단표</a>
@@ -147,11 +147,16 @@ request.setCharacterEncoding("UTF-8");
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
 					<c:when test="${logOn == true  && member!= null}">
-						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/logout.do">로그아웃 <span
-								class="sr-only">(current)</span>
-						</a></li>
-
+						<li class="nav-item">
+							<a class="nav-link" href="${contextPath}/member/info">내 정보
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="${contextPath}/member/logout.do">로그아웃
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link"
@@ -166,17 +171,6 @@ request.setCharacterEncoding("UTF-8");
 	</div>
 </nav>
 
-<button id="logout" type="button" onclick="location.href='${contextPath}/login'">메인화면</button>
-<button id="logout" type="button" onclick="location.href='${contextPath}/member/info'">내정보</button>
-<button id="logout" type="button" onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button>
-<br>
-<br>
-<a href="${contextPath}/schedule/calendar">일정</a>
-
-
-
-
-
 <script src="${contextPath}/assets/js/core/jquery.min.js"
 	type="text/javascript"></script>
 <script src="${contextPath}/assets/js/core/popper.min.js"
@@ -188,8 +182,10 @@ request.setCharacterEncoding("UTF-8");
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="${contextPath}/assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<!-- 
 <script src="${contextPath}/assets/js/plugins/jquery.sticky.js"
 	type="text/javascript"></script>
+	 -->
 <script src="${contextPath}/assets/js/plugins/nouislider.min.js"
 	type="text/javascript"></script>
 <script src="${contextPath}/assets/js/plugins/moment.min.js"></script>

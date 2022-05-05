@@ -124,9 +124,10 @@ public class ScheduleControllerImpl implements ScheduleController {
 		String schedule_content = (String)param.get("schedule_content");
 		String schedule_writer = (String)param.get("schedule_writer");
 		String member_email = (String)param.get("member_email");
+		String forAllCheck = (String)param.get("isForAll");
 		boolean isForAll = false;
 		
-		if ((String)param.get("isForAll") != null) {
+		if (forAllCheck.equals("true")) {
 			isForAll = true;
 		}
 		else {
@@ -177,10 +178,12 @@ public class ScheduleControllerImpl implements ScheduleController {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String id = (String)param.get("id");
+		String isForAllDelete = (String)param.get("isForAllDelete");
 		logger.info("일정 삭제 요청 : " + id);
+		logger.info("일괄 삭제 여부  : " + isForAllDelete);
 		
 		// 일정 정보 삭제 로직 실행
-		int result = scheduleService.delSchedule(id);
+		int result = scheduleService.delSchedule(param);
 		
 		// delete한 레코드의 개수값을 response해줌
 		if (result > 0) {
