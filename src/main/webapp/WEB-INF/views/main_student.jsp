@@ -11,9 +11,6 @@
 <meta charset="UTF-8">
 <title>학생 메인페이지(main_student.jsp)</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-
-</script>
 </head>
 <body>
 <h3>${member.member_name} 학우님 환영합니다!</h3>

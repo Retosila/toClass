@@ -2,11 +2,20 @@
 <!DOCTYPE tiles-definitions PUBLIC
 "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-<tiles-definitions>
-	<definition name="attendance" extends="baseLayout">
-	      <put-attribute name="title" value="글목록창" />
-	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
-	</definition>
 
+
+   <!-- 사이트의 기본 레이아웃. 헤더, 사이드바, 푸터를 공통으로 가지며, title과 body 부분만 변경하도록 한다.-->
+   <definition name="baseLayout"  template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+
+   <definition name="attendance" extends="baseLayout">
+      <put-attribute name="title" value="출석" />
+      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
+   </definition>
+    
 
 </tiles-definitions>

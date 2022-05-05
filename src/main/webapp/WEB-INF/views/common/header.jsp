@@ -38,15 +38,12 @@ request.setCharacterEncoding("UTF-8");
 	class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
 	<div class="container" stlye="text-align: left;">
 
-
 	<div class="navbar-brand " href="${contextPath}/main.do" style="color:#0065FF; font-family:'Product sans bold';">
 
 	<i class="ni ni-chat-round"></i>
 	<a>to</a><a style="font-size:1px">Cla</a><a>ss</a>
 
 	</div>
-
-
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbar_global" aria-controls="navbar_global"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -74,8 +71,10 @@ request.setCharacterEncoding("UTF-8");
 
 					<li class="nav-item dropdown">
 					<a href="#" class="nav-link"
-						data-toggle="dropdown" href="#" role="button">
-						<i class="ni ni-collection d-lg-none"></i>
+
+						data-toggle="dropdown" href="#" role="button"> 
+						<i class="ni ni-collection d-lg-none"></i> 
+
 							<span class="nav-link-inner--text">출결</span>
 					</a>
 						<div class="dropdown-menu">
@@ -116,7 +115,9 @@ request.setCharacterEncoding("UTF-8");
 							class="nav-link-inner--text">일정</span>
 					</a>
 						<div class="dropdown-menu">
-							<a href="./examples/landing.html" class="dropdown-item">학사캘린더</a>
+
+							<a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
+
 							<a href="./examples/profile.html" class="dropdown-item">수업시간표</a>
 							<a href="./examples/login.html" class="dropdown-item">알림장</a> <a
 								href="./examples/register.html" class="dropdown-item">식단표</a>
@@ -141,23 +142,30 @@ request.setCharacterEncoding("UTF-8");
 				</ul>
 
 
-
-
 <hr>
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
-					<c:when test="${isLogOn == true  && member!= null}">
-						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/member/logout.do">로그아웃 <span
-								class="sr-only">(current)</span>
-						</a></li>
+
+					<c:when test="${logOn == true  && member!= null}">
+						<li class="nav-item">
+							<a class="nav-link" href="${contextPath}/member/info">내 정보
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="${contextPath}/member/logout.do">로그아웃
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
 
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/memberForm.do">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
+
 							href="${contextPath}/member/loginForm.do">로그인</a>
+
 					</c:otherwise>
 				</c:choose>
 
@@ -165,12 +173,6 @@ request.setCharacterEncoding("UTF-8");
 		</div>
 	</div>
 </nav>
-
-
-
-
-
-
 
 <script src="${contextPath}/assets/js/core/jquery.min.js"
 	type="text/javascript"></script>
@@ -183,8 +185,12 @@ request.setCharacterEncoding("UTF-8");
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="${contextPath}/assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+
+<!-- 
 <script src="${contextPath}/assets/js/plugins/jquery.sticky.js"
 	type="text/javascript"></script>
+	 -->
+
 <script src="${contextPath}/assets/js/plugins/nouislider.min.js"
 	type="text/javascript"></script>
 <script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
@@ -192,12 +198,7 @@ request.setCharacterEncoding("UTF-8");
 	type="text/javascript"></script>
 <script
 	src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
-<!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<script
-	src="${contextPath}/assets/js/argon-design-system.min.js?v=1.2.2"
-	type="text/javascript"></script>
+
 <script>
 	function scrollToDownload() {
 
@@ -207,6 +208,7 @@ request.setCharacterEncoding("UTF-8");
 			}, 1000);
 		}
 	}
+
 	/*
 	var siteSticky = function() {
 		$(".js-sticky-header").sticky({topSpacing:0});
@@ -291,6 +293,7 @@ request.setCharacterEncoding("UTF-8");
 		});
 	};
 	siteMenuClone();*/
+
 </script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>

@@ -16,7 +16,8 @@
 	<!-- 정적 자원 매핑 관련 설정  -->
 
 	<resources mapping="/assets/**" location="/WEB-INF/static/assets/" />
-
+	<resources mapping="/fullcalendar/**" location="/WEB-INF/static/fullcalendar/" />
+	
 	<!-- ajax JSON parsing 관련 설정 -->
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	<beans:bean id="BeanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">

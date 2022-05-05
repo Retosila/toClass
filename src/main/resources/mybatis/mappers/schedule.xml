@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.schedule">
+
+	<resultMap id="scheduleResult" type="scheduleVO">
+        <result property="id" column="schedule_id" />
+        <result property="title" column="schedule_title" />
+        <result property="start" column="schedule_start" />
+        <result property="end" column="schedule_end" />
+        <result property="allDay" column="schedule_allday" />
+        <result property="schedule_content" column="schedule_content" />
+        <result property="schedule_writer" column="schedule_writer" />
+        <result property="member_email" column="member_email" />
+        <result property="forAll" column="schedule_forall" />
+        <result property="schedule_parent_id" column="schedule_parent_id" />
+	</resultMap> 
+
+  <select id="getScheduleByEmail"  resultMap="scheduleResult" parameterType="String">
+	<![CDATA[
+		select schedule_id, schedule_title, 
+			to_char(schedule_start, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_start,
+			to_char(schedule_end, 'YYYY-MM-DD"T"HH24:MI:SS') schedule_end,
+			schedule_allday,
+			schedule_content, schedule_writer, member_email, schedule_forall
+		from calendar_schedule
+		where member_email=#{member_email}
+	]]>
+  </select>
+  
+  <select id="getClassIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select *
+		from (select class_id
+		      	from info
+		      	where member_email = #{member_email}
+		        order by info_regdate desc)
+		where rownum = 1
+	]]>
+  </select>
+  
+  <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_email
+		from (select m.member_email, i.class_id, m.member_type
+		        from member m, info i
+		        where m.member_email = i.member_email)
+		where class_id = #{class_id} and member_type <> '교사'
+	]]>
+  </select>
+  
+  <select id="getRecentScheduleIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select schedule_id
+		from (select *from calendar_schedule where member_email = #{member_email} order by schedule_regdate desc)
+		where rownum = 1
+	]]>
+  </select>
+  
+  <insert id="addScheduleByEmail"  parameterType="scheduleVO">
+   		<choose>
+   			<when test="schedule_parent_id != null">
+  				insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
+	    			schedule_start, schedule_end, member_email, schedule_writer, schedule_forall, schedule_parent_id)
+				values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
+		    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
+		    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
+		    		#{member_email}, #{schedule_writer}, #{forAll}, #{schedule_parent_id})
+   			</when>
+			<otherwise>
+			  	insert into calendar_schedule (schedule_id, schedule_title, schedule_content,
+		    		schedule_start, schedule_end, member_email, schedule_writer, schedule_forall)
+				values((lpad(to_char(calendar_schedule_seq.nextval), 10, '0')), #{title}, #{schedule_content},
+		    		to_date(#{start}, 'YYYY-MM-DD HH24:MI'), 
+		    		to_date(#{end}, 'YYYY-MM-DD HH24:MI'),
+		    		#{member_email}, #{schedule_writer}, #{forAll})
+			</otherwise>   			
+   		</choose>
+  </insert>
+  
+  <delete id="delScheduleByScheduleId" parameterType="hashMap">
+		delete from calendar_schedule
+		where schedule_id = #{id}
+		<if test="isForAllDelete eq 'true'">
+			OR schedule_parent_id = #{id}
+		</if>
+  </delete>
+  
+  <!--
+  id를 기준으로 등록시점이 같은 일정 일괄 선택 
+	select schedule_id
+  	from calendar_schedule
+  	where schedule_regdate = (select schedule_regdate from calendar_schedule where schedule_id = #{id})
+   -->
+  
+</mapper>
