@@ -79,6 +79,8 @@ request.setCharacterEncoding("UTF-8");
 <script href="${contextPath}/assets/js/plugins/moment.min.js"></script>
 <script href="${contextPath}/assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
 <script href="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
+<script href="${contextPath}/assets/js/argon-design-system.min.js?v=1.2.2" type="text/javascript"></script>
+
 <script>
     function scrollToDownload() {
 

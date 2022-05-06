@@ -8,12 +8,13 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+
 	<!-- MVC패턴 + 어노테이션 사용 -->
 	<annotation-driven />
 	<context:component-scan base-package="com.bbt.toclass" />
 
 	<!-- 정적 자원 매핑 관련 설정  -->
+
 	<resources mapping="/assets/**" location="/WEB-INF/static/assets/" />
 	<resources mapping="/fullcalendar/**" location="/WEB-INF/static/fullcalendar/" />
 	
@@ -22,15 +23,15 @@
 	<beans:bean id="BeanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
     	<beans:property name="order" value="0"/>
 	</beans:bean>
-	
+
 	<!-- 뷰 리졸버 관련 설정 -->
-	
+
 	<!-- 우선순위 1 : 타일즈 -->
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
 		<beans:property name="order" value="1" />
 	</beans:bean>
-	
+
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<beans:property name="definitions">
 			<beans:list>
@@ -46,5 +47,5 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 	</beans:bean>
-	
+
 </beans:beans>
