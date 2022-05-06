@@ -1,6 +1,8 @@
 package com.bbt.toclass.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.bbt.toclass.member.service.MemberService;
+import com.bbt.toclass.member.vo.ApplicantVO;
+import com.bbt.toclass.member.vo.ClassVO;
 import com.bbt.toclass.member.vo.MemberVO;
 
 @Controller("memberController")
@@ -222,6 +226,91 @@ public class MemberControllerImpl implements MemberController {
 		return "info";
 	}
 	
+	// 학급관리 페이지(/member/myClass.jsp)
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/member/myClass", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView myClass(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		logger.info("myClass.jsp 페이지 요청");
+		ModelAndView mav = new ModelAndView("myClass");
+		
+		// curretClass가 null이 아닐 때, 데이터 바인딩
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		
+		String currentClass = "";
+		if (member.getCurrentClass() != null) {
+			currentClass = member.getCurrentClass();
+		}
+		String member_type = member.getMember_type();
+		String member_email = member.getMember_email();
+		if (currentClass != null || currentClass != "") {
+			logger.info("학급 정보 존재 : " + currentClass);
+			logger.info("회원유형 : " + member_type);
+			
+			logger.info("비즈니스 로직 요청 : getMyClassInfo");
+			ClassVO myClass = memberService.getMyClassInfo(currentClass);
+			logger.info("비즈니스 로직 성공 : getMyClassInfo");
+			mav.addObject("myClass", myClass);
+			
+			// 교사 회원인 경우 
+			if (member_type.equals("교사")) {
+				// 교사가 현재 담당 중인 학급의 구성원 정보를 List에 담은 후 데이터 바인딩
+				logger.info("비즈니스 로직 요청 : getMyStudentList");
+				List<MemberVO> studentList = memberService.getMyStudentList(currentClass);
+				logger.info("비즈니스 로직 성공 : getMyStudentList");
+				mav.addObject("studentList", studentList);
+				
+				// 학급 가입 신청자 명단 바인딩
+				logger.info("비즈니스 로직 요청 : getApplicantList");
+				List<ApplicantVO> applicantList = memberService.getApplicantList(currentClass);
+				logger.info("비즈니스 로직 성공 : getApplicantList");
+				// 조회된 신청자 정보가 1개 이상일 시
+				if (applicantList != null && applicantList.size() >= 1) {
+					mav.addObject("applicantList", applicantList);
+				}
+				else {
+					logger.info("가입 승인 대기 중인 학생 없음 ");
+				}
+			}
+			
+			// 학생 회원인 경우
+			else if (member_type.equals("학생")) {
+				// 가입 승인 대기 여부 확인용 데이터 바인딩
+				logger.info("비즈니스 로직 요청 : checkIsPending");
+				int result = memberService.checkIsPending(member_email);
+				if (result > 0) {
+					logger.info("교사의 학급 가입 승인 대기 목록에 존재");
+					mav.addObject("isPending", true);
+				}
+				else {
+					logger.info("교사의 학급 가입 승인 대기 목록에 비존재");
+					mav.addObject("isPending", false);
+				}
+			}
+			else {
+				logger.info("관리자 계정");
+			}
+			
+		}
+		else {
+			logger.info("학급 정보 없음");
+		}
+		
+		// *.do에서 result값을 가지고 리다이렉트되었을 때
+		if (RequestContextUtils.getInputFlashMap(request) != null) {
+			Map<String, ?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+			String result = (String)redirectMap.get("result");
+			logger.info("result : " + result);
+			mav.addObject("result", result);
+		}
+		
+		return mav;
+	}
+	
+	
+	
 	/*
 	 * 
 	 *  
@@ -253,8 +342,10 @@ public class MemberControllerImpl implements MemberController {
 		    session.setAttribute("logOn", true);
 		    String name = memberVO.getMember_name();
 		    String type = memberVO.getMember_type();
+		    String currentClass = memberVO.getCurrentClass();
 		    logger.info("회원이름 : " + type);
 		    logger.info("회원유형 : " + name);
+		    logger.info("학급ID : " + currentClass);
 		    
 		    // 회원타입에 따라 다른 메인 페이지로 분기시킴
 		    if (type.equals("교사")) {
@@ -470,4 +561,156 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
+	
+	/*
+	 * 
+	 * 학급 관리 관련
+	 * 
+	 */
+	
+	// 새 학급 생성 버튼 : 새로운 학급 생성
+	@RequestMapping(value = "/member/createClass.do", method = RequestMethod.POST)
+	public ModelAndView createClassDo(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 요청 처리 후 myClass.jsp로 리다이렉트
+		ModelAndView mav = new ModelAndView("redirect:/member/myClass");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String member_email = member.getMember_email();
+		String class_name = request.getParameter("class_name");
+		logger.info("새 학급 생성 요청 : " + member_email);
+		logger.info("학급명 : " + class_name);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_email", member_email);
+		map.put("class_name", class_name);
+		
+		// 우선 Class 테이블에 새로운 클래스를 만듦. 생성한 클래스의 id를 받아옴
+		String class_id = memberService.createClass(map);
+		
+		// 그리고, Info 테이블에 해당 교사이메일+새로 생성한 클래스id로 인스턴스 생성
+		Map<String, String> map2 = new HashMap<String, String>();
+		map2.put("member_email", member_email);
+		map2.put("class_id", class_id);
+		logger.info("클래스 로그 추가 요청");
+		memberService.addClassLog(map2);
+		logger.info("클래스 로그 추가 성공");
+		
+		// 현재 로그온된 회원 정보에 currentClass 프로퍼티 추가
+		member.setCurrentClass(class_id);
+		session.setAttribute("member", member);
+		
+		return mav;
+	}
+	
+	// 학급 폐쇄 버튼 : 학급 정보 제거
+	@RequestMapping(value = "/member/delMyClass.do", method = RequestMethod.POST)
+	public ModelAndView delMyClassDo(@RequestParam("class_id") String class_id, HttpSession session, RedirectAttributes rAttr, 
+										HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("학급 제거 요청 : " + class_id);
+		// 요청 처리 후 myClass.jsp로 리다이렉트
+		ModelAndView mav = new ModelAndView("redirect:/member/myClass");
+		
+		// 비즈니스 로직 처리 요청
+		int result = memberService.delMyClass(class_id);
+		
+		if (result > 0) {
+			logger.info("학급 제거 요청 성공");
+		    rAttr.addFlashAttribute("result","delSuccess");
+		    MemberVO member = (MemberVO)session.getAttribute("member");
+		    // currentClass 정보를 null로 변경
+		    member.setCurrentClass(null);
+		    session.setAttribute("member", member);
+		}
+		else {
+			logger.info("학급 제거 실패");
+			rAttr.addFlashAttribute("result","delFailed");
+		}
+		
+		return mav;
+		
+	}
+	
+	// 학급 가입 신청 버튼 : 학급 가입 신청
+	@RequestMapping(value = "/member/applyClass.do", method = RequestMethod.POST)
+	public ModelAndView applyClassDo(@RequestParam("class_code") String class_code, HttpSession session, RedirectAttributes rAttr, 
+					HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("학급 가입 요청 : " + class_code);
+		// 요청 처리 후 myClass.jsp로 리다이렉트
+		ModelAndView mav = new ModelAndView("redirect:/member/myClass");
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		
+		int result = memberService.applyClass(class_code, member);
+		
+		if (result > 0) {
+			logger.info("학급 가입 요청 성공");
+		    rAttr.addFlashAttribute("result","applySuccess");
+		    session.setAttribute("isPending", true);
+		}
+		else {
+			logger.info("학급 가입 요청 실패");
+			rAttr.addFlashAttribute("result","applyFailed");
+		}
+		
+		return mav;
+	}
+	
+	// 가입 신청 승인 및 거절 버튼
+	@RequestMapping(value = "/member/acceptApplicant.do", method = RequestMethod.GET)
+	public ModelAndView acceptApplicantDo(@RequestParam("email") String member_email, @RequestParam("accept") String accept, @RequestParam("class_id") String class_id, 
+					RedirectAttributes rAttr, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("가입 신청 승인/거절 요청");
+		logger.info("요청 클래스 : " + class_id);
+		logger.info("대상 신청자 : " + member_email);
+		logger.info("가부 : " + accept);
+		// 요청 처리 후 myClass.jsp로 리다이렉트
+		ModelAndView mav = new ModelAndView("redirect:/member/myClass");
+		
+		// 비즈니스 로직 처리 요청
+		int result = memberService.acceptApplicant(member_email, accept, class_id);
+		logger.info("비즈니스 로직 처리 성공 : acceptApplicant : " + result);
+		
+		// result 값에 따라 분기
+		if (result > 0) {
+			logger.info("학급 가입 승인 처리 완료");
+		    rAttr.addFlashAttribute("result","acceptSuccess");
+		}
+		else if (result < 0) {
+			logger.info("학급 가입 거부 처리 완료");
+			rAttr.addFlashAttribute("result","rejectSuccess");
+		}
+		else {
+			logger.info("오류 : 요청 처리 실패");
+			rAttr.addFlashAttribute("result","requestFailed");
+		}
+		
+		return mav;
+	}
+	
+	// 학급원 내보내기 버튼 : info 테이블에서 학급원 정보 삭제
+	@RequestMapping(value = "/member/delMyStudent.do", method = RequestMethod.GET)
+	public ModelAndView delMyStudentDo(@RequestParam("member_email") String member_email, @RequestParam("class_id") String class_id, RedirectAttributes rAttr,
+					HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("학급원 삭제 요청");
+		logger.info("요청 클래스 : " + class_id);
+		logger.info("대상 학급원 : " + member_email);
+		// 요청 처리 후 myClass.jsp로 리다이렉트
+		ModelAndView mav = new ModelAndView("redirect:/member/myClass");
+		
+		// 비즈니스 로직 처리 요청
+		int result = memberService.delMyStudent(member_email, class_id);
+		logger.info("비즈니스 로직 처리 성공 : delMyStudent : " + result);
+		
+		// result 값에 따라 분기
+		if (result > 0) {
+			logger.info("학급원 삭제 처리 완료");
+		    rAttr.addFlashAttribute("result","studentDeleteSuccess");
+		}
+		else {
+			logger.info("오류 : 요청 처리 실패");
+			rAttr.addFlashAttribute("result","requestFailed");
+		}
+		
+		return mav;
+	}
+	
 }

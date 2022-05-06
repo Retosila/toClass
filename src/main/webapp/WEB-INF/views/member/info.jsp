@@ -12,7 +12,7 @@
 <title>내 정보(/member/info.jsp)</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
-	// 
+
 	function unregister() {
 		var cmd = confirm("정말로 회원탈퇴하시겠습니까?");
 		if (cmd) {
@@ -33,7 +33,9 @@
 <p> 회원유형 : ${member.member_type}</p>
 <p> 등록일 : ${member.member_regdate}</p>
 <p> 수정일 : ${member.member_moddate}</p>
+<p> 현 소속학급 : ${member.currentClass}</p>
 
-<button id="unregister" type="button" onclick="unregister()">회원탈퇴</button>
+<button id="unregister" type="button" onclick="location.href='${contextPath}/member/myClass'">내 학급</button><br>
+<button id="unregister" type="button" onclick="unregister()">회원탈퇴</button><br>
 </body>
 </html>
