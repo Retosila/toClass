@@ -4,6 +4,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.member">
+
 	<resultMap id="memResult" type="memberVO">
         <result property="member_id" column="member_id" />
         <result property="member_email" column="member_email" />
@@ -13,12 +14,37 @@
         <result property="member_type" column="member_type" />
         <result property="member_regdate" column="member_regdate" />
         <result property="member_moddate" column="member_moddate" />
+        <result property="currentClass" column="class_id" />
+	</resultMap> 
+	
+	<resultMap id="classResult" type="classVO">
+        <result property="class_id" column="class_id" />
+        <result property="class_name" column="class_name" />
+        <result property="class_code" column="class_code" />
+        <result property="class_regdate" column="class_regdate" />
+        <result property="class_moddate" column="class_moddate" />
+        <result property="class_maker" column="class_maker" />
+	</resultMap>
+	 
+	<resultMap id="applicantResult" type="applicantVO">
+        <result property="class_id" column="class_id" />
+        <result property="name" column="member_name" />
+        <result property="email" column="member_email" />
+        <result property="phone" column="member_phone" />
+        <result property="regdate" column="class_applicant_regdate" />
 	</resultMap> 
 
   <select id="loginByEmail"  resultMap="memResult"   parameterType="memberVO" >
 	<![CDATA[
-		select * from member	
-		where member_email=#{member_email} and member_pw=#{member_pw}
+		select member_id, member_email, member_pw, member_name, member_phone, 
+		    member_type, member_regdate, member_moddate, class_id
+		from (
+			select *
+			from member m left outer join info i using(member_email)
+			where member_email = #{member_email}
+			order by info_regdate desc
+			)
+		where rownum = 1
 	]]>
   </select>
   
@@ -56,6 +82,125 @@
 		where member_email=#{member_email} and member_pw=#{member_pw}
 	]]>
   </delete>
+  
+  
+  <!-- 학급 관련 -->
+  <insert id="addClassLog" parameterType="hashMap" >
+	<![CDATA[
+		insert into info (info_id, member_email, class_id)
+		values (lpad(to_char(info_seq.nextval), 6, '0'), #{member_email}, #{class_id}) 
+	]]>
+  </insert>
+  
+  <insert id="createNewClass" parameterType="hashMap" >
+	<![CDATA[
+		insert into class(class_id, class_name, class_code, class_maker)
+		values ('CLS'||lpad(to_char(class_seq.nextval), 6, '0'), #{class_name}, #{class_code}, #{member_email}) 
+	]]>
+  </insert>
+  
+  <insert id="addApplicant" parameterType="applicantVO" >
+	<![CDATA[
+		insert into class_applicant(class_applicant_id, class_id, member_name, member_email, member_phone)
+		values (lpad(to_char(class_applicant_seq.nextval), 10, '0'), #{class_id}, #{name}, #{email}, #{phone}) 
+	]]>
+  </insert>
+  
+  <select id="checkClassCodeDuplicateByClassCode"  resultType="int" parameterType="String" >
+	<![CDATA[
+		select count(*) from class
+		where class_code = #{class_code}
+	]]>
+  </select>
+  
+  <select id="getRecentClassIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select class_id
+		from (select *from class where class_maker = #{member_email} order by class_regdate desc)
+		where rownum = 1
+	]]>
+   </select>
+   
+  <select id="getClassIdByClassCode"  resultType="String" parameterType="String">
+	<![CDATA[
+		select class_id
+		from class
+		where class_code = #{class_code}
+	]]>
+   </select>
+   
+  <select id="checkIsPendingByEmail"  resultType="int" parameterType="String">
+	<![CDATA[
+		select count(*) from class_applicant
+		where member_email = #{member_email}
+	]]>
+   </select>
+   
+  <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_email
+		from (select m.member_email, i.class_id, m.member_type
+		        from member m, info i
+		        where m.member_email = i.member_email)
+		where class_id = #{class_id} and member_type <> '교사'
+	]]>
+  </select>
+  
+  <select id="getStudentListByEmail"  resultMap="memResult" parameterType="String">
+	<![CDATA[
+		select member_name, member_email, member_phone, member_regdate
+		from member
+		where member_email = #{member_email}
+	]]>
+  </select>
+  
+  <select id="getMyClassInfoByClassId"  resultMap="classResult" parameterType="String">
+	<![CDATA[
+		select class_id, class_name, class_code, class_regdate, class_moddate, class_maker
+		from class
+		where class_id = #{class_id}
+	]]>
+  </select>
+  
+  <select id="getApplicantListByClassId"  resultMap="applicantResult" parameterType="String">
+	<![CDATA[
+		select class_id, member_name, member_email, member_phone, 
+			to_char(class_applicant_regdate, 'YYYY-MM-dd HH24:MI') as class_applicant_regdate
+		from class_applicant
+		where class_id = #{class_id}
+	]]>
+  </select>
+   
+  <delete id="delMyClassByClassId" parameterType="String">
+	<![CDATA[
+		delete from class
+		where class_id=#{class_id}
+	]]>
+  </delete>
+   
+  <delete id="delMyClassInfoByClassId" parameterType="String">
+	<![CDATA[
+		delete from info
+		where class_id=#{class_id}
+	]]>
+  </delete>
+  
+  <delete id="delMyStudentFromClassByClassId" parameterType="hashMap">
+	<![CDATA[
+		delete from info
+		where class_id=#{class_id} AND member_email = #{member_email}
+	]]>
+  </delete>
+  
+  <delete id="delApplicantByClassIdAndMemberEmail" parameterType="hashMap">
+	<![CDATA[
+		delete from class_applicant
+		where class_id = #{class_id} AND member_email = #{member_email}
+	]]>
+  </delete>
+  
+  
+  
   
   
 </mapper>

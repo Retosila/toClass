@@ -26,5 +26,10 @@
       <put-attribute name="title" value="내 정보" />
       <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
    </definition>
+   
+   <definition name="myClass" extends="baseLayout">
+      <put-attribute name="title" value="내 학급" />
+      <put-attribute name="body" value="/WEB-INF/views/member/myClass.jsp" />
+   </definition>
     
 </tiles-definitions>

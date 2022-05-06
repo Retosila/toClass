@@ -148,7 +148,7 @@ request.setCharacterEncoding("UTF-8");
 
 					<c:when test="${logOn == true  && member!= null}">
 						<li class="nav-item">
-							<a class="nav-link" href="${contextPath}/member/info">내 정보
+							<a class="nav-link" href="${contextPath}/member/info">마이페이지
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>

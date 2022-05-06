@@ -5,9 +5,13 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.bbt.toclass.member.vo.MemberVO"  alias="memberVO" />
-		<typeAlias type="com.bbt.toclass.schedule.vo.ScheduleVO"  alias="scheduleVO" />
+		<typeAlias type="com.bbt.toclass.member.vo.ClassVO"  alias="classVO" />
+		<typeAlias type="com.bbt.toclass.member.vo.ApplicantVO"  alias="applicantVO" />
+		
 		<typeAlias type="com.bbt.toclass.attendance.vo.AttendDTO"  alias="attendDTO" />
 		<typeAlias type="com.bbt.toclass.attendance.vo.AttendVO"  alias="attendVO" />
+		
+		<typeAlias type="com.bbt.toclass.schedule.vo.ScheduleVO"  alias="scheduleVO" />
 		
 		<typeAlias type="com.bbt.toclass.board.vo.ArticleVO"  alias="articleVO" />
 		<typeAlias type="com.bbt.toclass.board.vo.ImageVO"  alias="imageVO" />
