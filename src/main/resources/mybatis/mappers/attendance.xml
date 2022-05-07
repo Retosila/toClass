@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.attendance">
+
+	<resultMap id="attendResult" type="attendVO">
+        <result property="member_name" column="member_name" />
+        <result property="attend_time" column="attendance_regdate" />
+        <result property="attend_status" column="attendance_status" />
+	</resultMap> 
+
+  <select id="getAttendanceInfoByDTO"  resultMap="attendResult" parameterType="attendDTO">
+	<![CDATA[
+		select m.member_name, a.attendance_regdate, a.attendance_status
+		from attendance a inner join member m using(member_email)
+		where (a.attendance_regdate between #{monday} and #{friday})
+		 	and member_email = #{member_email}
+		order by a.attendance_regdate asc
+	]]>
+  </select>
+  
+  <select id="getStuEmails"  resultType="String" parameterType="String">
+	<![CDATA[
+		select DISTINCT b.member_email from teacher_info a left join student_info b on a.class_id = b.class_id
+		where a.member_email = #{email}
+	]]>
+  </select>
+  
+  <select id="getStuNames"  resultMap="attendResult" parameterType="String">
+	<![CDATA[
+		select distinct m.member_name
+		from attendance a inner join member m using(member_email)
+		where member_email = #{email}
+		order by m.member_name asc
+	]]>
+  </select>
+  
+</mapper>

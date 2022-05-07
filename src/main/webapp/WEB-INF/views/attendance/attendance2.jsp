@@ -118,7 +118,8 @@ studySearch span {
 .hak1_button {
 	width: 39px;
 	height: 24px;
-	background: url(http://toclass.smartschool.kr/LMS/images/sc_btn.jpg) no-repeat 0 0;
+	background: url(http://toclass.smartschool.kr/LMS/images/sc_btn.jpg)
+		no-repeat 0 0;
 	border: 0px;
 	color: #fff;
 }
@@ -587,45 +588,43 @@ button.white_sm {
 	right: 0;
 }
 
-.btnSet_center{
-	width:100%;
-	padding:20px 0;
-	text-align:center
+.btnSet_center {
+	width: 100%;
+	padding: 20px 0;
+	text-align: center
 }
 
-.whTable02 th{
-	height:27px;
-	padding:10px 10px 10px 10px;border-top:1px solid #bfbfbf;
-	border-right:1px solid #dcdcdc;
-	border-bottom:1px solid #bfbfbf;
-	background:linear-gradient(#fdfdfd, #f3f3f3);
-	color:#777777;
-	font-size:11px;
-	font-weight:normal;
-	vertical-align:middle;
+.whTable02 th {
+	height: 27px;
+	padding: 10px 10px 10px 10px;
+	border-top: 1px solid #bfbfbf;
+	border-right: 1px solid #dcdcdc;
+	border-bottom: 1px solid #bfbfbf;
+	background: linear-gradient(#fdfdfd, #f3f3f3);
+	color: #777777;
+	font-size: 11px;
+	font-weight: normal;
+	vertical-align: middle;
 }
 
 .whTable02 th:first-child {
-    border-left: 1px solid #bfbfbf;
+	border-left: 1px solid #bfbfbf;
 }
 
-.whTable02 td:first-child{
-	border-left:1px solid #bfbfbf
+.whTable02 td:first-child {
+	border-left: 1px solid #bfbfbf
 }
 
 .whTable02 tr:last-child td {
-    border-bottom: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
 }
 
 .whTable02 th, .whTable02 td {
-    position: relative;
+	position: relative;
 }
 
-
-
-
-<style>
-.bd-placeholder-img {
+<
+style>.bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
 	-webkit-user-select: none;
@@ -640,40 +639,43 @@ button.white_sm {
 }
 
 .whTable02 td {
-    padding: 10px 10px 10px 10px;
-    border-right: 1px solid #e6e7e9;
-    border-bottom: 1px solid #e6e7e9;
-    background: #fff;
-    color: #333333;
-    vertical-align: middle;
-    box-sizing: inherit;
+	padding: 10px 10px 10px 10px;
+	border-right: 1px solid #e6e7e9;
+	border-bottom: 1px solid #e6e7e9;
+	background: #fff;
+	color: #333333;
+	vertical-align: middle;
+	box-sizing: inherit;
 }
 
 button.wBtn03 {
-    height: 36px;
-    padding: 0 20px;
-    padding-bottom: 3px;
-    border: none;
-    background: url(/LMS/images/btn_typeW3_1.png) no-repeat 0 0, url(/LMS/images/btn_typeW3_3.png) no-repeat 100% 0, url(/LMS/images/btn_typeW3_2.png) repeat-x;
-    color: #878789;
-    font-size: 12px;
-    letter-spacing: -0.5px;
-    box-sizing: border-box;
+	height: 36px;
+	padding: 0 20px;
+	padding-bottom: 3px;
+	border: none;
+	background: url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_1.png) no-repeat 0 0,
+		url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_3.png) no-repeat 100% 0,
+		url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_2.png) repeat-x;
+	color: #878789;
+	font-size: 12px;
+	letter-spacing: -0.5px;
+	box-sizing: border-box;
 }
 
 button.bBtn06 {
-    height: 36px;
-    padding: 0 20px;
-    padding-bottom: 3px;
-    border: none;
-    background: url(/LMS/images/btn_typeB6_1.png) no-repeat 0 0, url(/LMS/images/btn_typeB6_3.png) no-repeat 100% 0, url(/LMS/images/btn_typeB6_2.png) repeat-x;
-    color: #fff;
-    font-size: 12px;
-    text-shadow: 0 0 2px #000;
-    letter-spacing: -0.5px;
-    box-sizing: border-box;
+	height: 36px;
+	padding: 0 20px;
+	padding-bottom: 3px;
+	border: none;
+	background: url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) no-repeat 0 0,
+		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) no-repeat 100% 0,
+		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png) repeat-x;
+	color: #fff;
+	font-size: 12px;
+	text-shadow: 0 0 2px #000;
+	letter-spacing: -0.5px;
+	box-sizing: border-box;
 }
-
 </style>
 
 <script>
@@ -1080,16 +1082,19 @@ $(document).ready(function(){
 							<input type="text" id="keyword" name="keyword" class="hak1_input"
 								onfocus="javascript:SetCaretAtEnd(document.getElementById('keyword'));"
 								value="" placeholder="학생 이름을 입력해주세요">
-							<button type="button" class="hak1_button" style=""
-								onclick="javascript:document.f.classNo.value='';document.f.target='_self';document.f.action='stdAttendCheck.asp';document.f.submit();"></button>
+							<button type="button" class="hak1_button" onclick="javascript:document.f.classNo.value='';document.f.target='_self';document.f.action='stdAttendCheck.asp';document.f.submit();"></button>
 						</div>
 						
-						<span class="theDate_sp">
-						<c:set var="today" value="<%=new java.util.Date()%>" /> <!-- 현재날짜 -->
-					<c:set var="date">
-						<fmt:formatDate value="${today}" pattern="YYYY.MM.dd" />
-					</c:set> <!-- 데이터 뿌릴때 --> <c:out value="${date}" /> <script>
-						function getTodayLabel() {
+						
+
+						<span class="theDate_sp"> 
+						<c:set var="today" value="<%=new java.util.Date()%>" /> <!-- 현재날짜 --> 
+						<c:set var="date">
+								<fmt:formatDate value="${today}" pattern="YYYY.MM.dd" />
+							</c:set> <!-- 데이터 뿌릴때 --> 
+							<c:out value="${date}" /> 
+					<script>
+							function getTodayLabel() {
 							var week = new Array('(일)', '(월)', '(화)', '(수)',
 									'(목)', '(금)', '(토)');
 							var today = new Date().getDay();
@@ -1098,22 +1103,30 @@ $(document).ready(function(){
 						}
 						document.write(getTodayLabel())
 					</script>
-					</span>
-					<img src="http://toclass.smartschool.kr/LMS/images/icon_calendar.png" class="callCal">
+						</span> <img
+							src="http://toclass.smartschool.kr/LMS/images/icon_calendar.png"
+							class="callCal">
 						<div
 							style="display: inline; margin-left: 10px; float: left; position: relative; top: -2px;">
-							<span><a href="javascript:;"
+							<span> <a href="javascript:;"
 								onclick="javascript:var theDate=addDay2('2022-04-27',-1);location.href='?classNo=8225&amp;keyword=&amp;theDate='+theDate;"
-								title="이전 일"><img
+								title="이전 일"> <img
 									src="http://toclass.smartschool.kr/LMS/images/btn_pre.gif"
-									class=""></a></span><span><a href="javascript:;"
+									class="">
+							</a>
+							</span> <span> <a href="javascript:;"
 								onclick="javascript:var theDate=addDay2('2022-04-27',1);location.href='?classNo=8225&amp;keyword=&amp;theDate='+theDate;"
-								title="다음 일"><img
+								title="다음 일"> <img
 									src="http://toclass.smartschool.kr/LMS/images/btn_next.gif"
-									class=""></a></span><span><a href="javascript:;"
-								onclick="location.href='?classNo=8225&amp;keyword=&amp;theDate=2022-04-27';"><img
+									class="">
+							</a>
+							</span> <span> <a href="javascript:;"
+								onclick="location.href='?classNo=8225&amp;keyword=&amp;theDate=2022-04-27';">
+									<img
 									src="http://toclass.smartschool.kr/LMS/images/btn_today.gif"
-									class=""></a></span>
+									class="">
+							</a>
+							</span>
 						</div>
 					</div>
 					<div class="attendStatus">
@@ -1121,8 +1134,7 @@ $(document).ready(function(){
 							<ul class="asResult" id="attendStatus">
 								<li><strong>전체</strong> : <span id="allCnt">2</span>명</li>
 								<li class="fcBlue"><strong>출석</strong> : <span id="attCnt">0</span>명</li>
-								<li class="fcOrange"><strong>지각</strong> : <span
-									id="rateCnt">0</span>명</li>
+								<li class="fcOrange"><strong>지각</strong> : <span id="rateCnt">0</span>명</li>
 								<li class="fcRed"><strong>결석</strong> : <span id="absCnt">0</span>명</li>
 							</ul>
 						</div>
@@ -1132,11 +1144,11 @@ $(document).ready(function(){
 
 			<form name="fList" method="post" action="stdAttendCheck_exec.asp"
 				target="hiddenIFrame">
-				<input type="hidden" name="classNo" value="8225"> 
-				<input type="hidden" name="theDate" value="2022-04-27">
+				<input type="hidden" name="classNo" value="8225"> <input
+					type="hidden" name="theDate" value="2022-04-27">
 				<table cellpadding="0" cellspacing="0" class="whTable02"></table>
 				<div class="" style="width: 946px; position: relative;">
-					<table cellpadding="0" cellspacing="0" class="whTable02 stdcheck" >
+					<table cellpadding="0" cellspacing="0" class="whTable02 stdcheck">
 						<colgroup>
 							<col width="100px">
 							<col width="200px">
@@ -1188,7 +1200,7 @@ $(document).ready(function(){
 							if (getCookie("att_tip") == "")
 								document.getElementById("att_tip").style.display = "block";
 							</script>
-<style>
+								<style>
 .att_tip {
 	border: 1px solid #4b4b4b;
 	padding: 15px;
@@ -1401,3 +1413,4 @@ function printTime() {
 </script>
 </body>
 </html>
+

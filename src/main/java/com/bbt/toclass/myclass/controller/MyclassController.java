@@ -17,7 +17,7 @@ import com.bbt.toclass.myclass.vo.MyclassVO;
 import net.sf.json.JSONObject;
 
 public interface MyclassController {
-	public ModelAndView myclass_teacher(HttpServletRequest request, HttpServletResponse response);
+	public String myclass_teacher(HttpServletRequest request, HttpServletResponse response);
 	
 	public ModelAndView getStuCnt(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException;
 

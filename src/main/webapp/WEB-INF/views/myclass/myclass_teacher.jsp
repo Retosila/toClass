@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.bbt.toclass.member.vo.MemberVO" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -124,6 +123,7 @@
 	            },
 	            complete: function(data) {
 	            	if(studentCnt == 0) {
+	            		$('#infoMyClass').css('display', '');
 	            		$('#allTable').css('display','none');
 	            	}
 	            	$('#stuCnt').val(studentCnt);
@@ -165,80 +165,76 @@
 	            }
 			});
 		}
-		console.log("${member.member_myclass}");
-		console.log("${member.member_type}");
 		
 	</script>
 	
 	
 	
 	<div class="container pt-lg-4">
-		<c:choose>
-			<c:when test="${member.member_type == '교사' && member.member_myclass == 0}">
-				<form name="f" method="post" action="class_exec.asp"
-					target="hiddenIFrame">
-				<input type="hidden" name="classNo" value="8225">
-				<h2>학급기본정보</h2>
-				<hr>
-	
-				<table cellpadding="0" cellspacing="0" width="100%"
-					class="table table-bordered" id="infoMyClass" style="max-width: 830px;">
-					<tr>
-						<th>학급명 <font color="#CC0000">*</font></th>
-						<td><input type="text" style="width: 100%;" id="className" name="className"
-							value="투클래스" maxlength="30"></td>
-						<th>대상학년 <font color="#CC0000">*</font></th>
-						<td><select id="classGrade" name="classGrade" style="width: 100%;">
-								<option value="">----학년선택----</option>
-	
-								<option value="m1">중등1</option>
-	
-								<option value="m2">중등2</option>
-	
-								<option value="m3">중등3</option>
-	
-								<option value="h1">고등1</option>
-	
-								<option value="h2">고등2</option>
-	
-								<option value="h3" selected="">고등3</option>
-	
-						</select></td>
-					</tr>
-					<tr>
-						<th>담임선생님 <font color="#CC0000">*</font></th>
-						<td>
+<!-- 				<h2>학급기본정보</h2> -->
+<!-- 				<hr> -->
+<!-- 				<h1>해당 화면은 교사만 확인 및 수정이 가능합니다.</h1> -->
+		
+		<form name="f" method="post" action="class_exec.asp"
+				target="hiddenIFrame">
+			<input type="hidden" name="classNo" value="8225">
+			<h2>학급기본정보</h2>
+			<hr>
+
+			<table cellpadding="0" cellspacing="0" width="100%"
+				class="table table-bordered" id="infoMyClass" style="max-width: 830px;">
+				<tr>
+					<th>학급명 <font color="#CC0000">*</font></th>
+					<td><input type="text" style="width: 100%;" id="className" name="className"
+						value="투클래스" maxlength="30"></td>
+					<th>대상학년 <font color="#CC0000">*</font></th>
+					<td><select id="classGrade" name="classGrade" style="width: 100%;">
+							<option value="">----학년선택----</option>
+
+							<option value="m1">중등1</option>
+
+							<option value="m2">중등2</option>
+
+							<option value="m3">중등3</option>
+
+							<option value="h1">고등1</option>
+
+							<option value="h2">고등2</option>
+
+							<option value="h3" selected="">고등3</option>
+
+					</select></td>
+				</tr>
+				<tr>
+					<th>담임선생님 <font color="#CC0000">*</font></th>
+					<td>
 <!-- 							<select name="teacherId" style="width: 100%;"> -->
 <!-- 									<option value="">----담임선택----</option> -->
-		
+	
 <!-- 									<option value="sdh3090" selected="">홍성동/sdh3090</option> -->
-		
+	
 <!-- 							</select> -->
-							<input type="text" style="width: 237px; text-align: left"
-							name="nowCnt" id="teacherInfo" />
-						</td>
-						<th>학생수</th>
-						<td><input type="text" style="width: 90px; text-align: right"
-							name="nowCnt" id="stuCnt" value="4" maxlength="3" onkeyup="chkNumeric(this);"
-							readonly="" class="readon"> 명</td>
-					</tr>
-					</tbody>
-				</table>
-				<div class="btnSet_center" style="max-width: 830px;">
-	<!-- 				<button type="button" class="btn btn-outline-primary btn-lg" -->
-	<!-- 					style="padding-left: 40px; padding-right: 40px;" -->
-	<!-- 					onclick="fSubmit(document.f); return false; alert('학급이 생성됐습니다..'); $('#allTable').css('display','block');">학급생성</button> -->
-						
-					<button type="button" class="btn btn-outline-primary btn-lg"
-						style="padding-left: 40px; padding-right: 40px;"
-						onclick="saveMyClass(this);">학급생성</button>
-				</div>
-			</form>		
-			</c:when>
-			
-			<c:when test="${member.member_type =='교사' && member.member_myclass >= 1}">
-
-			
+						<input type="text" style="width: 237px; text-align: left"
+						name="nowCnt" id="teacherInfo" />
+					</td>
+					<th>학생수</th>
+					<td><input type="text" style="width: 90px; text-align: right"
+						name="nowCnt" id="stuCnt" value="4" maxlength="3" onkeyup="chkNumeric(this);"
+						readonly="" class="readon"> 명</td>
+				</tr>
+				</tbody>
+			</table>
+			<div class="btnSet_center" style="max-width: 830px;">
+<!-- 				<button type="button" class="btn btn-outline-primary btn-lg" -->
+<!-- 					style="padding-left: 40px; padding-right: 40px;" -->
+<!-- 					onclick="fSubmit(document.f); return false; alert('학급이 생성됐습니다..'); $('#allTable').css('display','block');">학급생성</button> -->
+					
+				<button type="button" class="btn btn-outline-primary btn-lg"
+					style="padding-left: 40px; padding-right: 40px;"
+					onclick="saveMyClass(this);">학급생성</button>
+			</div>
+		</form>
+		
 		<table cellpadding="0" id="allTable" cellspacing="0" width="100%" class="table table-bordered">
 			<tbody>
 				<tr>
@@ -511,15 +507,6 @@
 				</tr>
 			</tbody>
 		</table>
-		</c:when>
-		
-			<c:when test="${member.member_type == '학생'}">
-				<h2>학급기본정보</h2>
-				<hr>
-				<h1>해당 화면은 교사만 확인 및 수정이 가능합니다.</h1>
-			</c:when>
-			
-		</c:choose>
 		
 		
 

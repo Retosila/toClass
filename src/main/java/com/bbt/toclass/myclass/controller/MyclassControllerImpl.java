@@ -31,9 +31,10 @@ public class MyclassControllerImpl implements MyclassController{
 	@Override
 	@RequestMapping(value = "/myclass/teacher", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView myclass_teacher(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("myclass_teacher");
-		return mav;
+	public String myclass_teacher(HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("text/html; charset=UTF-8");
+		
+		return "/myclass/myclass_teacher";
 		
 	}
 

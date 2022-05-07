@@ -6,7 +6,6 @@
 request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,57 +37,16 @@ request.setCharacterEncoding("UTF-8");
 	-moz-user-select: none;
 	user-select: none;
 }
-
 @media ( min-width : 768px) {
 	.bd-placeholder-img-lg {
 		font-size: 3.5rem;
 	}
 }
-
 th, td {
 	text-align: center;
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
-}
-
-table {
-	border: 1px solid black;
-	width: 110%;
-}
-
-input {
-	width: 100px;
-	height: 30px;
-}
-
-select {
-	width: 100px;
-	height: 30px;
 }
 </style>
-<script>
-	$(document).ready(function() {
-		$(".dropdown-item").on("click", function() {
-			var status = $(this).text();
-			if(status == '출석') {
-				$(this).parent().prev().css('background', '#5e72e4');
-			}
-			else if (status == '조퇴') {
-				$(this).parent().prev().css('background', '#2dce89');
-			}
-			else if (status == '지각') {
-				$(this).parent().prev().css('background', '#ffd600');
-			}
-			else if (status == '결석') {
-				$(this).parent().prev().css('background', '#EC431F');
-			}
-			else {}
-			
-			$(this).parent().prev().text(status);
-		});
-	});
-
-</script>
+</head>
 </head>
 <body>
 	<script src="${contextPath}/assets/js/core/jquery.min.js"
@@ -106,269 +64,308 @@ select {
 	<script src="${contextPath}/assets/js/plugins/datetimepicker.js"
 		type="text/javascript"></script>
 
-	<div class="container pt-lg-7">
+	<div class="container pt-lg-5 pb-lg-5" align="center">
+		<table class="table table-bordered">
+			<tr>
+				<th align='center'>오늘의 출석현황</th>
+				<th align='center'>출석율</th>
+				<th align='center'>미정</th>
+				<th align='center'>출석</th>
+				<th align='center'>조퇴</th>
+				<th align='center'>지각</th>
+				<th align='center'>결석</th>
+				<th align='center'>합계</th>
+			</tr>
+			<tr>
+				<td>4월 19일 (화)</td>
+				<td width="20%"><div class="progress-wrapper" style="padding-top: 0px;">
+						<div class="progress-info">
 
-		<table>
-			<thead>
-				<tr>
-					<th>이름</th>
-					<th>월</th>
-					<th>화</th>
-					<th>수</th>
-					<th>목</th>
-					<th>금</th>
-					<th>비고</th>
-				</tr>
-			</thead>
-			<tbody class='scoreInfo' class="table table-bordered">
-				<tr>
-					<td align="left"><a href="javascript:;"
-						onclick="javascript:window.open('/LMS/?goParam=member,1,V,student.asp,left_student.asp,,nowState:9|keytype:id|keyword:ewq123');"
-						style="color: #333333; text-decoration: none">이순신 ((기타)고등학교)</a></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="name" value='' class='form-control'></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
+							<div class="progress-percentage">
+								<span>80%</span>
 							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td>
-						<button type="button" onclick="scoreAdd();"
-							class="btn btn-outline-primary me-2">추가</button>
-					</td>
-				</tr>
-			</tbody>
+						</div>
+						<div class="progress">
+							<div class="progress-bar bg-toss" role="progressbar"
+								aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+								style="width: 80%;"></div>
+						</div>
+					</div></td>
+				<td>0명</td>
+				<td>28명</td>
+				<td>2명</td>
+				<td>0명</td>
+				<td>0명</td>
+				<td>30명</td>
+			</tr>
 		</table>
 
-		<script>
-		var rowCnt = 0
-		$(function() {
-		    $(document).on("dblclick", ".editable", function() {
-		        var value=$(this).text();
-		        var input="<input type='text' class='input-data tableInEdit' value='"+value+"' class='form-control'>";
-		        $(this).html(input);
-		        $(this).removeClass("editable");
-		    });
-		})
-		
-		function scoreDel(tar){
-		    var targetId = $($(tar).parent()).parent()[0].id;
-		    $("#" + targetId).remove();
-		}
-		
-		function scoreAdd() {
-		        var name = $("#name").val();
-		        var studyYearlist = $("#studyYearlist").val();
-		        var semesterlist = $("#semesterlist").val();
-		        var subjectNamelist = $("#subjectNamelist").val();
-		        var midtest = $("#midtest").val();
-		        var lasttest = $("#lasttest").val();
-		        var avg = $("#avg").val();
-		
-		        var resultStr = "<tr id=row" + rowCnt + ">";
-		        rowCnt++;
-		        resultStr += "<td>";
-		        resultStr += name;
-		        resultStr += "</td>";
-		
-		        resultStr += "<td>";
-		        resultStr += studyYearlist;
-		        resultStr+= "</td>";
-		
-		        resultStr+= "<td>";
-		        resultStr += semesterlist;
-		        resultStr+= "</td>";
-		
-		        resultStr+= "<td>";
-		        resultStr += subjectNamelist;
-		        resultStr+= "</td>";
-		
-		        resultStr+= "<td>";
-		        resultStr += midtest;
-		        resultStr+= "</td>";
-		
-		        resultStr+= "<td>";
-		        resultStr += lasttest;
-		        resultStr+= "</td>";
-		
-		        resultStr+= "<td>";
-		        resultStr += '<button type="button" onClick=scoreDel(this) class="btn btn-outline-primary me-2">삭제</button>';
-		        resultStr+= "</td>";
-		        resultStr+= "</tr>";
-		        $(".scoreInfo").before(resultStr);
-		        
-		        $("#name").val('');
-		        $("#studyYearlist").val('');
-		        $("#semesterlist").val('');
-		        $("#subjectNamelist").val('');
-		        $("#midtest").val('');
-		        $("#lasttest").val('');
-		    }
-		
-		</script>
-
-		<br>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적입력</button>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적조회</button>
-
 		<form>
-			<table class="table table-bordered" id="list_table">
+			<table class="table table-bordered">
 
 				<tr>
-					<td><input type='text' id="name" /></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
-					<td><div class="dropdown">
-							<button class="btn btn-primary dropdownMenuButton" type="button"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								style="border-color: rgb(255 255 255/ 50%) !important;">출석
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item">출석</a> <a class="dropdown-item">조퇴</a>
-								<a class="dropdown-item">지각</a> <a class="dropdown-item">결석</a>
-							</div>
-						</div></td>
+					<th>주간 출결 기록</th>
 
-					<td><a href="#" class="delete-link">삭제</a>
+
+
+					<th><div class="custom-control custom-checkbox mb-3">
+						<input class="custom-control-input" id="customCheck1"
+							type="checkbox" name='Attendance' value='selectall'
+						onclick='selectAll(this)'> <label class="custom-control-label"
+							for="customCheck1"> <span>일괄출석</span>
+						</label>
+					</div> </th>
+					<th><div class="custom-control custom-checkbox mb-3">
+						<input class="custom-control-input" id="customCheck2"
+							type="checkbox" name='Attendance2' value='selectall2'
+						onclick='selectAll(this)'> <label class="custom-control-label"
+							for="customCheck2"> <span>일괄출석</span>
+						</label>
+					</div> </th>
+					<th><div class="custom-control custom-checkbox mb-3">
+						<input class="custom-control-input" id="customCheck3"
+							type="checkbox" name='Attendance3' value='selectall3'
+						onclick='selectAll(this)'> <label class="custom-control-label"
+							for="customCheck3"> <span>일괄출석</span>
+						</label>
+					</div> </th>
+					<th><div class="custom-control custom-checkbox mb-3">
+						<input class="custom-control-input" id="customCheck4"
+							type="checkbox" name='Attendance4' value='selectall4'
+						onclick='selectAll(this)'> <label class="custom-control-label"
+							for="customCheck4"> <span>일괄출석</span>
+						</label>
+					</div> </th>
+					<th><div class="custom-control custom-checkbox mb-3">
+						<input class="custom-control-input" id="customCheck5"
+							type="checkbox" name='Attendance5' value='selectall5'
+						onclick='selectAll(this)'> <label class="custom-control-label"
+							for="customCheck5"> <span>일괄출석</span>
+						</label>
+					</div> </th>
 				</tr>
+				<tr>
+					<th>이름</th>
+					<th>월 04.11</th>
+					<th>화 04.12</th>
+					<th>수 04.13</th>
+					<th>목 04.14</th>
+					<th>금 04.15</th>
+				</tr>
+				<tr>
 
+					<td><input type='text' id="name" /></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="m" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t1" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="w" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t2" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="f" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+				<tr>
+					<td><input type='text' id="name" /></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="m" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t1" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="w" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t2" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="f" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+				<tr>
+					<td><input type='text' id="name" /></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="m" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t1" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="w" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t2" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="f" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+				<tr>
+					<td><input type='text' id="name" /></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="m" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t1" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="w" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t2" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="f" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+				<tr>
+					<td><input type='text' id="name" /></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="m" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t1" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="w" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="t2" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+					<td><input type='checkbox' name='Attendance'
+						value='Attendance' id="f" /><select>
+							<option value selected="출석">출석</option>
+							<option value="결석">결석</option>
+							<option value="지각">지각</option>
+							<option value="조퇴">조퇴</option>
+					</select></td>
+				</tr>
 			</table>
-			<button type="button" id="append_row"
-				class="btn btn-outline-primary btn-lg" onclick=addRow()>추가</button>
-
+			<button type="button" onclick="scoreAdd();"
+				class="btn btn-outline-primary btn-lg">추가</button>
 			<input type="submit" value="저장하기"
 				class="btn btn-outline-primary btn-lg">
-
 		</form>
 		<hr>
 	</div>
-	<script type="text/javascript">
-	
-function fn_addFile() {
-        $("#d_file").append(
-            "<br>" + "<input type='file' name='file"+cnt+"' />");
-        cnt++;
-    }
-		
-            function addRow() {
-                var el=document.getElementById('attendanceBtn');
-            }
-		$("#append_row").on("click",function(){
-    		$("#list_table").append(
-        		$("<tr>").append(
-            		$("<td>").append( $("#name").val() ),
-           		 	$("<td>").append( $("#dropdownMenuButton").val() ),
-            		$("<td>").append( $("#dropdownMenuButton2").val() ),
-            		$("<td>").append( $("#dropdownMenuButton3").val() ),
-            		$("<td>").append( $("#dropdownMenuButton4").val() ),
-            		$("<td>").append( $("#dropdownMenuButton5").val() ),
-            		//<td><a href="#" class="delete-link">삭제</a></td>
-           		 	$("<td>").append( $("<a>").prop("href","#").addClass("delete-link").append("삭제")
-            				)
-        				)
-    				);
-				});
 
-			//삭제
-			$("#list_table").on("click",".delete-link", function(){
-    		//a태그의 부모의 부모태그 (a-td-tr)
-    		$(this).parent().parent().remove();
-		});
-	</script>
-
-
-</body>
-</html>
+<!-- 
+	ShowAttendVOList 구조 설명
+ 	- ShowAttendVOList는 여러 개의 ShowAttendVO 객체로 구성된 List<ShowAttendVO> 배열 객체이다.
+ 	- ShowAttendVO객체는 String member_name(학생명), List<String> attend_status(출결상태), List<String> attend_time(출결시간)로 구성되어있다.
+ -->
+<table border="1">
+	<!-- ShowAttendVOList 안에 들어있는 ShowAttendVO 객체를 하나씩 대입 -->
+	<c:forEach var="showAttendVO" items="${ShowAttendVOList}">
+		<tr>
+			<th rowspan="2">${showAttendVO.member_name}</th>
+			<!-- 중첩 for문. ShowAttendVO 객체의 프로퍼티중 member_name은 String이지만, attend_status와 attend_time은 배열 객체기에 for문으로 탐색 가능. -->
+			<c:forEach var="attendVOStat" items="${showAttendVO.attend_status}">
+				<td>${attendVOStat}</td>	
+			</c:forEach>
+		</tr>
+		<tr>
+			<c:forEach var="attendVOTime" items="${showAttendVO.attend_time}">
+				<td>${attendVOTime}</td>	
+			</c:forEach>
+		</tr>
+	</c:forEach>

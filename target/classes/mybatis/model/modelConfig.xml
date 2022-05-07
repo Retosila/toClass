@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
-
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.bbt.toclass.member.vo.MemberVO"  alias="memberVO" />
+		<typeAlias type="com.bbt.toclass.member.vo.ClassVO"  alias="classVO" />
+		<typeAlias type="com.bbt.toclass.member.vo.ApplicantVO"  alias="applicantVO" />
+
+		<typeAlias type="com.bbt.toclass.attendance.vo.AttendDTO"  alias="attendDTO" />
+		<typeAlias type="com.bbt.toclass.attendance.vo.AttendVO"  alias="attendVO" />
+
+		<typeAlias type="com.bbt.toclass.schedule.vo.ScheduleVO"  alias="scheduleVO" />
+
 		<typeAlias type="com.bbt.toclass.myclass.vo.MyclassVO"  alias="myclassVO" />
 	</typeAliases>
 </configuration>

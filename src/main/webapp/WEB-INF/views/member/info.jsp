@@ -27,13 +27,13 @@
 
 <p> 식별번호 : ${member.member_id}</p>
 <p> 이메일 : ${member.member_email}</p>
-<p> 비밀번호 : ${member.member_pw}</p>
 <p> 이름 : ${member.member_name}</p>
 <p> 핸드폰 : ${member.member_phone}</p>
-<p> 회원유형 : ${member.member_type}</p>
+<p> 회원 유형 : ${member.member_type}</p>
 <p> 등록일 : ${member.member_regdate}</p>
 <p> 수정일 : ${member.member_moddate}</p>
+<p> 현 소속학급 : ${member.currentClass}</p>
 
-<button id="unregister" type="button" onclick="unregister()">회원탈퇴</button>
-</body>
+<button id="unregister" type="button" onclick="location.href='${contextPath}/member/myClass'">내 학급</button><br>
+<button id="unregister" type="button" onclick="unregister()">회원탈퇴</button><br></body>
 </html>

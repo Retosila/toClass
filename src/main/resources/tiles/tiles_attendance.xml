@@ -4,7 +4,7 @@
 "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 
-	<definition name="/attendance/attendance" extends="baseLayout">
+	<definition name="attendance" extends="baseLayout">
 	      <put-attribute name="title" value="출결입력" />
 	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
 	</definition>
@@ -13,5 +13,16 @@
 	      <put-attribute name="title" value="출결입력" />
 	      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance2.jsp" />
 	</definition>
+	
+	<definition name="baseLayout"  template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+   <definition name="attendance" extends="baseLayout">
+      <put-attribute name="title" value="출석" />
+      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
+   </definition>
 	
 </tiles-definitions>

@@ -146,10 +146,7 @@ request.setCharacterEncoding("UTF-8");
 			<ul class="navbar-nav ml-lg-auto">
 				<c:choose>
 					<c:when test="${logOn == true  && member!= null}">
-						<li class="nav-item"><a class="nav-link"
-							href="${contextPath}/myclass/teacher">학급 정보 <span
-								class="sr-only">(current)</span>
-						</a></li>
+						<a class="nav-link" href="${contextPath}/member/info">마이페이지
 						<li class="nav-item"><a class="nav-link"
 							href="${contextPath}/member/logout.do">로그아웃 <span
 								class="sr-only">(current)</span>
