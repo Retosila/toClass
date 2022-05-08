@@ -4,11 +4,11 @@
 	<!-- pom model의 버전 -->
 	<modelVersion>4.0.0</modelVersion>
 	<!-- 프로젝트를 생성하는 조직의 고유 아이디 설정  -->
-	<groupId>com.myspringEx</groupId>
+	<groupId>com.bbt</groupId>
 	<!-- 프로젝트 빌드시 파일 대표명  -->
-	<artifactId>myapp</artifactId>
+	<artifactId>toclass</artifactId>
 	<!-- 프로젝트의 이름 -->
-	<name>springEx</name>
+	<name>ToClass</name>
 	<!-- 패키징 유형. jar, war, ear등 -->
 	<packaging>war</packaging>
 	<!-- 현 프로젝트의 버전 -->
@@ -181,7 +181,7 @@
 			<artifactId>OracleDriver</artifactId>
 			<version>12.1.0.2.0</version>
 			<scope>system</scope>
-			<systemPath>C:/Users/User/Desktop/master/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
+			<systemPath>C:\Users\Aethersan\OneDrive\ktds\workspace\toClass\src\main\webapp\WEB-INF\lib\ojdbc6.jar</systemPath>
 		</dependency>
 	
 		<!-- org.apache.commons.io.FileUtil 관련 라이브러리 -->
