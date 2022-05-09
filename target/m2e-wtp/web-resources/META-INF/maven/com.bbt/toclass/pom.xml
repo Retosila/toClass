@@ -163,7 +163,7 @@
 			<artifactId>OracleDriver</artifactId>
 			<version>12.1.0.2.0</version>
 			<scope>system</scope>
-			<systemPath>C:\Users\Aethersan\OneDrive\ktds\workspace\toClass\src\main\webapp\WEB-INF\lib\ojdbc6.jar</systemPath>
+			<systemPath>D:\project\toClass\src\main\webapp\WEB-INF\lib\ojdbc6.jar</systemPath>
 		</dependency>
 		
 		<!-- org.apache.commons.io.FileUtil 관련 라이브러리 -->
