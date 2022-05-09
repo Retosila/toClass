@@ -221,7 +221,7 @@ th, td {
 					</c:forEach>
 					
 			
-			
+			  
 					 <td><div class="dropdown">
 							<button class="btn btn-primary dropdownMenuButton" type="button"
 								data-toggle="dropdown"
