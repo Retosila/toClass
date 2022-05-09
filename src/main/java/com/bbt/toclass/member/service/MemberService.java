@@ -60,11 +60,12 @@ public interface MemberService {
 
 	// 학급원 삭제 요청
 	int delMyStudent(String member_email, String class_id) throws Exception;
-	public MemberVO viewInfo(String email) throws Exception;
+	
+	MemberVO viewInfo(String email) throws Exception;
 
-	public int modMember(MemberVO memberVO) throws DataAccessException;
+	int modMember(MemberVO memberVO) throws DataAccessException;
 
-	public MemberVO updateDo(String email) throws Exception;
+	MemberVO updateDo(String email) throws Exception;
 
 	boolean checkPwDo(String member_email, String member_pw) throws Exception;
 

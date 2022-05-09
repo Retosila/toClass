@@ -11,9 +11,13 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
 	</definition>
 
-
-	<definition name="main" extends="baseLayout">
+	<definition name="main_teacher" extends="baseLayout">
 	      <put-attribute name="title" value="toClass" />
-	      <put-attribute name="body" value="/WEB-INF/views/main.jsp" />
+	      <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
+	</definition>
+	
+	<definition name="main_student" extends="baseLayout">
+	      <put-attribute name="title" value="toClass" />
+	      <put-attribute name="body" value="/WEB-INF/views/main_student.jsp" />
 	</definition>
 </tiles-definitions>

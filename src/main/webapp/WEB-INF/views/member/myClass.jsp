@@ -22,6 +22,19 @@
 		}
 	}
 	
+	// 코드 유효성 검증 (8글자여야만 버튼 활성화)
+	$(document).ready(function() {
+		$("#code_input").on("keyup", function() {
+			var cnt = $("#code_input").val();
+			if (cnt.length == 8) {
+				$('#apply_button').prop("disabled", false);
+			}
+			else {
+				$('#apply_button').prop("disabled", true);
+			}
+		})
+	});
+	
 </script>
 <style>
 th {
@@ -242,10 +255,10 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 				<p><b>***소속 학급이 존재하지 않습니다.***</b></p>
 				<p>생성된 학급에 가입해주세요!</p>
 				<form method="post" action="${contextPath}/member/applyClass.do">
-					<input type="text" name="class_code" placeholder="학급 가입코드를 입력해주세요."/>
+					<input id="code_input" type="text" name="class_code" placeholder="가입코드를 입력해주세요."/>
 					<br>
 					<br>
-					<button type="submit" class="bBtn06">학급 가입 신청</button>
+					<button id="apply_button" type="submit" class="bBtn06" disabled>학급 가입 신청</button>
 				</form>
 					<br>
 				<c:if test="${isPending == true}">

@@ -231,6 +231,36 @@ public class MemberServiceImpl implements MemberService {
 		return isUnregister;
 	}
 
+	@Override
+	public MemberVO viewInfo(String email) throws Exception{
+		return memberDAO.infoById(email);
+	}
+
+	@Override
+	public int modMember(MemberVO member) throws DataAccessException {
+		return memberDAO.updateMember(member);
+	}
+
+	@Override
+	public MemberVO updateDo(String email) throws Exception{
+		return memberDAO.updateById(email);
+	}
+
+	@Override
+	public boolean checkPwDo(String member_email, String member_pw) {
+		return memberDAO.checkPw(member_email,member_pw);
+	}
+	
+	/*
+	 * 
+	 * 
+	 *  
+	 *  학급 관리
+	 * 
+	 * 
+	 * 
+	 */
+	
 	// 내가 담당 중인 학급원 명단 요청
 	@Override
 	public List<MemberVO> getMyStudentList(String class_id) throws Exception {
@@ -392,35 +422,6 @@ public class MemberServiceImpl implements MemberService {
 
 		return result;
 	}
-	@Override
-	public MemberVO viewInfo(String email) throws Exception{
-		return memberDAO.infoById(email);
-	}
-
-	@Override
-	public int modMember(MemberVO member) throws DataAccessException {
-
-		return memberDAO.updateMember(member);
-
-	}
-
-	@Override
-	public MemberVO updateDo(String email) throws Exception{
-		return memberDAO.updateById(email);
-	}
-
-
-	@Override
-	public boolean checkPwDo(String member_email, String member_pw) {
-		return memberDAO.checkPw(member_email,member_pw);
-
-	}
-
-
-
-
-
-
-
-
+	
+	
 }

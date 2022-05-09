@@ -1,6 +1,5 @@
 package com.bbt.toclass.member.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,7 @@ public class MemberControllerImpl implements MemberController {
 	 */
 
 	// 로그인 페이지(/member/login.jsp)
-	@RequestMapping(value = { "/","/login"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {"/login"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
@@ -113,6 +112,30 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
+	// 메인페이지 (/main_student.jsp 및 /main_teacher.jsp)
+	@RequestMapping(value = {"/", "/main"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public String main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		logger.info("메인 페이지 요청");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String member_type = member.getMember_type();
+		
+		// 회원타입에 따라 다른 메인페이지로 분기
+		if (member_type.equals("교사")) {
+			return "main_teacher";
+		}
+		
+		else if (member_type.equals("학생")) {
+			return "main_student";
+		}
+		
+		else {
+			return "admin";
+		}
+	}
+	
 	// 계정 찾기 페이지(/member/findAccount.jsp)
 	@RequestMapping(value = "/member/findAccount", method = RequestMethod.GET)
 	public String findAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -222,94 +245,49 @@ public class MemberControllerImpl implements MemberController {
 
 	// 회원정보 페이지(/member/info.jsp)
 	@RequestMapping(value= "/info", method= {RequestMethod.POST, RequestMethod.GET} )
-	public ModelAndView infoDo( @RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView info(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		MemberVO member = memberService.viewInfo(email);
-
+		logger.info("마이페이지 요청 : " + member.getCurrentClass());
+		
 		mav.setViewName("info");
 		mav.addObject("member", member);
 		return mav;
-
+		
 	}
+	
+	// 회원정보 수정페이지(/member/infoUpdate.jsp)
 	@RequestMapping(value= "/member/infoUpdate", method= {RequestMethod.POST, RequestMethod.GET} )
-	public ModelAndView updateDo(@RequestParam("email") String email,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView infoUpdate(@RequestParam("email") String email,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("updateDo 컨트롤러 실행");
 		ModelAndView mav = new ModelAndView();
-
+		
 		MemberVO member = memberService.updateDo(email);
 		mav.setViewName("/member/infoUpdate");
 		mav.addObject("member", member);
-
-		return mav;
-	}
-	@Override
-	@RequestMapping(value="/member/modMember.do" , method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView modMember(@ModelAttribute MemberVO member,
-								  HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		System.out.println("modMember 컨트롤러 실행");
-		System.out.println( member.getMember_pw());
-		String email = member.getMember_email();
-		String id = member.getMember_id();
-		System.out.println( member.getMember_email());
-		System.out.println( member.getMember_id());
-		int result = memberService.modMember(member);
-		System.out.println("회원정보 수정 여부 : " + result);
-
-		System.out.println("수정된 계정정보 : " + email);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/info?email="+email);
-		//mav.setViewName("redirect:/member/info?id="+member.getId());
+		
 		return mav;
 	}
 
-
-
-
-	@RequestMapping(value = "/member/checkPw.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView checkPwDo(@RequestParam("member_pw") String member_pw,
-								  HttpSession session, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		System.out.println("checkPwDo 컨트롤러 실행");
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		String member_email = member.getMember_email();
-		System.out.println(member_email);
-
-		ModelAndView mav = new ModelAndView();
-
-		boolean result = memberService.checkPwDo(member_email,member_pw);
-		System.out.println(result);
-		if(result == true) {
-			mav.setViewName("/member/infoUpdate");
-		}else {
-			rAttr.addFlashAttribute("result","pwCheckFailed");
-			mav.setViewName("redirect:/member/checkPw");
-		}
-
-		return mav;
-	}
-
-
-
+	// 패스워드 체크 페이지 (/member/checkPw.jsp)
 	@RequestMapping(value = "/member/checkPw", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView checkPw(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		ModelAndView mav = new ModelAndView();
-
+		
 		mav.setViewName("/member/checkPw");
-
+		
 		if (RequestContextUtils.getInputFlashMap(request) != null) {
 			Map<String, ?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 			String result = (String)redirectMap.get("result");
 			logger.info("result : " + result);
 			mav.addObject("result", result);
 		}
-
+		
 		return mav;
 	}
+	
 	// 학급관리 페이지(/member/myClass.jsp)
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/member/myClass", method = {RequestMethod.GET, RequestMethod.POST})
@@ -332,12 +310,12 @@ public class MemberControllerImpl implements MemberController {
 		if (currentClass != null || currentClass != "") {
 			logger.info("학급 정보 존재 : " + currentClass);
 			logger.info("회원유형 : " + member_type);
-
+				
 			logger.info("비즈니스 로직 요청 : getMyClassInfo");
 			ClassVO myClass = memberService.getMyClassInfo(currentClass);
 			logger.info("비즈니스 로직 성공 : getMyClassInfo");
 			mav.addObject("myClass", myClass);
-
+				
 			// 교사 회원인 경우
 			if (member_type.equals("교사")) {
 				// 교사가 현재 담당 중인 학급의 구성원 정보를 List에 담은 후 데이터 바인딩
@@ -358,7 +336,7 @@ public class MemberControllerImpl implements MemberController {
 					logger.info("가입 승인 대기 중인 학생 없음 ");
 				}
 			}
-
+				
 			// 학생 회원인 경우
 			else if (member_type.equals("학생")) {
 				// 가입 승인 대기 여부 확인용 데이터 바인딩
@@ -392,7 +370,6 @@ public class MemberControllerImpl implements MemberController {
 
 		return mav;
 	}
-
 
 
 	/*
@@ -565,7 +542,6 @@ public class MemberControllerImpl implements MemberController {
 
 	}
 
-
 	// 회원가입 버튼 : 회원정보 DB에 insert 및 로그인 요청
 	@Override
 	@RequestMapping(value = "/member/register.do", method = RequestMethod.POST)
@@ -645,10 +621,65 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
+	@Override
+	@RequestMapping(value="/member/modMember.do" , method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView modMemberDo(@ModelAttribute MemberVO member,
+								  HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		System.out.println("modMember 컨트롤러 실행");
+		System.out.println( member.getMember_pw());
+		String email = member.getMember_email();
+		String id = member.getMember_id();
+		System.out.println( member.getMember_email());
+		System.out.println( member.getMember_id());
+		int result = memberService.modMember(member);
+		System.out.println("회원정보 수정 여부 : " + result);
+		
+		System.out.println("수정된 계정정보 : " + email);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/info?email="+email);
+		//mav.setViewName("redirect:/member/info?id="+member.getId());
+		return mav;
+	}
+
+	@RequestMapping(value = "/member/checkPw.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView checkPwDo(@RequestParam("member_pw") String member_pw,
+								  HttpSession session, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		System.out.println("checkPwDo 컨트롤러 실행");
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String member_email = member.getMember_email();
+		System.out.println(member_email);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		boolean result = memberService.checkPwDo(member_email,member_pw);
+		System.out.println(result);
+		
+		if(result == true) {
+			mav.setViewName("/member/infoUpdate");
+		}
+		else {
+			rAttr.addFlashAttribute("result","pwCheckFailed");
+			mav.setViewName("redirect:/member/checkPw");
+		}
+		
+		return mav;
+	}
+	
+	
+	
+	
 
 	/*
 	 *
+	 *
+	 *
 	 * 학급 관리 관련
+	 *
+	 * 
 	 *
 	 */
 

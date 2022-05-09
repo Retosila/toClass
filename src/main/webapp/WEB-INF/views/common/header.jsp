@@ -37,11 +37,8 @@
      class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
     <div class="container" stlye="text-align: left;">
 
-        <div class="navbar-brand " href="${contextPath}/main.do"
-             style="color: #0065FF; font-family: 'Product sans bold';">
-
+        <div class="navbar-brand" style="color: #0065FF; font-family: 'Product sans bold';" onclick="location.href='${contextPath}/main'">
             <i class="ni ni-chat-round"></i> <a>to</a><a style="font-size: 1px">Cla</a><a>ss</a>
-
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbar_global" aria-controls="navbar_global"
@@ -52,8 +49,8 @@
             <div class="navbar-collapse-header">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a class="navbar-brand" href="${contextPath}/main.do"><img
-                                src="${contextPath}/assets/img/brand/logo3.png" style="height: 60px;"></a>
+                        <a class="navbar-brand"><img src="${contextPath}/assets/img/brand/logo3.png" style="height: 60px;">
+                        </a>
                     </div>
                     <div class="col-6 collapse-close">
                         <button type="button" class="navbar-toggler"

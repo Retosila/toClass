@@ -22,6 +22,14 @@ public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
+	/*
+	 * 
+	 * 
+	 * 회원관리
+	 * 
+	 * 
+	 */
+	
 	@Override
 	public MemberVO loginByEmail(MemberVO member) throws DataAccessException{
 		logger.info("myBatis에게 쿼리 요청 : loginByEmail : " + member.getMember_email());
@@ -91,6 +99,48 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	@Override
+	public MemberVO infoById(String email) throws DataAccessException{
+		MemberVO vo = sqlSession.selectOne("mapper.member.infoByEmail", email);
+		logger.info(vo.getCurrentClass());
+		return vo;
+	}
+
+	@Override
+	public int updateMember(MemberVO memberVO) throws DataAccessException{
+		System.out.println("memberDAO.updateMember 메소드 실행 성공");
+		int result= sqlSession.update("mapper.member.updateMember", memberVO);
+		System.out.println("쿼리문 실행 성공");
+		return result;
+
+	}
+
+	@Override
+	public MemberVO updateById(String email) throws DataAccessException{
+		MemberVO vo = sqlSession.selectOne("mapper.member.updateById",email);
+		return vo;
+	}
+
+	@Override
+	public boolean checkPw(String member_email,String member_pw) {
+		boolean result = false;
+		Map<String, String> map= new HashMap<String, String>();
+		map.put("member_email", member_email);
+		map.put("member_pw", member_pw);
+		int count = sqlSession.selectOne("mapper.member.checkPw",map);
+		if(count==1) result=true;
+		return result;
+	}
+	
+	/*
+	 * 
+	 * 
+	 * 학급 관리
+	 * 
+	 * 
+	 */
+	
+	
 	@Override
 	public List<MemberVO> getMyStudentList(String class_id) throws DataAccessException{
 		// 교사 이메일 정보를 사용하여 교사의 담당학급에 소속된 학생들의 이메일 정보를 추출
@@ -209,7 +259,7 @@ public class MemberDAOImpl implements MemberDAO {
 		logger.info("회원이메일 : " + email);
 		logger.info("회원연락처 : " + phone);
 		// 매칭되는 클래스 id존재 시, class_applicant 테이블에
-		if (class_id != null || class_id != "") {
+		if (class_id != null) {
 			// ApplicantVO 객체에 값 저장
 			ApplicantVO avo = new ApplicantVO();
 			avo.setClass_id(class_id);
@@ -309,37 +359,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
-	@Override
-	public MemberVO infoById(String email) throws DataAccessException{
-		MemberVO vo = sqlSession.selectOne("mapper.member.infoById",email);
-		return vo;
-	}
 
-	@Override
-	public int updateMember(MemberVO memberVO) throws DataAccessException{
-		System.out.println("memberDAO.updateMember 메소드 실행 성공");
-		int result= sqlSession.update("mapper.member.updateMember", memberVO);
-		System.out.println("쿼리문 실행 성공");
-		return result;
-
-	}
-
-	@Override
-	public MemberVO updateById(String email) throws DataAccessException{
-		MemberVO vo = sqlSession.selectOne("mapper.member.updateById",email);
-		return vo;
-	}
-
-	@Override
-	public boolean checkPw(String member_email,String member_pw) {
-		boolean result = false;
-		Map<String, String> map= new HashMap<String, String>();
-		map.put("member_email", member_email);
-		map.put("member_pw", member_pw);
-		int count = sqlSession.selectOne("mapper.member.checkPw",map);
-		if(count==1) result=true;
-		return result;
-	}
 
 
 
