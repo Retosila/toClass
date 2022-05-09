@@ -1,28 +1,4 @@
-/**
- * Ligne Paginatejs
- *
- * Autor: Albert Eduardo Hidalgo Taveras
- * Github: https://github.com/itsalb3rt
- *
- * El propósito de esta liberia es proporcionar una herramienta sin
- * dependencias de Frameworks o otras dependencias molestas.
- *
- * Con unas pocas configuraciones esto es capaz de arrancar y liberarlo de mucho trabajo.
- *
- * *
- * Ejemplo:
- * let options = {
- *       numberPerPage:5,
- *       goBar:false,
- *       pageCounter:false,
- * };
- *
- * let filterOptions = {
- *      el:'#searchBox'
- * };
- *
- * paginate.init('.myTable',options,filterOptions);
- **/
+
 
 (function(window){
     'use strict';
@@ -202,7 +178,8 @@
              *
              * Tambien se encarga de agregar el boton de "gotopage" y "pagecounter"
              **/
-            let buttons = "<input type='button' value='← prev' class='paginate_control_prev' onclick='paginate.sort("+(currentPage - 1)+")' "+prevDisabled+">";
+
+            let buttons = "<input type='button' value='<' class='paginate_control_prev' onclick='paginate.sort("+(currentPage - 1)+")' "+prevDisabled+">";
             let buttonNumberOfPage = "<input type='button' value='" + currentPage + ' - ' + numberOfPage + "' disabled>";
 
             for (let $i=1; $i<=numberOfPage;$i++){
@@ -213,14 +190,12 @@
                 }
             }
 
-            let nextButton = "<input type='button' value='next →' class='paginate_control_next' onclick='paginate.sort("+(currentPage + 1)+")' "+nextDisabled+">";
+            let nextButton = "<input type='button' value='>' class='paginate_control_next' onclick='paginate.sort("+(currentPage + 1)+")' "+nextDisabled+">";
             buttons +=  nextButton;
 
-            if(settings.pageCounter)
-                buttons += buttonNumberOfPage;
 
-            if(settings.goBar)
-                buttons += addGoToPage();
+
+
 
             return buttons;
         }
@@ -284,7 +259,7 @@
                 for ($i = $j,$ii = 0; $i < rowCount; $i++, $ii++)
                     tr[$ii] = table.rows[$i].outerHTML;
                 // Contenedor de los botones "paginate_controls"
-                table.insertAdjacentHTML("afterend","<div id='buttons' class='paginate paginate_controls'></div");
+                table.insertAdjacentHTML("afterend","<div id='buttons' style='text-align: center;' class='paginate paginate_controls'></div");
                 // Inicializando la tabla en la pagina 1
                 _lignePaginate.sort(1);
             }else{
@@ -293,10 +268,7 @@
         };
 
         _lignePaginate.sort = function(selectedPageNumber) {
-            /** crea (filas) una variable para contener el grupo de filas
-             * para ser mostrado en la página seleccionada,
-             * startPoint: la primera fila en cada página, Do The Math
-             **/
+
             let rows = th,startPoint = ((settings.numberPerPage * selectedPageNumber)-settings.numberPerPage);
             for (let $i = startPoint; $i < (startPoint+settings.numberPerPage) && $i < tr.length; $i++)
                 rows += tr[$i];

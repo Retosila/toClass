@@ -19,6 +19,7 @@
 
     <script src="${contextPath}/assets/js/paginate.js"
             type="text/javascript"></script>
+
     <script>
         function fn_articleForm(logOn, articleForm, login) {
             if (logOn != '' && logOn != 'false') {
@@ -41,7 +42,7 @@
 
     <table class="myTable table hover">
         <thead>
-        <tr>
+        <tr class="header" style="text-align: center;">
             <th>번호</th>
 
             <th>제목</th>
@@ -51,6 +52,7 @@
             <th class="text-center">추천</th>
 
         </tr>
+
         </thead>
         <tbody>
         <c:choose>
@@ -89,22 +91,28 @@
                         <td width="7%"></td>
 
                     </tr>
+
                 </c:forEach>
+
             </c:when>
         </c:choose>
 
         </tbody>
+
     </table>
 
-    <div class="input-group col-1">
-    <input type="search" id="searchBox" placeholder="검색">
+
+<div class="row">
+    <div class="input-group col-3">
+        <input class="form-control" type="search" id="searchBox" placeholder="검색">
     </div>
-    <div class="col-12" align="right">
+    <div class="col-9" align="right">
 
         <a href="javascript:fn_articleForm('${logOn}','${contextPath}/board/articleForm.do','${contextPath}/login')">
             <button type="button" class="btn btn-default btn-round ">글쓰기</button>
         </a>
     </div>
+</div>
 </div>
 
 
@@ -113,7 +121,7 @@
 <script>
 
     let options = {
-        numberPerPage: 5, //Cantidad de datos por pagina
+        numberPerPage: 10, //Cantidad de datos por pagina
         goBar: true, //Barra donde puedes digitar el numero de la pagina al que quiere ir
         pageCounter: true, //Contador de paginas, en cual estas, de cuantas paginas
     };

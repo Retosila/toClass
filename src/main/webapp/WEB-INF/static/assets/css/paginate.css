@@ -6,18 +6,39 @@ div.paginate input[type='button']:hover{
     cursor: pointer;
 }
 div.paginate input[type='button']{
-    margin: 0px 2px;
-    border: none;
-    color: #03A9F4;
-    background-color: transparent;
-    border-radius: 50%;
+
+    border: .0625rem solid #dee2e6;
+    color: #8898aa;
+    background-color: #fff;
+
     min-width: 1.5rem;
     min-height: 1.5rem;
     outline: none;
+
+
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 3px;
+    border-radius: 50%!important;
+    width: 36px;
+    height: 36px;
+    font-size: .875rem;
+
+}
+div.paginate input[type='button']:hover{
+    z-index: 2;
+    color: #8898aa;
+    text-decoration: none;
+    background-color: #dee2e6;
+    border-color: #dee2e6;
 }
 
+
+
+
 div.paginate input[type='button'].active{
-    background-color: #17a2b8;
+    background-color: #0065FF;
     color: #fff;
     font-weight: bold;
 }
@@ -32,4 +53,6 @@ div.paginate input[type='number']#paginate_page_to_go{
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 0.65);
     padding: 3px;
+
+
 }
