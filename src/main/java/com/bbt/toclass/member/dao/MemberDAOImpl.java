@@ -1,5 +1,8 @@
 package com.bbt.toclass.member.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,5 +81,46 @@ public class MemberDAOImpl implements MemberDAO {
 		logger.info(result + "개의 회원 레코드 삭제");
 		return result;
 	}
+	
+	@Override
+	public MemberVO infoById(String email) throws DataAccessException{
+		MemberVO vo = sqlSession.selectOne("mapper.member.infoById",email);
+		return vo;
+	}
+	
+	@Override
+	public int updateMember(MemberVO memberVO) throws DataAccessException{
+		System.out.println("memberDAO.updateMember 메소드 실행 성공");
+		int result= sqlSession.update("mapper.member.updateMember", memberVO); 
+		System.out.println("쿼리문 실행 성공");
+		return result;
+		
+	}
+	
+	@Override
+	public MemberVO updateById(String email) throws DataAccessException{
+		MemberVO vo = sqlSession.selectOne("mapper.member.updateById",email);
+		return vo;
+	}
+	
+	@Override
+	public boolean checkPw(String member_email,String member_pw) {
+		boolean result = false;
+		Map<String, String> map= new HashMap<String, String>();
+		map.put("member_email", member_email);
+		map.put("member_pw", member_pw);
+		int count = sqlSession.selectOne("mapper.member.checkPw",map);
+		if(count==1) result=true;
+		return result;
+	}
+	
+	
+	
+
+	
+
+	
+	
+	
 	
 }

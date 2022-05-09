@@ -30,7 +30,7 @@ public interface MemberController {
 	ModelAndView register_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPolicy(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPersonal(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+	//ModelAndView classDo(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	// 로직
 	ModelAndView loginDo(@ModelAttribute MemberVO member,
 			RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -41,6 +41,9 @@ public interface MemberController {
 	ModelAndView unregisterDo(RedirectAttributes rAttr, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	ModelAndView findAccountDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
 	ModelAndView findPwDo(@RequestBody @ModelAttribute MemberVO member) throws Exception;
+	ModelAndView modMember(MemberVO member, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	
 	
 	// interwork test
 }

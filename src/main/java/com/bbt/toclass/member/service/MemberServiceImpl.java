@@ -3,6 +3,7 @@ package com.bbt.toclass.member.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.bbt.toclass.member.controller.MemberControllerImpl;
@@ -217,4 +218,33 @@ public class MemberServiceImpl implements MemberService {
 		return isUnregister;
 	}
 	
+	@Override
+	public MemberVO viewInfo(String email) throws Exception{
+		return memberDAO.infoById(email);
+	}
+	
+	@Override
+	public int modMember(MemberVO member) throws DataAccessException {
+		
+		 return memberDAO.updateMember(member);
+		
+	}
+
+	@Override
+	public MemberVO updateDo(String email) throws Exception{
+		return memberDAO.updateById(email);
+	}
+	
+	
+	@Override
+	public boolean checkPwDo(String member_email, String member_pw) {
+		 return memberDAO.checkPw(member_email,member_pw);
+			
+	}
+	
+	
+	
 }
+	
+	
+

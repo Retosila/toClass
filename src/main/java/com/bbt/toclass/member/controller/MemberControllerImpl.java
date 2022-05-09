@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,7 +69,7 @@ public class MemberControllerImpl implements MemberController {
 		if (logOn) {
 			logger.info("logOn : " + logOn);
 			logger.info("이미 로그온된 회원 : " + logOnMember.getMember_email());
-			mav.setViewName("/member/info");
+			mav.setViewName("/info");
 			return mav;
 		}
 		else {
@@ -370,7 +371,7 @@ public class MemberControllerImpl implements MemberController {
 	@RequestMapping(value = "/member/register.do", method = RequestMethod.POST)
 	public void registerDo(@ModelAttribute MemberVO member, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8"); 
-		//response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
 		logger.info("회원가입 요청");
 		logger.info("이메일 : " + member.getMember_email());
@@ -443,5 +444,133 @@ public class MemberControllerImpl implements MemberController {
 		}
 		return mav;
 	}
+	
+	
+	
+	
+	@RequestMapping(value= "/info", method= {RequestMethod.POST, RequestMethod.GET} )
+	public ModelAndView infoDo( @RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		MemberVO member = memberService.viewInfo(email);
+		
+		mav.setViewName("info");
+		mav.addObject("member", member);
+		return mav;
+		
+	}
+	
+	@RequestMapping(value= "/member/infoUpdate", method= {RequestMethod.POST, RequestMethod.GET} )
+	public ModelAndView updateDo(@RequestParam("email") String email,HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("updateDo 컨트롤러 실행");
+		ModelAndView mav = new ModelAndView();
+	
+		MemberVO member = memberService.updateDo(email);
+		mav.setViewName("/member/infoUpdate");
+		mav.addObject("member", member);
+		
+		return mav;
+	}
+	@Override
+	@RequestMapping(value="/member/modMember.do" , method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView modMember(@ModelAttribute MemberVO member,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		System.out.println("modMember 컨트롤러 실행");
+		System.out.println( member.getMember_pw());
+		String email = member.getMember_email();
+		String id = member.getMember_id();
+		System.out.println( member.getMember_email());
+		System.out.println( member.getMember_id());
+			int result = memberService.modMember(member);
+			System.out.println("회원정보 수정 여부 : " + result);
+			
+			System.out.println("수정된 계정정보 : " + email);
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:/info?email="+email);
+			//mav.setViewName("redirect:/member/info?id="+member.getId());
+			return mav;
+	}
+	
+	
+	
+//	@RequestMapping(value = "/member/myClass.do", method = {RequestMethod.POST, RequestMethod.GET})
+//	public ModelAndView classDo(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		request.setCharacterEncoding("UTF-8"); 
+//		response.setContentType("text/html; charset=UTF-8");
+//
+//		ModelAndView mav = new ModelAndView();
+//		
+//		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+//		String member_type = memberVO.getMember_type();
+//		
+//		System.out.println(member_type);
+//		    
+//	    if (member_type.equals("교사")) {
+//	    	mav.setViewName("/member/myclass_teacher");
+//	    }
+//	    else if (member_type.equals("학생")) {
+//	    	mav.setViewName("/member/myclass_student");
+//	    }
+//		    
+//		return mav;	
+//	}
+	
+	@RequestMapping(value = "/member/checkPw.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView checkPwDo(@RequestParam("member_pw") String member_pw,
+			HttpSession session, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		System.out.println("checkPwDo 컨트롤러 실행");
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String member_email = member.getMember_email();
+		System.out.println(member_email);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		boolean result = memberService.checkPwDo(member_email,member_pw);
+		System.out.println(result);
+		if(result == true) {
+			mav.setViewName("/member/infoUpdate");
+		}else {
+			 rAttr.addFlashAttribute("result","pwCheckFailed");
+			   mav.setViewName("redirect:/member/checkPw");
+		}
+		
+		return mav;
+	}
+	
+//	@RequestMapping(value= "/member/checkPw", method= {RequestMethod.POST, RequestMethod.GET} )
+//	public ModelAndView checkPw(@RequestParam("id") String id,HttpServletRequest request, HttpServletResponse response) throws Exception{
+//		System.out.println("updateDo 컨트롤러 실행");
+//		ModelAndView mav = new ModelAndView();
+//	
+//		MemberVO member = memberService.updateDo(id);
+//		mav.setViewName("/member/infoUpdate");
+//		mav.addObject("member", member);
+//		
+//		return mav;
+//	}	
+	
+	@RequestMapping(value = "/member/checkPw", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView checkPw(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+        ModelAndView mav = new ModelAndView();
+        
+    	mav.setViewName("/member/checkPw");   
+    	
+		if (RequestContextUtils.getInputFlashMap(request) != null) {
+			Map<String, ?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+			String result = (String)redirectMap.get("result");
+			logger.info("result : " + result);
+			mav.addObject("result", result);
+		}
+    	
+		return mav;	
+	}
+
+	
+
 
 }

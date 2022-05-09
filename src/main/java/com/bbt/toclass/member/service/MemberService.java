@@ -1,5 +1,7 @@
 package com.bbt.toclass.member.service;
 
+import org.springframework.dao.DataAccessException;
+
 import com.bbt.toclass.member.vo.MemberVO;
 
 public interface MemberService {
@@ -24,4 +26,18 @@ public interface MemberService {
 	
 	// 비밀번호 찾기
 	String findPw(MemberVO member) throws Exception;
+	
+	public MemberVO viewInfo(String email) throws Exception;
+	
+	public int modMember(MemberVO memberVO) throws DataAccessException;
+	
+	public MemberVO updateDo(String email) throws Exception;
+
+	boolean checkPwDo(String member_email, String member_pw) throws Exception;
+	
+
+
+	
+
+
 }

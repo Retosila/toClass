@@ -57,5 +57,40 @@
 	]]>
   </delete>
   
+  <select id="infoById" resultType="memberVO"   parameterType="String" >
+		<![CDATA[
+		select * from member	
+		where member_email=#{member_email} 	
+		]]> 	
+  </select>
+  
+  <update id="updateMember" parameterType="memberVO" >
+  	 <![CDATA[
+		update member 
+		set member_pw=#{member_pw},
+	    	member_phone=#{member_phone},
+	    	member_moddate=sysdate
+		where member_email = #{member_email}
+			]]> 			
+	</update>
+	
+	 <select id="updateById" resultType="memberVO"   parameterType="String" >
+		<![CDATA[
+		select * from member	
+		where member_email=#{member_email} 	
+		]]> 	
+  </select>
+  
+   <select id="checkPw"  resultType="int" parameterType="hashMap" >
+	<![CDATA[
+		select count(*) from member
+		where member_email=#{member_email} and member_pw=#{member_pw}
+	]]> 
+
+  </select>
+   
+	
+  
+  
   
 </mapper>

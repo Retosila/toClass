@@ -23,9 +23,28 @@
       <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
    </definition>
    
-      <definition name="/member/info" extends="baseLayout">
+      <definition name="info" extends="baseLayout">
       <put-attribute name="title" value="내 정보" />
       <put-attribute name="body" value="/WEB-INF/views/member/info.jsp" />
    </definition>
+    
+    <definition name="/member/infoUpdate" extends="baseLayout">
+      <put-attribute name="title" value="내 정보 수정페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/member/infoUpdate.jsp" />
+   </definition>
    
+   <definition name="/member/myclass_student" extends="baseLayout">
+      <put-attribute name="title" value="내 정보 수정페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/member/myclass_student.jsp" />
+   </definition>
+   
+   <definition name="/member/myclass_teacher" extends="baseLayout">
+      <put-attribute name="title" value="내 정보 수정페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/member/myclass_teacher.jsp" />
+   </definition>
+   
+    <definition name="/member/checkPw" extends="baseLayout">
+      <put-attribute name="title" value="내 정보 수정페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/member/checkPw.jsp" />
+   </definition>
 </tiles-definitions>

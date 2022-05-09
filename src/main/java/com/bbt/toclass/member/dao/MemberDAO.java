@@ -17,4 +17,19 @@ public interface MemberDAO {
 	MemberVO findAccount(MemberVO member) throws DataAccessException;
 	
 	MemberVO getMemberInfo(MemberVO member) throws DataAccessException;
+	
+	public MemberVO infoById(String email) throws DataAccessException;
+	
+	public int updateMember(MemberVO memberVO)throws DataAccessException;
+	
+	public MemberVO updateById(String email) throws DataAccessException;
+
+	boolean checkPw(String member_email, String member_pw) throws DataAccessException;
+
+
+	
+	
+
+	
+	
 }
