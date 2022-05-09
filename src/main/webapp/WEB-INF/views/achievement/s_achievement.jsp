@@ -10,27 +10,6 @@ request.setCharacterEncoding("UTF-8");
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="apple-touch-icon" sizes="76x76"
-	href="./assets/img/apple-icon.png">
-<link rel="icon" type="image/png" href="./assets/img/favicon.png">
-<title>Argon Design System by Creative Tim</title>
-<!--     Fonts and icons     -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
-	rel="stylesheet">
-<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-	rel="stylesheet">
-<!-- Nucleo Icons -->
-<link href="${contextPath}/assets/css/nucleo-icons.css" rel="stylesheet" />
-<link href="${contextPath}/assets/css/nucleo-svg.css" rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<link href="${contextPath}/assets/css/font-awesome.css" rel="stylesheet" />
-<link href="${contextPath}/assets/css/nucleo-svg.css" rel="stylesheet" />
 
 <style>
 .bd-placeholder-img {
@@ -68,27 +47,13 @@ select {
 	height: 30px;
 }
 </style>
-</head>
-</head>
-<body>
-	<script src="${contextPath}/assets/js/core/jquery.min.js"
-		type="text/javascript"></script>
-	<script src="${contextPath}/assets/js/core/popper.min.js"
-		type="text/javascript"></script>
-	<script
-		src="${contextPath}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-	<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-	<script src="${contextPath}/assets/js/plugins/bootstrap-switch.js"></script>
-	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-	<script src="${contextPath}/assets/js/plugins/nouislider.min.js"
-		type="text/javascript"></script>
-	<script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
-	<script src="${contextPath}/assets/js/plugins/datetimepicker.js"
-		type="text/javascript"></script>
 
-	<div class="container">
+
+<body>
+
+
+	<div class="container pt-5 pb-5">
 		<form action="achievement" align="left">
-			<label for="studyName">이름</label> <input type="text" id="studyName">
 			<label for="studyYear">학년</label> <select id="studyYear">
 				<option value="" selected>전체</option>
 				<option value="3학년">3학년</option>
@@ -121,74 +86,40 @@ select {
 				<col style="width: 2%; height: 10%;">
 				<col style="width: 2%; height: 10%;">
 				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
 			</colgroup>
 
 			<thead>
 				<tr>
 					<th>이름</th>
-					<th>학년</th>
-					<th>학기</th>
 					<th>교과명</th>
 					<th>중간고사</th>
 					<th>기말고사</th>
 					<th>평균</th>
 					<th>석차</th>
 					<th>등급</th>
-					<th>전체평균</th>
-					<th>수정 사유</th>
-					<th>추가 / 삭제</th>
+					<th>학년</th>
+					<th>학기</th>
+
 				</tr>
 			</thead>
 			<tbody class='scoreInfo'>
-				<tr>
-					<td><input type='text' class='input-data tableInEdit'
-						id="name" value='' class='form-control'></td>
-					<td><select id="studyYearlist">
-							<option value="" selected>학년</option>
-							<option value="3학년">3학년</option>
-							<option value="2학년">2학년</option>
-							<option value="1학년">1학년</option>
-					</select></td>
-					<td><select id="semesterlist">
-							<option value="" selected>학기</option>
-							<option value="1학기">1학기</option>
-							<option value="2학기">2학기</option>
-					</select></td>
-					<td><select id="subjectNamelist">
-							<option value="" selected>과목명</option>
-							<option value="국어">국어</option>
-							<option value="영어">영어</option>
-							<option value="수학">수학</option>
-							<option value="사회">사회</option>
-							<option value="과학">과학</option>
-					</select></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="midtest" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="lasttest" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit' id="avg"
-						value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="rank" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="score" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="total" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit' id="re"
-						value='' class='form-control'></td>
-					<td>
-						<button type="button" onclick="scoreAdd();"
-							class="btn btn-outline-primary me-2">추가</button>
-					</td>
-				</tr>
+				<c:forEach var="achievement" items="${achievement}">
+					<tr>
+					<!-- 틀에 맞춰서 값이 나오게... -->
+						<td>${member.member_name}</td>
+						<td>${achievement.subject_name}</td>
+						<td>${achievement.achievement_mid}</td>
+						<td>${achievement.achievement_final}</td>
+						<td>${achievement.achievement_avg}</td>
+						<td>${achievement.achievement_rank}</td>
+						<td>${achievement.achievement_grade}</td>
+						<td>${achievement.achievement_year}</td>
+						<td>${achievement.achievement_semester}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<br>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적
-			입력</button>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적
-			조회</button>
 
 	</div>
 
@@ -294,17 +225,11 @@ select {
 		}
 	</script>
 
-	<!--  Google Maps Plugin    -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-	<script>
-		window.TrackJS && TrackJS.install({
-			token : "ee6fab19c5a04ac1a32a645abde4613a",
-			application : "argon-design-system-pro"
-		});
-	</script>
+
+						<button class="btn btn-outline-primary btn-lg" type="submit">성적
+			조회</button>
 </body>
 </html>
-</body>
-</html>
+
+
 

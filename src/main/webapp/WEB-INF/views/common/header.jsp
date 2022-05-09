@@ -88,8 +88,8 @@
                         class="nav-link-inner--text">성적</span>
                 </a>
                     <div class="dropdown-menu">
-                        <a href="${contextPath}/achievement/achievement"
-                           class="dropdown-item">성적분석</a> <a href="./examples/profile.html"
+                        <a href="${contextPath}/achievement/s_achievement"
+                           class="dropdown-item">성적분석</a> <a href="${contextPath}/achievement/t_achievement"
                                                              class="dropdown-item">성적분석</a>
                     </div>
                 </li>

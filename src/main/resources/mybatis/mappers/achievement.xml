@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.achievement">
+
+	<resultMap id="achievementResult" type="achievementVO">
+        <result property="achievement_id" column="achievement_id" />
+        <result property="member_email" column="member_email" />
+        <result property="subject_name" column="subject_name" />
+        <result property="achievement_mid" column="achievement_mid" />
+        <result property="achievement_final" column="achievement_final" />
+        <result property="achievement_avg" column="achievement_avg" />
+        <result property="achievement_rank" column="achievement_rank" />
+        <result property="achievement_grade" column="achievement_grade" />
+        <result property="achievement_year" column="achievement_year" />
+        <result property="achievement_semester" column="achievement_semester" />
+        <result property="achievement_regdate" column="achievement_regdate" />
+        <result property="achievement_moddate" column="achievement_moddate" />
+	</resultMap> 
+
+  <select id="getAchievementByEmail"  resultMap="achievementResult" parameterType="String" >
+	<![CDATA[
+		select achievement_id, member_email, subject_name, achievement_mid, achievement_mid,
+			achievement_final, achievement_avg, achievement_rank, achievement_grade, achievement_year,
+			achievement_semester, achievement_regdate, achievement_moddate
+		from (select *from achievement where member_email=#{member_email} order by achievement_regdate desc)
+	]]>
+  </select>
+
+
+
+  
+  
+</mapper>
