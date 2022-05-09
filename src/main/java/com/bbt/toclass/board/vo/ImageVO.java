@@ -4,20 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component("imageVO")
 public class ImageVO {
 	private int imageFileNO;
 	private String imageFileName;
 	private Date regDate;
 	private int articleNO;
-	
-	public ImageVO() {
-		System.out.println("ImageVO 생성자호출");
-	}
-	
-	
 	
 	public int getImageFileNO() {
 		return imageFileNO;

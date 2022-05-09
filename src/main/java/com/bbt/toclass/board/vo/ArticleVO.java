@@ -1,11 +1,11 @@
 package com.bbt.toclass.board.vo;
 
+import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
-
-import javax.validation.constraints.NotEmpty;
-import org.springframework.stereotype.Component;
 
 @Component("articleVO")
 public class ArticleVO {
@@ -20,8 +20,9 @@ public class ArticleVO {
 	private String id;
 	private Date  writeDate;
 	private int views;
-	
-	
+	private String member_email;
+
+
 	public ArticleVO() {
 		System.out.println("ArticleVO 생성자호출");
 	}
@@ -80,8 +81,8 @@ public class ArticleVO {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 
 	public String getId() {
 		return id;
@@ -107,7 +108,13 @@ public class ArticleVO {
 		this.views = views;
 	}
 
+	public String getMember_email() {
+		return member_email;
+	}
 
-	
-	
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+
 }
