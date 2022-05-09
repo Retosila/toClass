@@ -41,7 +41,7 @@
 		from (
 			select *
 			from member m left outer join info i using(member_email)
-			where member_email = #{member_email}
+			where member_email = #{member_email} AND member_pw = #{member_pw}
 			order by info_regdate desc
 			)
 		where rownum = 1

@@ -27,7 +27,12 @@ public class MemberDAOImpl implements MemberDAO {
 		logger.info("myBatis에게 쿼리 요청 : loginByEmail : " + member.getMember_email());
 		MemberVO vo = sqlSession.selectOne("mapper.member.loginByEmail", member);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
-		logger.info("계정 로그인 승인 : " + vo.getMember_email() );
+		if (vo != null) {
+			logger.info("계정 로그인 승인 : " + vo.getMember_email() );
+		}
+		else {
+			logger.info("계정 로그인 거부 " );
+		}
 		return vo;
 	}
 
