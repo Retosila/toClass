@@ -153,7 +153,7 @@
 
                 <c:when test="${logOn == true  && member!= null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${contextPath}/member/info">마이페이지
+                        <a class="nav-link" value="내정보" href="${contextPath}/info?email=${member.member_email}">마이페이지
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
