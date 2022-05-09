@@ -17,6 +17,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired
 	AttendanceDAO attendanceDAO;
 	
+	@Override
 	public ShowAttendVO getAttendanceInfo(AttendDTO attendDTO) throws Exception {
 		
 		// AttendDTO를 바탕으로 DB로부터 출결 정보 조회 후, AttendVO 객체(최대 5개) 반환 
@@ -44,4 +45,18 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return savo;
 	}
 	
+	//교사가 운영하는 학급에 속한 학생의 이메일 출력
+		@Override
+		public List<String> getClassMemberEmail(String member_email) throws Exception {
+			List<AttendDTO> eList = attendanceDAO.getClassMemberEmail(member_email);
+			List<String> emailList = new ArrayList<String>();
+			
+			List<String> member_email1 = new ArrayList<String>();
+			for(int i = 0; i<eList.size(); i++ ) {
+				member_email1.add(eList.get(i).getMember_email());
+			}
+		//	String member_email1 =  eList.get(0).getMember_email();
+			emailList.addAll(member_email1);
+			return emailList;
+		}
 }

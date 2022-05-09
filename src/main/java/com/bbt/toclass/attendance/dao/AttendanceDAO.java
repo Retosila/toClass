@@ -8,5 +8,5 @@ import com.bbt.toclass.attendance.vo.AttendVO;
 public interface AttendanceDAO {
 
 	List<AttendVO> getAttendanceInfo(AttendDTO attendDTO) throws Exception;
-	
+	List<AttendDTO> getClassMemberEmail(String member_email) throws Exception;
 }

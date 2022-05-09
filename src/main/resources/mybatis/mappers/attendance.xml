@@ -10,7 +10,11 @@
         <result property="attend_time" column="attendance_regdate" />
         <result property="attend_status" column="attendance_status" />
 	</resultMap> 
-
+	<resultMap id="memberEmailResult" type="attendDTO"> <!-- id는 mapper의 이름과 같아도 사용 가능 -->
+		<result property="member_email" column="member_email" />
+        <result property="monday" column="monday" />
+        <result property="friday" column="friday" />
+	</resultMap>
   <select id="getAttendanceInfoByDTO"  resultMap="attendResult" parameterType="attendDTO">
 	<![CDATA[
 		select m.member_name, a.attendance_regdate, a.attendance_status
@@ -20,5 +24,11 @@
 		order by a.attendance_regdate asc
 	]]>
   </select>
-  
+  <select id="getClassMemberEmail" resultMap="memberEmailResult" parameterType="string">
+		<![CDATA[
+			select i.member_email 
+			from info i inner join member m on(i.member_email = m.member_email)
+			where i.class_id = 'CLS000001' and m.member_type='학생'
+		 ]]>
+	</select>
 </mapper>
