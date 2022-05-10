@@ -13,15 +13,15 @@ import com.bbt.toclass.member.vo.MemberVO;
 
 // 로그온 체크용 인터셉터
 public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
-	
+
 	// log4j 로깅용
 	private static final Logger logger = LoggerFactory.getLogger(LogOnCheckInterceptor.class);
-	
+
 	// 각 요청 처리 전, 로그온 여부 확인
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		logger.info("요청 URI : " + request.getRequestURI());
 		logger.info("로그인이 필요한 서비스");
 		logger.info("logOnCheckInterceptor 호출");
@@ -31,14 +31,14 @@ public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
 		logger.info("logOn : " + logOn);
 		// contextPath
 		String contextPath = request.getContextPath();
-		
+
 		// logOn 정보가 false일 시 로그인 화면으로 리다이렉트
 		if (logOn == false) {
 			response.sendRedirect(contextPath + "/login");
 			logger.info("/login으로 리다이렉트");
 			return false;
 		}
-		
+
 		else {
 			MemberVO mvo = (MemberVO)session.getAttribute("member");
 			logger.info("로그인된 회원 : " + mvo.getMember_email());
@@ -51,8 +51,11 @@ public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		super.postHandle(request, response, handler, modelAndView);
+		long end = System.currentTimeMillis();
+		long start = (long)request.getAttribute("start");
+		System.out.println("URL : "+ request.getRequestURI() + ", 걸린시간 :" + (end-start));
 	}
 
-	
-	
+
+
 }

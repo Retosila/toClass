@@ -20,12 +20,14 @@ public interface MemberController {
 	ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String findAccount(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String findPw(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 	String register_0(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String register_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	ModelAndView register_2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	ModelAndView register_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPolicy(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPersonal(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	String main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	// 로직
 	ModelAndView loginDo(@ModelAttribute MemberVO member,

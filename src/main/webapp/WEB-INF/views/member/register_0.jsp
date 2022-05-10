@@ -1,26 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"
+         isELIgnored="false" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"/> 
 <%
   request.setCharacterEncoding("UTF-8");
-%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>회원가입 페이지_0단계(/member/register_0.jsp)</title>
+%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-</head>
+<!DOCTYPE html>
+<html lang="en">
 
 <body>
+<div class="container container-lg pt-9 pb-9">
+  <div class="row">
+    <div class="col-md-6 mb-5 mb-md-0">
+      <div class="card card-lift--hover shadow border-0">
+        <a href="${contextPath}/member/register_1?member_type=교사" >
+          <img src="/assets/img/ill/teacher.png" class="card-img">
+        </a>
+        <H3 text-align="center !important">교사 회원가입</H3>
+      </div>
+    </div>
+    <div class="col-md-6 mb-5 mb-lg-0">
+      <div class="card card-lift--hover shadow border-0">
+        <a href="${contextPath}/member/register_1?member_type=학생" >
+          <img src="/assets/img/ill/student.png" class="card-img">
+        </a>
+        <H3 text-align="center !important">학생 회원가입</H3>
+      </div>
 
-<a href="${contextPath}/member/register_1?member_type=교사">교사</a>
-<br>
-<a href="${contextPath}/member/register_1?member_type=학생">학생</a>
+    </div>
+  </div>
+  <div class="row">
 
+  </div>
+</div>
 
 
 </body>
 </html>
+
+
+
+
+

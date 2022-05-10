@@ -3,9 +3,22 @@
 "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
+   <!-- 사이트의 기본 레이아웃. 헤더, 사이드바, 푸터를 공통으로 가지며, title과 body 부분만 변경하도록 한다.-->
+   <definition name="baseLayout"  template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
 
-
-
+   <definition name="/" extends="baseLayout">
+      <put-attribute name="title" value="메인페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/main.jsp" />
+   </definition>
+   <definition name="admin" extends="baseLayout">
+      <put-attribute name="title" value="관리자" />
+      <put-attribute name="body" value="/WEB-INF/views/admin.jsp" />
+   </definition>
    <definition name="main_student" extends="baseLayout">
       <put-attribute name="title" value="학생 메인페이지" />
       <put-attribute name="body" value="/WEB-INF/views/main_student.jsp" />
@@ -14,6 +27,14 @@
    <definition name="main_teacher" extends="baseLayout">
       <put-attribute name="title" value="교사 메인페이지" />
       <put-attribute name="body" value="/WEB-INF/views/main_teacher.jsp" />
+   </definition>
+   <definition name="/member/login" extends="baseLayout">
+      <put-attribute name="title" value="로그인" />
+      <put-attribute name="body" value="/WEB-INF/views/member/login.jsp" />
+   </definition>
+   <definition name="/member/register_0" extends="baseLayout">
+      <put-attribute name="title" value="회원가입" />
+      <put-attribute name="body" value="/WEB-INF/views/member/register_0.jsp" />
    </definition>
 
    <definition name="info" extends="baseLayout">

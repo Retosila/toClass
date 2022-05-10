@@ -163,10 +163,10 @@
                 </c:when>
                 <c:otherwise>
                 <li class="nav-item"><a class="nav-link"
-                                        href="${contextPath}/member/memberForm.do">회원가입</a></li>
+                                        href="${contextPath}/member/register_0">회원가입</a></li>
                 <li class="nav-item"><a class="nav-link"
 
-                                        href="${contextPath}/member/loginForm.do">로그인</a>
+                                        href="${contextPath}/login">로그인</a>
 
                     </c:otherwise>
                     </c:choose>
@@ -195,6 +195,6 @@
         type="text/javascript"></script>
 <script
         src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

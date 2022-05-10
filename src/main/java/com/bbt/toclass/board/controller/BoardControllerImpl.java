@@ -47,7 +47,7 @@ public class BoardControllerImpl  implements BoardController{
 		System.out.println(viewName);
 
 		ModelAndView mav = new ModelAndView(viewName);
-		System.out.println(mav);
+
 		mav.addObject("articlesList", articlesList);
 
 		return mav;
@@ -121,6 +121,7 @@ public class BoardControllerImpl  implements BoardController{
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		mav.addObject("article", articleVO);
+		System.out.printf(String.valueOf(mav));
 		return mav;
 	}
 
