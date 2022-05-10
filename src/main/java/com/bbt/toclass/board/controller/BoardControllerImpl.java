@@ -44,6 +44,7 @@ public class BoardControllerImpl  implements BoardController{
 		String viewName = (String)request.getAttribute("viewName");
 
 		List articlesList = boardService.listArticles();
+
 		System.out.println(viewName);
 
 		ModelAndView mav = new ModelAndView(viewName);
@@ -72,9 +73,9 @@ public class BoardControllerImpl  implements BoardController{
 		String imageFileName= upload(multipartRequest);
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
-		String email = memberVO.getMember_email();
+		String member_name = memberVO.getMember_name();
 		articleMap.put("parentNO", 0);
-		articleMap.put("member_email", email);
+		articleMap.put("member_name", member_name);
 		articleMap.put("imageFileName", imageFileName);
 
 		String message;
@@ -125,23 +126,11 @@ public class BoardControllerImpl  implements BoardController{
 		return mav;
 	}
 
-	/*
-	//���� �̹��� �����ֱ�
-	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
-	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
-			  HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName = (String)request.getAttribute("viewName");
-		Map articleMap=boardService.viewArticle(articleNO);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		mav.addObject("articleMap", articleMap);
-		return mav;
-	}
-   */
 
 
 
-  //�� �� �̹��� ���� ���
+
+
   @RequestMapping(value="/board/modArticle.do" ,method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity modArticle(MultipartHttpServletRequest multipartRequest,
@@ -158,8 +147,8 @@ public class BoardControllerImpl  implements BoardController{
 	String imageFileName= upload(multipartRequest);
 	HttpSession session = multipartRequest.getSession();
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
-	String email = memberVO.getMember_email();
-	articleMap.put("email", email);
+	String member_name = memberVO.getMember_name();
+	articleMap.put("name", member_name);
 	articleMap.put("imageFileName", imageFileName);
 
 	String articleNO=(String)articleMap.get("articleNO");
@@ -259,79 +248,7 @@ public class BoardControllerImpl  implements BoardController{
 		return imageFileName;
 	}
 
-	/*
-	//���� �̹��� ���ε��ϱ�
-	private List<String> upload(MultipartHttpServletRequest multipartRequest) throws Exception{
-		List<String> fileList= new ArrayList<String>();
-		Iterator<String> fileNames = multipartRequest.getFileNames();
-		while(fileNames.hasNext()){
-			String fileName = fileNames.next();
-			MultipartFile mFile = multipartRequest.getFile(fileName);
-			String originalFileName=mFile.getOriginalFilename();
-			fileList.add(originalFileName);
-			File file = new File(ARTICLE_IMAGE_REPO +"\\"+ fileName);
-			if(mFile.getSize()!=0){ //File Null Check
-				if(! file.exists()){ //��λ� ������ �������� ���� ���
-					if(file.getParentFile().mkdirs()){ //��ο� �ش��ϴ� ���丮���� ����
-							file.createNewFile(); //���� ���� ����
-					}
-				}
-				mFile.transferTo(new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+ "\\"+originalFileName)); //�ӽ÷� ����� multipartFile�� ���� ���Ϸ� ����
-			}
-		}
-		return fileList;
-	}
-	*/
 
-//	@RequestMapping("/board")
-//	public ModelAndView viewBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		String viewName = (String)request.getAttribute("viewName");
-//		ModelAndView mav = new ModelAndView(viewName);
-//		mav.addObject("msg", "I amd a Message!");
-//		return mav;
-
-		// 서블릿/jsp방식에서 object.setAttribute("listMembers", listMembers); 했던거랑 같은 운리!
-
-//	private JdbcTemplate jdbcTemplate;
-//
-//	public void setDataSource(DataSource dataSource) {
-//		this.jdbcTemplate = new JdbcTemplate(dataSource);
-//	}
-//
-//	public List selectAllMembers() throws Exception {
-//		String query = "select *from t_members";
-//		List membersList = new ArrayList();
-//
-//		membersList = this.jdbcTemplate.query(query, new RowMapper() {
-//			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				MemberVO memberVO = new MemberVO();
-//				memberVO.setId(rs.getString("id"));
-//				memberVO.setPwd(rs.getString("pwd"));
-//				return memberVO;
-//			}
-//
-//
-//
-//
-//		});
-//
-//		return membersList;
-//	}
-//
-//	public int addMember(MemberVO memberVO) throws DataAccessException {
-//		String id = memberVO.getId();
-//		String query = "insert into t_member(id, pwd, name, email) values ("
-//				+ "'" + id + "',"
-//				+ "'" + pwd + "',"
-//				+ "'" + name + "')";
-//
-//		// 원래는 executeQuery, ,executeUpdate를 썼었는데,
-//		// 이제는 update만 써도 충분해짐!
-//		int result = jdbcTemplate.update(query);
-//
-//		return result;
-//	}
-//
 
 
 }

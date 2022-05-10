@@ -20,7 +20,11 @@ request.setCharacterEncoding("UTF-8");
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<script src="${contextPath}/assets/js/summernote-ko-KR.min.js"></script>
+
 <body>
+
 
 
 <div class="container">
@@ -30,12 +34,12 @@ request.setCharacterEncoding("UTF-8");
     <table border="0" align="center" style="width: 800px;">
         <tr>
             <td><input style="display: none;" type="text"
-                       value="${member.member_email}" readonly />
+                       value="${member.member_name}" readonly />
             <td>
 
         </tr>
         <tr>
-            <td width="20%" style="text-align: center;" align="center">제목</td>
+
             <td><input type="text" placeholder="제목"
                        class="form-control" name="title" style="width: 100%"></td>
         </tr>
@@ -66,8 +70,13 @@ request.setCharacterEncoding("UTF-8");
     $('#summernote').summernote({
         placeholder : '공지사항 필독!',
         tabsize : 2,
-        height : 300
+        height : 300,
+        lang: "ko-KR"
+
     });
+
+
+
 </script>
 <script type="text/javascript">
     function readURL(input) {

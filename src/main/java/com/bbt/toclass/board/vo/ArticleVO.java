@@ -17,10 +17,15 @@ public class ArticleVO {
 	@NotEmpty(message="내용을 입력해주세요!")
 	private String content;
 	private String imageFileName;
-	private String id;
+	private String member_name;
+	private String member_id;
 	private Date  writeDate;
 	private int views;
 	private String member_email;
+
+
+
+
 
 
 	public ArticleVO() {
@@ -82,15 +87,21 @@ public class ArticleVO {
 		}
 	}
 
-
-
-	public String getId() {
-		return id;
+	public String getMember_name() {
+		return member_name;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
 
 	public Date getWriteDate() {
 		return writeDate;

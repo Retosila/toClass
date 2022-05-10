@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:beans="http://www.springframework.org/schema/beans"
@@ -105,6 +106,7 @@
 			<mapping path="/board/**"/>
 			<mapping path="/schedule/**"/>
 			<exclude-mapping path="/board/listArticles.do"/>
+			<exclude-mapping path="/board/viewArticles.do"/>
 			<beans:ref bean="classCheckInterceptor"/>
 
 		</interceptor>

@@ -13,6 +13,7 @@
     <result property="imageFileName" column="imageFileName" />
     <result property="views" column="views"/>
     <result property="member_email" column="member_email"/>
+    <result property="member_name" column="member_name"/>
   </resultMap>
 
   <resultMap id="imgResult" type="imageVO">
@@ -23,7 +24,7 @@
 
   <select id="selectAllArticlesList" resultMap="articlesResult"   >
     <![CDATA[
-      SELECT articleNO, parentNO, title, content, writeDate, imageFileName, member_email,views
+      SELECT articleNO, parentNO, title, content, writeDate, imageFileName, member_name,views
       from t_board
       START WITH  parentNO=0
       CONNECT BY PRIOR articleNO=parentNO
@@ -35,8 +36,8 @@
 
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
-			INSERT into t_board(articleNO, title, content, imageFileName, member_email)
-			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_email,jdbcType=VARCHAR})
+			INSERT into t_board(articleNO, title, content, imageFileName, member_name)
+			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{member_name})
 		]]>
 	</insert>
     <select id="articleCount" resultType="int"  >

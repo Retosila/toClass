@@ -85,7 +85,7 @@
                                    href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
                             </c:otherwise>
                         </c:choose></td>
-                        <td width="15%">${article.member_email }</td>
+                        <td width="15%">${article.member_name}</td>
                         <td width="15%">${article.writeDate}</td>
                         <td width="7%">${article.views }</td>
                         <td width="7%"></td>
