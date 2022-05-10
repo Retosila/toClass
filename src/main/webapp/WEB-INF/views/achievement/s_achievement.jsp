@@ -52,7 +52,7 @@ select {
 <body>
 
 
-	<div class="container pt-5 pb-5">
+	<div class="container">
 		<form action="achievement" align="left">
 			<label for="studyYear">학년</label> <select id="studyYear">
 				<option value="" selected>전체</option>

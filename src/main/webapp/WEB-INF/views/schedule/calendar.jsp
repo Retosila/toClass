@@ -526,7 +526,7 @@ request.setCharacterEncoding("UTF-8");
 <body>
 
 <!-- 학사 캘린더 -->
-<div id="calendar" class="pt-5 pb-5"></div>
+<div id="calendar"></div>
 
 <!-- 일정 모달창 -->
 <div id="eventModal">

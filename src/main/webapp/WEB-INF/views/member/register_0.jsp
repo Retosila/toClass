@@ -12,7 +12,7 @@
 <html lang="en">
 
 <body>
-<div class="container container-lg pt-9 pb-9">
+<div class="container container-lg pt-4 pb-4">
   <div class="row">
     <div class="col-md-6 mb-5 mb-md-0">
       <div class="card card-lift--hover shadow border-0">

@@ -53,7 +53,7 @@
 </script>
 
 <body>
-<div class="container pt-lg-5">
+<div class="container">
     <table class="table table-bordered">
         <tr>
             <th align='center'>오늘의 출석현황</th>

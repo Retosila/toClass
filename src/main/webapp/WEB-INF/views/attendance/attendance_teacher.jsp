@@ -47,7 +47,7 @@ request.setCharacterEncoding("UTF-8");
 </head>
 </head>
 <body>
-	<div class="container pt-lg-7">
+	<div class="container">
 		<table class="table">
 			<thead>
 				<tr>
@@ -124,7 +124,7 @@ request.setCharacterEncoding("UTF-8");
             </button>
         </td>
     </tr>
-  
+
     </tbody> -->
 		</table>
 	</div>
@@ -135,7 +135,7 @@ request.setCharacterEncoding("UTF-8");
 	</a>
 
 
-	<div class="container pt-lg-7">
+	<div class="container">
 		<table class="table">
 			<thead>
 				<tr>

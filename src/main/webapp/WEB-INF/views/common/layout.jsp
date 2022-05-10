@@ -42,7 +42,7 @@
     <div id="header">
         <tiles:insertAttribute name="header"/>
     </div>
-    <div id="content">
+    <div id="content" class="pt-5 pb-5">
         <tiles:insertAttribute name="body"/>
     </div>
     <div id="footer">
@@ -55,8 +55,10 @@
         type="text/javascript"></script>
 <script src="${contextPath}/assets/js/core/popper.min.js"
         type="text/javascript"></script>
+
 <script src="${contextPath}/assets/js/core/bootstrap.min.js"
         type="text/javascript"></script>
+
 <script
         src="${contextPath}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 

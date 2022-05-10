@@ -13,7 +13,7 @@ request.setCharacterEncoding("UTF-8");
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="${contextPath}/assets/css/bootstarp_summernote.css" rel="stylesheet"/>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -23,7 +23,7 @@ request.setCharacterEncoding("UTF-8");
 <body>
 
 
-<div class="container pt-lg-7 pb-lg-7">
+<div class="container">
 <form name="articleForm" method="post"
       action="${contextPath}/board/addNewArticle.do"
       enctype="multipart/form-data">

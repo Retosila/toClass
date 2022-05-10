@@ -93,6 +93,7 @@
 			<exclude-mapping path="/member/register.do"/>
 			<exclude-mapping path="/member/logout.do"/>
 			<exclude-mapping path="/assets/**"/>
+
 			<exclude-mapping path="/fullcalendar/**"/>
 			<beans:ref bean="logOnCheckInterceptor"/>
 		</interceptor>
@@ -103,7 +104,9 @@
 			<mapping path="/achievement/**"/>
 			<mapping path="/board/**"/>
 			<mapping path="/schedule/**"/>
+			<exclude-mapping path="/board/listArticles.do"/>
 			<beans:ref bean="classCheckInterceptor"/>
+
 		</interceptor>
 
 	</interceptors>
