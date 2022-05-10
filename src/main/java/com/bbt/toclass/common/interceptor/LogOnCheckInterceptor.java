@@ -51,9 +51,9 @@ public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		super.postHandle(request, response, handler, modelAndView);
-		long end = System.currentTimeMillis();
+		/*long end = System.currentTimeMillis();
 		long start = (long)request.getAttribute("start");
-		System.out.println("URL : "+ request.getRequestURI() + ", 걸린시간 :" + (end-start));
+		System.out.println("URL : "+ request.getRequestURI() + ", 걸린시간 :" + (end-start));*/
 	}
 
 
