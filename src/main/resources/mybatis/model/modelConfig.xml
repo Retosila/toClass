@@ -12,9 +12,13 @@
 		<typeAlias type="com.bbt.toclass.attendance.vo.AttendVO"  alias="attendVO" />
 
 		<typeAlias type="com.bbt.toclass.schedule.vo.ScheduleVO"  alias="scheduleVO" />
+		<typeAlias type="com.bbt.toclass.schedule.vo.MenuVO"  alias="menuVO" />
+		<typeAlias type="com.bbt.toclass.schedule.vo.MenuDTO"  alias="menuDTO" />
+		<typeAlias type="com.bbt.toclass.schedule.vo.ShowMenuVO"  alias="showMenuVO" />
 
 		<typeAlias type="com.bbt.toclass.board.vo.ArticleVO"  alias="articleVO" />
 		<typeAlias type="com.bbt.toclass.board.vo.ImageVO"  alias="imageVO" />
 		<typeAlias type="com.bbt.toclass.achievement.vo.AchievementVO"  alias="achievementVO" />
+
 	</typeAliases>
 </configuration>

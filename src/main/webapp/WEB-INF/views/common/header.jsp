@@ -133,7 +133,7 @@
 
                         <a href="./examples/profile.html" class="dropdown-item">수업시간표</a>
                         <a href="./examples/login.html" class="dropdown-item">알림장</a> <a
-                            href="./examples/register.html" class="dropdown-item">식단표</a>
+                            href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
                     </div>
                 </li>
             </ul>
