@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="assignment" extends="baseLayout">
+	      <put-attribute name="title" value="과제 페이지(임시)" />
+	      <put-attribute name="body" value="/WEB-INF/views/assignment/assignment.jsp" />
+	</definition>
+
+</tiles-definitions>

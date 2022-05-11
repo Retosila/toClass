@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"
-		 isELIgnored="false" %>
+		 isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -10,23 +10,105 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
 
-<body>
-<form name="frmLogin" method="post"  action="${contextPath}/member/login.do">
+	//이메일 정규식
+	var emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+	var email;
 
+	// 쿠키 저장
+	function setCookie(cookieName, value, exdays) {
+	    var expireDate = new Date();
+	    expireDate.setDate(expireDate.getDate() + exdays);
+	    var cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + expireDate.toGMTString());
+	    document.cookie = cookieName + "=" + cookieValue;
+	}
+
+	// 쿠키 불러오기
+	function getCookie(cookieName) {
+	    cookieName = cookieName + "=";
+	    var cookieData = document.cookie;
+	    var start = cookieData.indexOf(cookieName);
+	    var cookieValue = "";
+	    if(start != -1){
+	        start += cookieName.length;
+	        var end = cookieData.indexOf(";", start);
+	        if(end == -1)end = cookieData.length;
+	        cookieValue = cookieData.substring(start, end);
+	    }
+    	return unescape(cookieValue);
+	}
+	
+	// 쿠키 삭제
+	function deleteCookie(cookieName){
+	    var expireDate = new Date();
+	    expireDate.setDate(expireDate.getDate() - 1);
+	    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	}
+
+	// 아이디 저장 로직
+	$(function(){
+		// 쿠키에 저장된 member_email값을 input에 할당
+	    var member_email = getCookie("Cookie_member_email");
+	    $("#member_email").val(member_email);
+    	// 값이 입력되어 있을 시 아이디 저장란 체크 표시
+   		if($("#member_email").val() != "") {
+	        $("#customCheckLogin").attr("checked", true);
+   		}
+	});
+ 
+	function login(){
+	    var member_email = $("#member_email");
+	    email = $("#member_email").val();
+	    var member_pw = $("#member_pw");
+	    var frmLogin = $("#frmLogin");
+    
+	    // 유효성 검증
+	    if(member_email.val() == ""){
+	        alert("이메일을 입력해주세요.");
+	        member_email.focus();
+	        return;
+	    }
+	    else if(emailRegex.test(email) == false) {
+	        alert("유효하지 않은 이메일 주소입니다.");
+	        member_email.focus();
+	        return;
+	    }
+	    else if(member_pw.val() == ""){
+	        alert("비밀번호를 입력해주세요.");
+	        member_pw.focus();
+	        return;
+	    }
+	    // 이메일 저장이 check 상태일 시, 이메일 정보를 쿠키에 30일 간 저장
+	    else if($("#customCheckLogin").is(":checked")){
+	        var member_email = $("#member_email").val();
+	        setCookie("Cookie_member_email", member_email, 30);
+	        frmLogin.submit();
+	    }
+	    // 체크를 풀고 로그인할 시 쿠키 삭제
+	    else{
+	        deleteCookie("Cookie_member_email");
+	        frmLogin.submit();
+	    }
+	}
+	
+</script>
+
+<!-- login 페이지에서 enter 입력 시 submit 처리  -->
+<body onKeyDown="if(event.keyCode == 13) login()">
 	<div class="container pt-lg-7">
 		<div class="row justify-content-center">
 			<div class="col-lg-5">
 				<div class="card bg-secondary shadow border-0">
 					<div class="card-header bg-white pb-5">
-						<div class="text-muted text-center mb-3"><small>Sign in with</small></div>
+						<div class="text-muted text-center mb-3"><small>구글 계정으로 시작</small>
+						</div>
 						<div class="btn-wrapper text-center">
-							<a href="#" class="btn btn-neutral btn-icon">
-								<span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>
-								<span class="btn-inner--text">Github</span>
-							</a>
 							<a href="#" class="btn btn-neutral btn-icon g-signin2" data-onsuccess="onSignIn">
-								<span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
+								<span class="btn-inner--icon">
+									<img src="${contextPath}/assets/img/icons/common/google.svg">
+								</span>
 								<span class="btn-inner--text">Google</span>
 								<%--구글로그인--%>
 								<%--<div class="g-signin2" data-onsuccess="onSignIn"></div>--%>
@@ -34,19 +116,19 @@
 						</div>
 					</div>
 
-
-
 					<div class="card-body px-lg-5 py-lg-5">
 						<div class="text-center text-muted mb-4">
-							<small>Or sign in with credentials</small>
+							<small>이메일로 로그인</small>
 						</div>
-						<form role="form">
+						
+						<form id="frmLogin" name="frmLogin" role="form" method="post" action="${contextPath}/member/login.do">
 							<div class="form-group mb-3">
 								<div class="input-group input-group-alternative">
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="ni ni-email-83"></i></span>
 									</div>
-									<input class="form-control" placeholder="Email" type="text" name="member_email" value="">
+									
+									<input id="member_email" name="member_email" class="form-control" placeholder="이메일" type="text"/>
 								</div>
 							</div>
 							<div class="form-group focused">
@@ -54,21 +136,25 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
 									</div>
-									<input class="form-control" placeholder="Password" type="password" name="member_pw" value="">
+									<!-- pw입력 창에서 enter시 login함수 실행  -->
+									<input id="member_pw" name="member_pw" class="form-control" placeholder="비밀번호" type="password"/>
 								</div>
 							</div>
 
 							<div class="custom-control custom-control-alternative custom-checkbox">
-								<input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-								<label class="custom-control-label" for=" customCheckLogin"><span>아이디 저장</span></label>
+								<input class="custom-control-input" id="customCheckLogin" name="customCheckLogin" type="checkbox">
+								<label class="custom-control-label" for="customCheckLogin">
+									<span>이메일 저장</span>
+								</label>
 							</div>
 							<div class="text-center">
-
-								<button type="submit" class="btn btn-primary my-4" value="로그인" >로그인</button>
+								<button type="button" class="btn btn-primary my-4" onclick="login()">로그인</button>
 							</div>
 						</form>
+						
 					</div>
 				</div>
+				
 				<div class="row mt-3">
 					<div class="col-4 text-left">
 						<a href="${contextPath}/member/findAccount" class="text-light"><small>계정찾기</small></a>
@@ -76,11 +162,10 @@
 					<div class="col-4">
 						<a href="${contextPath}/member/findPw" class="text-light"><small>비밀번호 찾기</small></a>
 					</div>
-					<div class="col-4 text-right">
-						<a href="${contextPath}/member/register_0" class="text-light"><small>회원가입</small></a>
-					</div>
 				</div>
+				
 			</div>
+			
 			<c:choose>
 				<c:when test="${result eq 'loginFailed'}">
 					<script>
@@ -94,9 +179,17 @@
 						alert("회원탈퇴가 완료되었습니다.");
 					</script>
 				</c:when>
+				<c:when test="${msg != null}">
+					<script>
+						console.log("${msg}");
+						alert("${msg}");
+					</script>
+				</c:when>
 			</c:choose>
+			
 		</div>
 	</div>
+	
 	<%--구글 로그인--%>
 	<%--<script>
 		function onSignIn(googleUser) {

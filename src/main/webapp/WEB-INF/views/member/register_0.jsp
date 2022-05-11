@@ -17,17 +17,17 @@
     <div class="col-md-6 mb-5 mb-md-0">
       <div class="card card-lift--hover shadow border-0">
         <a href="${contextPath}/member/register_1?member_type=교사" >
-          <img src="/assets/img/ill/teacher.png" class="card-img">
+          <img src="${contextPath}/assets/img/ill/teacher.png" class="card-img">
         </a>
-        <H3 text-align="center !important">교사 회원가입</H3>
+        <h3>교사 회원가입</h3>
       </div>
     </div>
     <div class="col-md-6 mb-5 mb-lg-0">
       <div class="card card-lift--hover shadow border-0">
         <a href="${contextPath}/member/register_1?member_type=학생" >
-          <img src="/assets/img/ill/student.png" class="card-img">
+          <img src="${contextPath}/assets/img/ill/student.png" class="card-img">
         </a>
-        <H3 text-align="center !important">학생 회원가입</H3>
+        <h3>학생 회원가입</h3>
       </div>
 
     </div>

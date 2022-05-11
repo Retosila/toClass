@@ -42,6 +42,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 	 *  
 	 */
 	
+	// 학사 캘린더
 	@RequestMapping(value = {"/schedule/calendar"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView calendar(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 로그인 확인 로직
@@ -65,6 +66,16 @@ public class ScheduleControllerImpl implements ScheduleController {
 			mav.setViewName("calendar");
 			return mav;
 		}
+	}
+	
+	// 임시 매핑용
+	@RequestMapping(value = {"/schedule/undefined"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView temp(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		// undefined로 요청이 올 경우 일단 학사캘린더로 가도록 함
+		mav.setViewName("calendar");
+		
+		return mav;
 	}
 	
 	/*

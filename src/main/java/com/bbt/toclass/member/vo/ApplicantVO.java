@@ -1,19 +1,16 @@
 package com.bbt.toclass.member.vo;
 
-import java.sql.Date;
-
 public class ApplicantVO {
 
 	// 프로퍼티
-	
 	private String class_id;
 	private String name;
 	private String email;
 	private String phone;
 	private String regdate;
+	private String status;
 	
 	// getter ~ setter
-	
 	public String getName() {
 		return name;
 	}
@@ -43,5 +40,11 @@ public class ApplicantVO {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

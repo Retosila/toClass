@@ -9,6 +9,6 @@
 <html>
 
 <body>
-<h3>main 페이지</h3>
+<h3>main (비로그인 상태)</h3>
 </body>
 </html>
