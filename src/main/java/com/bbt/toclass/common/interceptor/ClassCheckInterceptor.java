@@ -6,8 +6,12 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.bbt.toclass.member.vo.MemberVO;
 
@@ -29,13 +33,24 @@ public class ClassCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		// 소속 클래스 확인
 		MemberVO mvo = (MemberVO)session.getAttribute("member");
-		String currentClass = mvo.getCurrentClass();
+		
+		// null처리
+		String currentClass = null;
+		if (mvo.getCurrentClass() != null) {
+			currentClass = mvo.getCurrentClass();
+		}
 		
 		// contextPath
 		String contextPath = request.getContextPath();
 		
 		// 소속 클래스 정보가 없을 시 myClass로 리다이렉트
-		if (currentClass == "" || currentClass == null) {
+		if (currentClass == null) {
+			// 클래스 요구 멘트
+			FlashMap flashMap = new FlashMap();
+			flashMap.put("msg", "학급 가입 후 이용할 수 있는 서비스입니다.");
+			FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+			flashMapManager.saveOutputFlashMap(flashMap, request, response);
+			
 			response.sendRedirect(contextPath + "/member/myClass");
 			logger.info("/member/myClass로 리다이렉트");
 			return false;

@@ -9,8 +9,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-
+<head>
 <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -30,28 +29,34 @@
         text-align: center;
     }
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $(".dropdown-item").on("click", function () {
             var status = $(this).text();
+        	console.log(status);
+            
             if (status == '출석') {
                 $(this).parent().prev().css('background', '#5e72e4');
-            } else if (status == '조퇴') {
+            } 
+            else if (status == '조퇴') {
                 $(this).parent().prev().css('background', '#2dce89');
-            } else if (status == '지각') {
+            } 
+            else if (status == '지각') {
                 $(this).parent().prev().css('background', '#ffd600');
-            } else if (status == '결석') {
+            } 
+            else if (status == '결석') {
                 $(this).parent().prev().css('background', '#EC431F');
-            } else {
+            } 
+            else {
             }
 
             $(this).parent().prev().text(status);
         });
     });
-
-
 </script>
-
+</head>
 <body>
 <div class="container">
     <table class="table table-bordered">
@@ -261,53 +266,11 @@
                         </div>
                     </td>
 
-                    <!-- <td><a href="#" class="delete-link">삭제</a> -->
                 </tr>
             </c:forEach>
         </table>
-        <button type="button" id="append_row"
-                class="btn btn-outline-primary btn-lg" onclick=addRow()>추가
-        </button>
-        <script type="text/javascript">
-            //버튼 클릭하면 추가
-            function fn_addFile() {
-                $("#d_file").append(
-                    "<br>" + "<input type='file' name='file" + cnt + "' />");
-                cnt++;
-            }
-
-            function addRow() {
-                var el = document.getElementById('attendanceBtn');
-            }
-
-            $("#append_row").on("click", function () {
-                $("#list_table").append(
-                    $("<tr>").append(
-                        $("<td>").append($("#name").val()),
-                        $("<td>").append($("#dropdownMenuButton").val()),
-                        $("<td>").append($("#dropdownMenuButton2").val()),
-                        $("<td>").append($("#dropdownMenuButton3").val()),
-                        $("<td>").append($("#dropdownMenuButton4").val()),
-                        $("<td>").append($("#dropdownMenuButton5").val()),
-                        //<td><a href="#" class="delete-link">삭제</a></td>
-                        $("<td>").append($("<a>").prop("href", "#").addClass("delete-link").append("삭제")
-                        )
-                    )
-                );
-            });
-            //삭제
-            $("#list_table").on("click", ".delete-link", function () {
-                //a태그의 부모의 부모태그 (a-td-tr)
-                $(this).parent().parent().remove();
-            });
-        </script>
-        <input type="submit" value="저장하기"
-               class="btn btn-outline-primary btn-lg"/>
-
     </form>
-
 </div>
-
 
 </body>
 </html>

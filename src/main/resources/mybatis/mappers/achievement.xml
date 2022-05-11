@@ -28,9 +28,5 @@
 		from (select *from achievement where member_email=#{member_email} order by achievement_regdate desc)
 	]]>
   </select>
-
-
-
-  
   
 </mapper>

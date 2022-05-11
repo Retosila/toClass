@@ -237,6 +237,9 @@ public class MemberDAOImpl implements MemberDAO {
 		if (result > 0 && result2 > 0) {
 			logger.info(result + "개의 클래스 삭제 완료");
 			logger.info(result2 + "개의 클래스 log 삭제 완료");
+			// 해당 클래스id에 대한 가입 신청 전부 삭제
+			int delResult = sqlSession.delete("mapper.member.delApplicantByClassId", class_id);
+			logger.info(delResult + "명의 가입 신청자 정보 삭제 완료");
 		}
 		else {
 			logger.info("클래스 삭제 실패");
@@ -266,12 +269,12 @@ public class MemberDAOImpl implements MemberDAO {
 			avo.setName(name);
 			avo.setEmail(email);
 			avo.setPhone(phone);
-
+			
 			logger.info("myBatis에게 쿼리 요청 : addApplicant : " + email);
 			int result = sqlSession.insert("mapper.member.addApplicant", avo);
 			logger.info("myBatis로부터 성공적으로 응답 수신");
 			logger.info(result + " 개의 applicant 추가 완료");
-
+			
 			return result;
 		}
 		else {
@@ -283,11 +286,31 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int checkIsPending(String member_email) throws DataAccessException {
+		// pending 상태의 가입 요청 개수 확인
 		logger.info("myBatis에게 쿼리 요청 : checkIsPendingByEmail : " + member_email);
 		int result = sqlSession.selectOne("mapper.member.checkIsPendingByEmail", member_email);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
-
-		return result;
+		logger.info(result + "개의 승인 대기 중인 요청");
+		
+		// pending 상태의 요청 존재 시 return
+		if (result > 0) {
+			return result;
+		}
+		
+		// rejected 상태의 가입 요청 개수 확인
+		logger.info("myBatis에게 쿼리 요청 : checkIsRejectedByEmail : " + member_email);
+		int result2 = sqlSession.selectOne("mapper.member.checkIsRejectedByEmail", member_email);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info(result2 + "개의 요청 거부 확인");
+		
+		// rejected 상태의 요청 존재 시 return
+		if (result2 > 0) {
+			int result3 = sqlSession.delete("mapper.member.delApplicantByMemberEmail", member_email);
+			logger.info(result3 + "개의 요청 삭제 완료");
+			return (-result2);
+		}
+		
+		return result2;
 	}
 
 	@Override
@@ -306,11 +329,11 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("member_email", member_email);
 		map.put("class_id", class_id);
 
-		// class_applicant에서 레코드 삭제
+		// class_applicant를 삭제
 		logger.info("myBatis에게 쿼리 요청 : delApplicantByClassIdAndMemberEmail : " + member_email);
 		int result = sqlSession.delete("mapper.member.delApplicantByClassIdAndMemberEmail", map);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
-		logger.info(result + " 명의 applicant 삭제 완료");
+		logger.info(result + " 명의 applicant accept 완료");
 
 		// info 테이블에 레코드 추가
 		if (result > 0) {
@@ -335,11 +358,11 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("member_email", member_email);
 		map.put("class_id", class_id);
 
-		// class_applicant에서 레코드 삭제
-		logger.info("myBatis에게 쿼리 요청 : delApplicantByClassIdAndMemberEmail : " + member_email);
-		int result = sqlSession.delete("mapper.member.delApplicantByClassIdAndMemberEmail", map);
+		// class_applicant의 status를 rejected로 변경
+		logger.info("myBatis에게 쿼리 요청 : rejectApplicantByClassIdAndMemberEmail : " + member_email);
+		int result = sqlSession.update("mapper.member.rejectApplicantByClassIdAndMemberEmail", map);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
-		logger.info(result + " 명의 applicant 삭제 완료");
+		logger.info(result + " 명의 applicant reject 완료");
 
 		return result;
 	}

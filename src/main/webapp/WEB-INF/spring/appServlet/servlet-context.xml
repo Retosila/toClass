@@ -68,15 +68,19 @@
 	<!-- 클래스 확인 인터셉터 -->
 	<beans:bean id="classCheckInterceptor" class="com.bbt.toclass.common.interceptor.ClassCheckInterceptor">
 	</beans:bean>
+	
+	<!-- 회원정보 갱신 인터셉터 -->
+	<beans:bean id="renewMemberInterceptor" class="com.bbt.toclass.common.interceptor.RenewMemberInterceptor">
+	</beans:bean>
 
-	<!-- 인터셉터 -->
+	<!-- 인터셉터 목록 -->
 	<interceptors>
-
+	
 	<!-- 우선순위 1 : 로그온 확인 -->
 		<interceptor>
-
-			<mapping path="/member/**"/>
+			<mapping path="/**"/>
 			<exclude-mapping path="/"/>
+			<exclude-mapping path="/main"/>
 			<exclude-mapping path="/login"/>
 			<exclude-mapping path="/member/findAccount"/>
 			<exclude-mapping path="/member/findPw"/>
@@ -99,11 +103,23 @@
 			<beans:ref bean="logOnCheckInterceptor"/>
 		</interceptor>
 
-	<!-- 우선순위 2 : 클래스 확인 -->
+	<!-- 우선순위 2 : 회원정보 갱신 -->
 		<interceptor>
 			<mapping path="/attendance/**"/>
 			<mapping path="/achievement/**"/>
 			<mapping path="/board/**"/>
+			<mapping path="/assignment/**"/>
+			<mapping path="/schedule/**"/>
+			<mapping path="/member/**"/>
+			<beans:ref bean="renewMemberInterceptor"/>
+		</interceptor>
+		
+	<!-- 우선순위 3 : 클래스 확인 -->
+		<interceptor>
+			<mapping path="/attendance/**"/>
+			<mapping path="/achievement/**"/>
+			<mapping path="/board/**"/>
+			<mapping path="/assignment/**"/>
 			<mapping path="/schedule/**"/>
 			<exclude-mapping path="/board/listArticles.do"/>
 			<exclude-mapping path="/board/viewArticles.do"/>
