@@ -24,7 +24,7 @@
 
   <select id="selectAllArticlesList" resultMap="articlesResult"   >
     <![CDATA[
-      SELECT articleNO, parentNO, title, content, writeDate, imageFileName, member_name,views
+      SELECT articleNO, parentNO, title, content, writeDate, imageFileName, member_name,views,GOOD,BAD
       from t_board
       START WITH  parentNO=0
       CONNECT BY PRIOR articleNO=parentNO
@@ -32,7 +32,6 @@
     ]]>
   </select>
 
-	<!--단일이미지 추가  -->
 
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
@@ -64,7 +63,16 @@
 			set views=views+1
 			where articleNO=#{articleNO}
 	</update>
-
+    <update id="good"   parameterType="int">
+        update t_board
+        set GOOD=GOOD+1
+        where articleNO=#{articleNO}
+    </update>
+    <update id="bad"   parameterType="int">
+        update t_board
+        set BAD=BAD-1
+        where articleNO=#{articleNO}
+    </update>
 
   <update id="updateArticle"  parameterType="java.util.Map">
 			update t_board

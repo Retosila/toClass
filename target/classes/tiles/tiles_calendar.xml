@@ -8,5 +8,13 @@
       <put-attribute name="title" value="학사 캘린더" />
       <put-attribute name="body" value="/WEB-INF/views/schedule/calendar.jsp" />
    </definition>
+   <definition name="/schedule/menu_student" extends="baseLayout">
+      <put-attribute name="title" value="식단표" />
+      <put-attribute name="body" value="/WEB-INF/views/schedule/menu_student.jsp" />
+   </definition>
+   <definition name="/schedule/menu_teacher" extends="baseLayout">
+      <put-attribute name="title" value="식단표" />
+      <put-attribute name="body" value="/WEB-INF/views/schedule/menu_teacher.jsp" />
+   </definition>
 
 </tiles-definitions>

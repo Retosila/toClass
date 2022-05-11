@@ -22,6 +22,25 @@ public class ArticleVO {
 	private Date  writeDate;
 	private int views;
 	private String member_email;
+	private int bad;
+	private int good;
+
+	public int getGood() {
+		return good;
+	}
+
+	public void setGood(int good) {
+		this.good = good;
+	}
+
+	public int getBad() {
+		return bad;
+	}
+
+	public void setBad(int bad) {
+		this.bad = bad;
+	}
+
 
 
 

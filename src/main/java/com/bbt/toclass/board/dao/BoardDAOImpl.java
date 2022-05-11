@@ -69,6 +69,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public void addViews(int articleNO) throws DataAccessException {
 		sqlSession.update("mapper.board.addViews", articleNO);
 	}
+	public void bad(int articleNO) throws DataAccessException {
+		sqlSession.update("mapper.board.bad", articleNO);
+	}
+	public void good(int articleNO) throws DataAccessException {
+		sqlSession.update("mapper.board.good", articleNO);
+	}
 
 	@Override
 	public void deleteArticle(int articleNO) throws DataAccessException {

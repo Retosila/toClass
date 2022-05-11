@@ -44,6 +44,18 @@ public class BoardServiceImpl  implements BoardService{
 		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
 		return articleVO;
 	}
+	public ArticleVO bad(int articleNO) throws Exception {
+
+		boardDAO.bad(articleNO);
+		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
+		return articleVO;
+	}
+	public ArticleVO good(int articleNO) throws Exception {
+
+		boardDAO.good(articleNO);
+		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
+		return articleVO;
+	}
 
 	@Override
 	public void modArticle(Map articleMap) throws Exception {

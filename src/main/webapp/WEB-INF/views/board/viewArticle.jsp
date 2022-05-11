@@ -123,7 +123,7 @@
                     <a>${article.member_name }</a></th>
 
                 <th><p style="margin-bottom: 0px; text-align: right;font-size: 0.8em;">조회 ${article.views}
-                    추천 ${article.views}
+                    추천 ${article.good+article.bad}
                     댓글 ${article.views}</p></th>
             </tr>
             <tr style="border-color: #F9FAFB;">
@@ -163,10 +163,10 @@
 
     <div align="center">
         <div class="row col-3" >
-            <button class="btn btn-secondary btn-round" onClick="#" style="margin-right: 5px"><img src="/assets/img/good.png" class="card-img"
+            <button class="btn btn-secondary btn-round" onClick="location.href=${contextPath}/board/good.do?articleNO=${article.articleNO}" style="margin-right: 5px"><img src="/assets/img/good.png" class="card-img"
                                                                          height="40"></button>
-            <h3 style="padding-top: 3px" class="display-4">11</h3>
-            <button class="btn btn-secondary btn-round" onClick="#" style="margin-left: 5px"><img src="/assets/img/bad.png" class="card-img"
+            <h3 style="padding-top: 3px" class="display-4">${article.good+article.bad}</h3>
+            <button class="btn btn-secondary btn-round" onClick="${contextPath}/board/bad.do?articleNO=${article.articleNO}" style="margin-left: 5px"><img src="/assets/img/bad.png" class="card-img"
                                                                          height="40"></button>
         </div>
 

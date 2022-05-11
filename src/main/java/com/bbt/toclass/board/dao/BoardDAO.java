@@ -18,4 +18,6 @@ public interface BoardDAO {
 	public void deleteArticle(int articleNO) throws DataAccessException;
 	public List selectImageFileList(int articleNO) throws DataAccessException;
 	void addViews(int articleNO) throws DataAccessException;
+	void bad(int articleNO) throws DataAccessException;
+	void good(int articleNO) throws DataAccessException;
 }

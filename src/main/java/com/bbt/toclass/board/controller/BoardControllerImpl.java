@@ -128,7 +128,24 @@ public class BoardControllerImpl  implements BoardController{
 	}
 
 
-
+	@RequestMapping(value="/board/bad.do" ,method = RequestMethod.GET)
+	public ModelAndView bad(@RequestParam("articleNO") int articleNO,
+							HttpServletRequest request, HttpServletResponse response) throws Exception {
+		articleVO=boardService.bad(articleNO);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/viewArticle");
+		mav.addObject("article", articleVO);
+		return mav;
+	}
+	@RequestMapping(value="/board/good.do" ,method = RequestMethod.GET)
+	public ModelAndView good(@RequestParam("articleNO") int articleNO,
+							HttpServletRequest request, HttpServletResponse response) throws Exception {
+		articleVO=boardService.good(articleNO);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/viewArticle");
+		mav.addObject("article", articleVO);
+		return mav;
+	}
 
 
 
@@ -143,6 +160,7 @@ public class BoardControllerImpl  implements BoardController{
 		String name=(String)enu.nextElement();
 		String value=multipartRequest.getParameter(name);
 		articleMap.put(name,value);
+
 	}
 
 	String imageFileName= upload(multipartRequest);
@@ -223,7 +241,7 @@ public class BoardControllerImpl  implements BoardController{
 	mav.setViewName("/board/articleForm");
 	return mav;
 }
-  
+
   	// 미구현 페이지 임시 매핑용
 	@RequestMapping(value={"/board/undefined"}, method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView temp(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -49,7 +49,7 @@
             <th>작성자</th>
             <th>작성일</th>
             <th>조회</th>
-            <th class="text-center">추천</th>
+            <th >추천</th>
 
         </tr>
 
@@ -87,8 +87,8 @@
                         </c:choose></td>
                         <td width="15%">${article.member_name}</td>
                         <td width="15%">${article.writeDate}</td>
-                        <td width="7%">${article.views }</td>
-                        <td width="7%"></td>
+                        <td width="7%">${article.views}</td>
+                        <td width="7%">${article.good+article.bad}</td>
 
                     </tr>
 
