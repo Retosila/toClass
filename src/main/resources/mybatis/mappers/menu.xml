@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.menu">
+
+    <resultMap id="menuResult" type="menuVO">
+        <result property="menu_content" column="menu_content" />
+    </resultMap>
+    <resultMap id="MenuDateResult" type="menuDTO"> <!-- id는 mapper의 이름과 같아도 사용 가능 -->
+        <result property="menu_date" column="menu_date" />
+        <result property="monday" column="monday" />
+        <result property="friday" column="friday" />
+    </resultMap>
+    <select id="getMenuInfoByDTO"  resultMap="menuResult" parameterType="menuDTO">
+	<![CDATA[
+		 select menu_content
+		 from menu
+		 where menu_date between #{monday} AND #{friday}
+        ]]>
+  </select>
+    <select id="getMenuDate" resultMap="MenuDateResult" parameterType="string">
+		<![CDATA[
+        select menu_date
+        from menu
+        ]]>
+	</select>
+</mapper>

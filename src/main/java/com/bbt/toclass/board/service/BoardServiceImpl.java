@@ -39,6 +39,7 @@ public class BoardServiceImpl  implements BoardService{
 
 	@Override
 	public ArticleVO viewArticle(int articleNO) throws Exception {
+
 		boardDAO.addViews(articleNO);
 		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
 		return articleVO;
@@ -52,6 +53,10 @@ public class BoardServiceImpl  implements BoardService{
 	@Override
 	public void removeArticle(int articleNO) throws Exception {
 		boardDAO.deleteArticle(articleNO);
+	}
+
+	static void incrementNttRdCnt(String nttId) {
+
 	}
 
 }

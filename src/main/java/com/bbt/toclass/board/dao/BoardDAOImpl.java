@@ -25,9 +25,9 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	@Override
 	public int articleCount() throws DataAccessException {
-		System.out.println("DB에 articleCount 요청");
+
 		int result = sqlSession.selectOne("mapper.board.articleCount");
-		System.out.println("확인용 : " + result);
+
 		return result;
 	}
 
