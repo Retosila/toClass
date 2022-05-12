@@ -118,11 +118,14 @@ public class BoardControllerImpl  implements BoardController{
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
                                     HttpServletRequest request, HttpServletResponse response) throws Exception{
+
 		String viewName = (String)request.getAttribute("viewName");
 		articleVO=boardService.viewArticle(articleNO);
+		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		mav.addObject("article", articleVO);
+		mav.addObject("articlesList", articlesList);
 		System.out.printf(String.valueOf(mav));
 		return mav;
 	}
@@ -132,8 +135,11 @@ public class BoardControllerImpl  implements BoardController{
 	public ModelAndView bad(@RequestParam("articleNO") int articleNO,
 							HttpServletRequest request, HttpServletResponse response) throws Exception {
 		articleVO=boardService.bad(articleNO);
+
+		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/viewArticle");
+		mav.addObject("articlesList", articlesList);
 		mav.addObject("article", articleVO);
 		return mav;
 	}
@@ -141,8 +147,11 @@ public class BoardControllerImpl  implements BoardController{
 	public ModelAndView good(@RequestParam("articleNO") int articleNO,
 							HttpServletRequest request, HttpServletResponse response) throws Exception {
 		articleVO=boardService.good(articleNO);
+
+		List articlesList = boardService.listArticles();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/viewArticle");
+		mav.addObject("articlesList", articlesList);
 		mav.addObject("article", articleVO);
 		return mav;
 	}

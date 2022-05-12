@@ -20,16 +20,6 @@
     <script src="${contextPath}/assets/js/paginate.js"
             type="text/javascript"></script>
 
-    <script>
-        function fn_articleForm(logOn, articleForm, login) {
-            if (logOn != '' && logOn != 'false') {
-                location.href = articleForm;
-            } else {
-                alert("로그인 후 글쓰기가 가능합니다.")
-                location.href = login + '?action=/board/articleForm.do';
-            }
-        }
-    </script>
     <link href="${contextPath}/assets/css/ligne.css" rel="stylesheet"/>
     <link href="${contextPath}/assets/css/paginate.css" rel="stylesheet"/>
 
@@ -39,20 +29,17 @@
 
 <div class="container ">
 
-
+    <H6 class="display-4">자유게시판</H6>
     <table class="myTable table hover">
         <thead>
         <tr class="header" style="text-align: center;">
             <th>번호</th>
-
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
             <th>조회</th>
-            <th >추천</th>
-
+            <th>추천</th>
         </tr>
-
         </thead>
         <tbody>
         <c:choose>
@@ -68,66 +55,49 @@
             <c:when test="${not empty articlesList}">
                 <c:forEach var="article" items="${articlesList}" varStatus="articleNum">
                     <tr align="center">
-                        <td width="7%">${article.articleNO}</td>
 
+                        <td width="7%">${article.articleNO}</td>
                         <td align='left' width="40%"><span
-                                style="padding-right: 30px"></span> <c:choose>
-                            <c:when test='${article.level > 1 }'>
-                                <c:forEach begin="1" end="${article.level}" step="1">
-                                    <span style="padding-left: 20px"></span>
-                                </c:forEach>
-                                <span style="font-size: 12px;">[답변]</span>
-                                <a class='cls1'
-                                   href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a class='cls1'
-                                   href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
-                            </c:otherwise>
-                        </c:choose></td>
+                                style="padding-right: 30px"></span>
+                        <a class='cls1'
+                           href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+                        </td>
                         <td width="15%">${article.member_name}</td>
                         <td width="15%">${article.writeDate}</td>
                         <td width="7%">${article.views}</td>
                         <td width="7%">${article.good+article.bad}</td>
-
                     </tr>
-
                 </c:forEach>
-
             </c:when>
         </c:choose>
-
         </tbody>
-
     </table>
 
 
-<div class="row">
-    <div class="input-group col-3">
-        <input class="form-control" type="search" id="searchBox" placeholder="검색">
-    </div>
-    <div class="col-9" align="right">
+    <div class="row">
+        <div class="input-group col-3">
+            <input class="form-control" type="search" id="searchBox" placeholder="검색">
+        </div>
+        <div class="col-9" align="right">
 
-        <a href="javascript:fn_articleForm('${logOn}','${contextPath}/board/articleForm.do','${contextPath}/login')">
-            <button type="button" class="btn btn-default btn-round ">글쓰기</button>
-        </a>
+            <a href="${contextPath}/board/articleForm.do">
+                <button type="button" class="btn btn-default btn-round ">글쓰기</button>
+            </a>
+        </div>
     </div>
 </div>
-</div>
-
-
 
 
 <script>
 
     let options = {
-        numberPerPage: 10, //Cantidad de datos por pagina
-        goBar: true, //Barra donde puedes digitar el numero de la pagina al que quiere ir
-        pageCounter: true, //Contador de paginas, en cual estas, de cuantas paginas
+        numberPerPage: 10,
+        goBar: true,
+        pageCounter: true,
     };
 
     let filterOptions = {
-        el: '#searchBox' //Caja de texto para filtrar, puede ser una clase o un ID
+        el: '#searchBox'
     };
 
     paginate.init('.myTable', options, filterOptions);

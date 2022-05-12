@@ -2,6 +2,8 @@ package com.bbt.toclass.board.service;
 
 import com.bbt.toclass.board.vo.ArticleVO;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +19,5 @@ public interface BoardService {
 	public void removeArticle(int articleNO) throws Exception;
 	public ArticleVO bad(int articleNO) throws Exception;
 	public ArticleVO good(int articleNO) throws Exception;
+
 }
