@@ -17,4 +17,8 @@ public class AchievementServiceImpl implements AchievementService {
 	public List<AchievementVO> getAchievement(String member_email) throws Exception {
 		return achievementDAO.getAchievement(member_email);
 	}
+	
+	public List<AchievementVO> getMyStudentAchievement(String member_email) throws Exception {
+		return achievementDAO.getMyStudentAchievement(member_email);
+	}
 }
