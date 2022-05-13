@@ -5,11 +5,14 @@
 
 <tiles-definitions>
 
-
    <definition name="attendance" extends="baseLayout">
-      <put-attribute name="title" value="출석" />
+      <put-attribute name="title" value="출결" />
       <put-attribute name="body" value="/WEB-INF/views/attendance/attendance.jsp" />
    </definition>
 
+   <definition name="attendance_student" extends="baseLayout">
+      <put-attribute name="title" value="출결 열람" />
+      <put-attribute name="body" value="/WEB-INF/views/attendance/attendance_student.jsp" />
+   </definition>
 
 </tiles-definitions>

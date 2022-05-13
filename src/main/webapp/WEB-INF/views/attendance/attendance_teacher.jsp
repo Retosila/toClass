@@ -10,12 +10,12 @@ request.setCharacterEncoding("UTF-8");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<head>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-<!-- 
+
+<!--
 <link rel="apple-touch-icon" sizes="76x76"
 	href="${contextPath}/assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="${contextPath}/assets/img/favicon.png">
@@ -40,9 +40,9 @@ request.setCharacterEncoding("UTF-8");
 	}
 </script>
 </head>
-</head>
+
 <body>
-	<div class="container">
+	<div class="container pt-lg-7">
 		<table class="table">
 			<thead>
 				<tr>
@@ -96,31 +96,6 @@ request.setCharacterEncoding("UTF-8");
 				</c:when>
 			</c:choose>
 
-
-
-
-			<!--  <tbody>
-
-    <tr>
-        <td class="text-center">2</td>
-        <td>John Doe</td>
-        <td>Design</td>
-        <td>2012</td>
-        <td class="text-right">&euro; 89,241</td>
-        <td class="td-actions text-right">
-            <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm " data-original-title="" title="">
-                <i class="ni ni-circle-08 pt-1"></i>
-            </button>
-            <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm " data-original-title="" title="">
-                <i class="ni ni-settings-gear-65 pt-1"></i>
-            </button>
-            <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm " data-original-title="" title="">
-                <i class="ni ni-fat-remove pt-1"></i>
-            </button>
-        </td>
-    </tr>
-
-    </tbody> -->
 		</table>
 	</div>
 
@@ -130,7 +105,7 @@ request.setCharacterEncoding("UTF-8");
 	</a>
 
 
-	<div class="container">
+	<div class="container pt-lg-7">
 		<table class="table">
 			<thead>
 				<tr>

@@ -50,27 +50,8 @@ public class ScheduleControllerImpl implements ScheduleController {
 	// 학사 캘린더
 	@RequestMapping(value = {"/schedule/calendar"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView calendar(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// 로그인 확인 로직
-		logger.info("/schedule/calendar.jsp 요청");
-		ModelAndView mav = new ModelAndView();
-		if (session.getAttribute("logOn") == null) {
-			logger.info("logOn == null : 승인되지 않은 요청");
-			logger.info("로그인 화면으로 redirect");
-			mav.setViewName("redirect:/login");
-			return mav;
-		}
-		else if((boolean)session.getAttribute("logOn") == false) {
-			logger.info("logOn == false : 승인되지 않은 요청");
-			logger.info("로그인 화면으로 redirect");
-			mav.setViewName("redirect:/login");
-			return mav;
-		}
-		else {
-			logger.info("logOn == true : 승인된 요청");
-			logger.info("/schedule/calender.jsp로 이동");
-			mav.setViewName("calendar");
-			return mav;
-		}
+		ModelAndView mav = new ModelAndView("calendar");
+		return mav;
 	}
 
 	// 임시 매핑용

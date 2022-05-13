@@ -1,10 +1,13 @@
 package com.bbt.toclass.member.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,7 +15,17 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.impl.GoogleTemplate;
+import org.springframework.social.google.api.plus.Person;
+import org.springframework.social.google.api.plus.PlusOperations;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +41,7 @@ import com.bbt.toclass.member.vo.ApplicantVO;
 import com.bbt.toclass.member.vo.ClassVO;
 import com.bbt.toclass.member.vo.MemberVO;
 
+
 @Controller("memberController")
 public class MemberControllerImpl implements MemberController {
 
@@ -39,6 +53,10 @@ public class MemberControllerImpl implements MemberController {
 	private MemberService memberService;
 	@Autowired
 	private MemberVO memberVO;
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
 
 	/*
 	 *
@@ -837,5 +855,76 @@ public class MemberControllerImpl implements MemberController {
 
 		return mav;
 	}
+	
+	
+	// 구글 로그인
+	@RequestMapping(value = "/google/login.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView googleLogin(String idtoken, Model model) throws GeneralSecurityException, IOException {
+		ModelAndView mav = new ModelAndView("main");
+		
+		logger.info("googleLogin 요청성공");
+		logger.info("idtoken : " + idtoken);
+		
+		return mav;
+	    
+	}
+	
+
+//	/* 사용자가 인증 처리시 redirect 되는 함수. 따라서, 여기서 가입 처리와 로그인을 담당 */
+//    @RequestMapping(value = "/google/login.do", method = { RequestMethod.GET, RequestMethod.POST })
+//    public String googleRollin(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+//                                Model model, @RequestParam String code) throws ServletException, IOException {
+//        
+//     
+//        OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+//        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(), null);
+//        
+//        String accessToken = accessGrant.getAccessToken();
+//        Long expireTime = accessGrant.getExpireTime();
+//        
+//        if (expireTime != null && expireTime < System.currentTimeMillis()) {
+//            accessToken = accessGrant.getRefreshToken();
+//            System.out.printf("accessToken is expired. refresh token = {}", accessToken);
+//        }
+//        
+//        Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
+//        Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
+//        
+//        PlusOperations plusOperations = google.plusOperations();
+//        Person profile = plusOperations.getGoogleProfile();
+//        
+//        return "redirect:/";
+//    }
+	
+//	@RequestMapping("/google/login.do")
+//	public String doSessionAssignActionPage(HttpServletRequest request){
+//		System.out.println("/google/login.do");
+//		String code = request.getParameter("code");
+//		System.out.println("코드 : " + code);
+//		
+//		String queryString = request.getQueryString();
+//		System.out.println("쿼리스트링 : " + queryString);
+//		
+//		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+//		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(),
+//				null);
+//		
+//		String accessToken = accessGrant.getAccessToken();
+//		Long expireTime = accessGrant.getExpireTime();
+//		if (expireTime != null && expireTime < System.currentTimeMillis()) {
+//			accessToken = accessGrant.getRefreshToken();
+//			System.out.printf("accessToken is expired. refresh token = {}", accessToken);
+//		}
+//		Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
+//		Google google = connection == null ? new GoogleTemplate(accessToken) : (GoogleTemplate) connection.getApi();
+//		
+//		PlusOperations plusOperations = google.plusOperations();
+//		Person person = plusOperations.getGoogleProfile();
+//	
+		
+//		return "redirect:/";
+//	}
+	
+	
 
 }

@@ -190,7 +190,20 @@
     		<artifactId>commons-io</artifactId>
     		<version>2.4</version>
 		</dependency>
-
+		
+		<!-- Google Login API -->
+        <dependency>
+             <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+        
+        <dependency>
+              <groupId>org.apache.httpcomponents</groupId>
+              <artifactId>httpclient</artifactId>
+              <version>4.5.3</version>
+        </dependency>
+        
 		<!-- 타일즈 관련 라이브러리 -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -245,11 +258,25 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.10.0</version>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.8.11.3</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.8.6</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.8.11</version>
+		</dependency>
+				
 		<!-- Validate Check : 파라미터 검증 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

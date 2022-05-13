@@ -2,13 +2,21 @@ package com.bbt.toclass.attendance.controller;
 
 import com.bbt.toclass.attendance.service.AttendanceService;
 import com.bbt.toclass.attendance.vo.AttendDTO;
+import com.bbt.toclass.attendance.vo.AttendVO;
+import com.bbt.toclass.attendance.vo.MyAttendVO;
 import com.bbt.toclass.attendance.vo.ShowAttendVO;
+import com.bbt.toclass.schedule.vo.ScheduleVO;
+
+import net.sf.json.JSONArray;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Controller("attendanceController")
 public class AttendanceControllerImpl implements AttendanceController{
@@ -28,34 +37,11 @@ public class AttendanceControllerImpl implements AttendanceController{
 	@Autowired
 	AttendanceService attendanceService;
 
-	@RequestMapping(value = { "/attendance/attendance"}, method = RequestMethod.GET)
+	// 교사용
+	@RequestMapping(value = { "/attendance/attendance"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView attendance(String member_email, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("attendance");
 
-		/*
-		 * 위 url로 요청을 받는 순간(=출결관리 메뉴를 클릭하는 순간) 아래와 같은 로직을 실행한다.
-		 *
-		 * -- 교사 회원의 요청이라고 가정한다(이 부분은, member_type.equals("교사")를 통해 분기시킬 수 있음)
-		 * 0. 세션에서 member_email 정보를 받아온다음, 해당 정보를 바탕으로 DB에 "해당 이메일을 가진 교사와 동일한 학급에 소속된 학생의 이메일 정보들을 추출한다.
-		 *   -> ex) neru@naver.com 선생이 관리하는 reto@naver.com, lala@naver.com....
-		 *   -> 해당 이메일 정보들은 List<String>의 형태로 저장해둔다.
-		 * 1. 현재 날짜를 기준으로 이번 주 월요일과 금요일 날짜를 받아온다.
-		 * 2. List<String>의 size만큼 for문을 돌려 아래와 같은 방식으로 AttendDTO 객체를 만들고 List에 담는다.
-		 * 3. 배열 내의 AttendDTO 객체의 수만큼 for문을 돌려 attendanceService.getAttendanceInfo(attendDTO) 메소드를 실행한다.
-		 * 4. 메소드에서 return된 값을 List<ShowAttendVO>  배열 객체에 add한다.
-		 * 5. 바인딩된 데이터를 프론트단에 넘겨준다.
-		 *
-		 */
-
-		/*
-		 *
-		 * 아래 로직은 임시로 AttendDTO 객체를 만들어서 실행해본 예시임.
-		 * 위 설명과 아래의 구현 예제를 통해 기능 구현을 할 것
-		 *
-		 */
-
-		// 여러 개의 ShowAttendVO 객체를 담기 위한 배열 생성
-		// ShowAttendVO는 일주일 치의 AttendVO 객체를 하나로 압축해둔 VO 객체임(for문을 통한 배열 탐색을 위함)
 		logger.info("주간 날짜 가져오기");
 		ArrayList<String> week = WeekDay();
 		request.setAttribute("week", week.get(0));
@@ -88,7 +74,63 @@ public class AttendanceControllerImpl implements AttendanceController{
 		mav.addObject("ShowAttendVOList", savoList);
 		return mav;
 	}
-
+	
+	// 학생용 (캘린더 연동)
+	@RequestMapping(value = {"/attendance/attendance_student"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView attendance_student(String member_email, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("attendance_student");
+		return mav;
+		
+	}
+	
+	
+	/*
+	 * 
+	 *  
+	 *  로직 구현 (.do를 붙일 것)
+	 *  
+	 *  
+	 */
+	
+	// ajax : 일정 정보 가져오기
+	// produces 속성은 한글 깨짐 방지용
+	@RequestMapping(value = {"/schedule/getAttendance.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String getAttendanceDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String member_email = (String)param.get("member_email");
+		
+		// 한글 깨짐 방지용
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		logger.info("ajax 요청 : " + member_email + "의 출결 정보");
+		// 서비스 객체를 통해 출결 데이터를 list 방식으로 저장
+		List<MyAttendVO> mavoList = attendanceService.getAttendance(member_email);
+		for (MyAttendVO mavo : mavoList) {
+			logger.info("title : " + mavo.getTitle());
+			logger.info("start : " + mavo.getStart());
+		}
+		
+		// list 형식의 일정 데이터 json 데이터로 변환
+		JSONArray result = JSONArray.fromObject(mavoList);
+		// 배열 형식의 json 데이터를 한줄의 문자열로 변환
+		String resp = result.toString();
+		logger.info(resp);
+		
+		// ajax 요청에 대해 resp 객체를 응답
+		return resp;
+	}
+	
+	
+	
+	
+	
+	
+	/*
+	 * 
+	 *  내부 메소드
+	 * 
+	 */
 
 	//오늘 날짜를 기준으로 월~금의 날짜 가져와서 arraylist에 값 넣기
 		private ArrayList<String> WeekDay() {
@@ -117,6 +159,11 @@ public class AttendanceControllerImpl implements AttendanceController{
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M월 d일 (E)");
 			String formatedNow = now.format(formatter);
 			System.out.println(formatedNow);
-				return formatedNow;
-				}
+			return formatedNow;
+		}
+		
+		
+		
+		
+		
 }
