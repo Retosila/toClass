@@ -149,6 +149,20 @@ select {
 							class="btn btn-outline-primary me-2">추가</button>
 					</td>
 				</tr>
+								<c:forEach var="achievement" items="${achievement}">
+					<tr>
+					<!-- 틀에 맞춰서 값이 나오게... -->
+						<td>${achievement.member_name}</td>
+						<td>${achievement.achievement_year}</td>
+						<td>${achievement.achievement_semester}</td>
+						<td>${achievement.subject_name}</td>
+						<td>${achievement.achievement_mid}</td>
+						<td>${achievement.achievement_final}</td>
+						<td>${achievement.achievement_avg}</td>
+						<td>${achievement.achievement_rank}</td>
+						<td>${achievement.achievement_grade}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<br>

@@ -21,6 +21,7 @@ public class AchievementVO {
 	private String achievement_semester;
 	private Date achievement_regdate;
 	private Date achievement_moddate;
+	private String member_name;
 	
 	
 	
@@ -141,6 +142,14 @@ public class AchievementVO {
 
 	public void setAchievement_moddate(Date achievement_moddate) {
 		this.achievement_moddate = achievement_moddate;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 	
 	

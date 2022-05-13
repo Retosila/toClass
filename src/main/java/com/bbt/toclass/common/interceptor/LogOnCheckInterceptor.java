@@ -6,8 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.bbt.toclass.member.vo.MemberVO;
 
@@ -26,14 +29,26 @@ public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
 		logger.info("로그인이 필요한 서비스");
 		logger.info("logOnCheckInterceptor 호출");
 		HttpSession session = request.getSession();
+		
+		// null처리
+		boolean logOn = false;
+		if (session.getAttribute("logOn") != null) {
+			logOn = (boolean)session.getAttribute("logOn");
+		}
+		
 		// 로그온 확인
-		boolean logOn = (boolean)session.getAttribute("logOn");
 		logger.info("logOn : " + logOn);
 		// contextPath
 		String contextPath = request.getContextPath();
 
 		// logOn 정보가 false일 시 로그인 화면으로 리다이렉트
 		if (logOn == false) {
+			// 로그인 요구 멘트
+			FlashMap flashMap = new FlashMap();
+			flashMap.put("msg", "로그인이 필요한 서비스입니다");
+			FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+			flashMapManager.saveOutputFlashMap(flashMap, request, response);
+			
 			response.sendRedirect(contextPath + "/login");
 			logger.info("/login으로 리다이렉트");
 			return false;
@@ -51,9 +66,6 @@ public class LogOnCheckInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		super.postHandle(request, response, handler, modelAndView);
-		/*long end = System.currentTimeMillis();
-		long start = (long)request.getAttribute("start");
-		System.out.println("URL : "+ request.getRequestURI() + ", 걸린시간 :" + (end-start));*/
 	}
 
 

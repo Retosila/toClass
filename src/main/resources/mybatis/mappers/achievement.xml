@@ -18,17 +18,33 @@
         <result property="achievement_semester" column="achievement_semester" />
         <result property="achievement_regdate" column="achievement_regdate" />
         <result property="achievement_moddate" column="achievement_moddate" />
+        <result property="member_name" column="member_name" />
 	</resultMap> 
 
   <select id="getAchievementByEmail"  resultMap="achievementResult" parameterType="String" >
 	<![CDATA[
 		select achievement_id, member_email, subject_name, achievement_mid, achievement_mid,
 			achievement_final, achievement_avg, achievement_rank, achievement_grade, achievement_year,
-			achievement_semester, achievement_regdate, achievement_moddate
-		from (select *from achievement where member_email=#{member_email} order by achievement_regdate desc)
+			achievement_semester, achievement_regdate, achievement_moddate, member_name
+        from achievement a inner join member m using(member_email)
+        where member_email = #{member_email}
+        order by achievement_regdate desc
 	]]>
   </select>
-
+  
+  <select id="getMyStudentEmailByEmail"  resultType="String" parameterType="String" >
+	<![CDATA[
+		select member_email from info where class_id = (select class_id from class where class_maker = #{member_email}) AND member_email <> #{member_email}
+	]]>
+  </select>
+  
+    <select id="getClassMemberEmail" resultType="String" parameterType="string">
+		<![CDATA[
+        select i.member_email
+        from info i inner join member m on(i.member_email = m.member_email)
+        where i.class_id = #{class_id} and m.member_type='학생'
+        ]]>
+	</select>
 
 
   

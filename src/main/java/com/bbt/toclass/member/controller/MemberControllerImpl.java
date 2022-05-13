@@ -69,32 +69,16 @@ public class MemberControllerImpl implements MemberController {
 			logOn = (boolean)session.getAttribute("logOn");
 		}
 
-		// 바인딩된 회원 정보 있을 시 회원유형에 따른 메인 페이지를 출력
+		// 이미 로그온된 상태일 시, main 컨트롤러로 redirect
 		MemberVO logOnMember = (MemberVO)session.getAttribute("member");
 		if (logOn == true && logOnMember != null) {
 			String member_type = logOnMember.getMember_type();
 			logger.info("logOn : " + logOn);
 			logger.info("이미 로그온된 회원 : " + logOnMember.getMember_email());
 			logger.info("회원유형 : " + member_type);
-
-			// 회원유형이 학생인 경우 main_student.jsp로 이동
-			if (member_type.equals("학생")) {
-				mav.setViewName("main_student");
-				return mav;
-			}
-			// 회원유형이 교사인 경우 main_teacher.jsp로 이동
-			else if (member_type.equals("교사")) {
-				mav.setViewName("main_teacher");
-				return mav;
-			}
-			else if (member_type.equals("관리자")) {
-				mav.setViewName("admin");
-				return mav;
-			}
-			else {
-				mav.setViewName("/errors/undefined_error");
-				return mav;
-			}
+			
+			mav.setViewName("redirect:/");
+			return mav;
 		}
 		else {
 			session.setAttribute("logOn", false);
@@ -102,43 +86,64 @@ public class MemberControllerImpl implements MemberController {
 		}
 
 		mav.setViewName("/member/login");
-		// 로그인 실패로 인해 redirect되었을 시 데이터 바인딩
+		// 로그인 실패 및 로그인 필요 서비스 접근으로 인해 redirect되었을 시
 		if (RequestContextUtils.getInputFlashMap(request) != null) {
 			Map<String, ?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 			String result = (String)redirectMap.get("result");
+			String msg = (String)redirectMap.get("msg");
 			logger.info("result : " + result);
+			logger.info("msg : " + msg);
 			mav.addObject("result", result);
+			mav.addObject("msg", msg);
 		}
+		
 		return mav;
 	}
 
-	// 메인페이지 (/main_student.jsp 및 /main_teacher.jsp)
+	// 메인페이지 (/main.jsp, /main_student.jsp, /main_teacher.jsp)
+	@SuppressWarnings("unused")
 	@RequestMapping(value = {"/", "/main"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		logger.info("메인 페이지 요청");
-
+		
 		MemberVO member = (MemberVO)session.getAttribute("member");
-		if(member==null){
-			return "/";
+		String member_type = null;
+		boolean logOn = false;
+
+		// null처리
+		if (member != null) {
+			member_type = member.getMember_type();
+		}
+		
+		if (session.getAttribute("logOn") == null) {
+			logOn = false;
 		}
 		else {
-			// 회원타입에 따라 다른 메인페이지로 분기
-			String member_type = member.getMember_type();
-			if (member_type.equals("교사")) {
-				return "main_teacher";
-			}
-
-			else if (member_type.equals("학생")) {
-				return "main_student";
-			}
-
-			else {
-				return "admin";
-			}
+			logOn = (boolean)session.getAttribute("logOn");
 		}
-
+		
+		logger.info("logOn : " + logOn);
+		
+		// 회원타입에 따라 다른 메인페이지로 분기
+		// 회원정보가 없을 시 
+		if (member == null){
+			return "main";
+		}
+		else if (member_type.equals("교사")) {
+			return "main_teacher";
+		}
+		else if (member_type.equals("학생")) {
+			return "main_student";
+		}
+		// 회원정보는 존재하나 회원유형이 정해지지 않았을 시(구글 계정 시작)
+		else if (member != null && member_type == null) {
+			return "googleRegister";
+		}
+		else {
+			return "admin";
+		}
 
 	}
 
@@ -217,18 +222,18 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView register_2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-
+		
 		logger.info("register_2.jsp 페이지 요청");
-
+		
 		ModelAndView mav = new ModelAndView("/member/register_2");
 		String policy = (String)request.getParameter("policy");
 		String personal = (String)request.getParameter("personal");
-
+		
 		logger.info("약관동의 여부 : " + policy);
 		logger.info("개인정보 동의 여부 : " + personal);
-
+		
 		return mav;
-
+		
 	}
 
 	// 회원가입 페이지 : 3단계(/member/register_3.jsp)
@@ -236,28 +241,32 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView register_3(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-
+		
 		logger.info("register_3.jsp 페이지 요청");
-
+		
 		ModelAndView mav = new ModelAndView("/member/register_3");
 		String member_email = (String)request.getParameter("member_email");
-
+		
 		logger.info("전송 데이터 : " + member_email);
 		mav.addObject("member_email", member_email);
-
+		
 		return mav;
 
 	}
 
 	// 회원정보 페이지(/member/info.jsp)
 	@RequestMapping(value= "/info", method= {RequestMethod.POST, RequestMethod.GET} )
-	public ModelAndView info(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		MemberVO member = memberService.viewInfo(email);
-		logger.info("마이페이지 요청 : " + member.getCurrentClass());
-
-		mav.setViewName("info");
-		mav.addObject("member", member);
+	public ModelAndView info(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("info");
+		
+		// session에 바인딩된 회원 이메일 정보를 바탕으로 DB에 다시 데이터 요청
+		MemberVO sessionMember = (MemberVO)session.getAttribute("member");
+		String member_email = sessionMember.getMember_email();
+		
+		MemberVO requestMember = memberService.viewInfo(member_email);
+		logger.info("마이페이지 요청 : " + requestMember.getCurrentClass());
+		
+		mav.addObject("member", requestMember);
 		return mav;
 
 	}
@@ -267,11 +276,11 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView infoUpdate(@RequestParam("email") String email,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("updateDo 컨트롤러 실행");
 		ModelAndView mav = new ModelAndView();
-
+		
 		MemberVO member = memberService.updateDo(email);
 		mav.setViewName("/member/infoUpdate");
 		mav.addObject("member", member);
-
+		
 		return mav;
 	}
 
@@ -313,7 +322,9 @@ public class MemberControllerImpl implements MemberController {
 		}
 		String member_type = member.getMember_type();
 		String member_email = member.getMember_email();
-		if (currentClass != null || currentClass != "") {
+		
+		// 학급 정보가 존재할 시
+		if (currentClass != "") {
 			logger.info("학급 정보 존재 : " + currentClass);
 			logger.info("회원유형 : " + member_type);
 
@@ -342,38 +353,43 @@ public class MemberControllerImpl implements MemberController {
 					logger.info("가입 승인 대기 중인 학생 없음 ");
 				}
 			}
-
+			
+		}
+		// 학급 정보 존재하지 않을 시
+		else {
+			logger.info("학급 정보 없음");
 			// 학생 회원인 경우
-			else if (member_type.equals("학생")) {
+			if (member_type.equals("학생")) {
 				// 가입 승인 대기 여부 확인용 데이터 바인딩
 				logger.info("비즈니스 로직 요청 : checkIsPending");
 				int result = memberService.checkIsPending(member_email);
+				
 				if (result > 0) {
-					logger.info("교사의 학급 가입 승인 대기 목록에 존재");
+					logger.info("승인 대기 중인 가입 요청 존재");
 					mav.addObject("isPending", true);
 				}
-				else {
-					logger.info("교사의 학급 가입 승인 대기 목록에 비존재");
+				else if (result == 0) {
+					logger.info("승인 대기 중인 가입 요청 비존재");
 					mav.addObject("isPending", false);
 				}
+				else {
+					logger.info("거부된 가입 요청 존재");
+					mav.addObject("isRejected", true);
+				}
 			}
-			else {
-				logger.info("관리자 계정");
-			}
-
 		}
-		else {
-			logger.info("학급 정보 없음");
-		}
-
-		// *.do에서 result값을 가지고 리다이렉트되었을 때
+		
+		// *.do에서 result값을 가지고 리다이렉트 & 인터셉터의 msg 가지고 리다이렉트 
 		if (RequestContextUtils.getInputFlashMap(request) != null) {
 			Map<String, ?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 			String result = (String)redirectMap.get("result");
+			String msg = (String)redirectMap.get("msg");
 			logger.info("result : " + result);
+			logger.info("msg : " + msg);
 			mav.addObject("result", result);
+			mav.addObject("msg", msg);
 		}
-
+		
 		return mav;
 	}
 
@@ -413,23 +429,11 @@ public class MemberControllerImpl implements MemberController {
 		    logger.info("회원이름 : " + type);
 		    logger.info("회원유형 : " + name);
 		    logger.info("학급ID : " + currentClass);
-
-		    // 회원타입에 따라 다른 메인 페이지로 분기시킴
-		    if (type.equals("교사")) {
-		    	mav.setViewName("main_teacher");
-		    }
-		    else if (type.equals("학생")) {
-		    	mav.setViewName("main_student");
-		    }
-			else if (type.equals("관리자")) {
-				mav.setViewName("admin");
-			}
-		    else {
-		    	// 회원유형이 없는 경우(ex. 구글 로그인api 사용시) 회원유형 및 기타정보들을 받을 수 있는 페이지로 이동
-		    	mav.setViewName("/errors/undefined_error");
-		    }
+		    
+		    // main 컨트롤러로 redirect하에 회원 유형에 따라 분기하여 처리
+		    mav.setViewName("redirect:/");
 		}
-
+		
 		// 입력된 email&pw값과 일치하는 회원 존재하지 않을 시
 		else {
 		   rAttr.addFlashAttribute("result","loginFailed");
@@ -572,8 +576,7 @@ public class MemberControllerImpl implements MemberController {
 		if (isRegister) {
 			logger.info("회원등록 성공");
 			session.setAttribute("member", member);
-			//session.setAttribute("logOn", true);
-			// 로그인 서블릿으로 요청을 forward
+			// login 컨트롤러로 요청을 forward
 			RequestDispatcher dispatch = request.getRequestDispatcher("/member/login.do");
 			dispatch.forward(request, response);
 			logger.info("logOn : " + (boolean)session.getAttribute("logOn"));
@@ -591,11 +594,10 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView logoutDo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 세션에 바인딩된 데이터 제거
 		HttpSession session = request.getSession();
-		session.removeAttribute("member");
-		session.removeAttribute("logOn");
+		session.invalidate();
 
 		// 로그인 화면으로 리다이렉트
-		ModelAndView mav = new ModelAndView("/");
+		ModelAndView mav = new ModelAndView("redirect:/");
 
 		return mav;
 	}
@@ -617,8 +619,7 @@ public class MemberControllerImpl implements MemberController {
 			boolean isUnregister = memberService.unregister(member);
 			if (isUnregister) {
 				logger.info("회원탈퇴 완료 : " + member.getMember_email());
-				session.removeAttribute("member");
-				session.removeAttribute("logOn");
+				session.invalidate();
 				rAttr.addFlashAttribute("result","unregistered");
 				mav.setViewName("redirect:/login");
 			}
@@ -768,13 +769,11 @@ public class MemberControllerImpl implements MemberController {
 		if (result > 0) {
 			logger.info("학급 가입 요청 성공");
 		    rAttr.addFlashAttribute("result","applySuccess");
-		    session.setAttribute("isPending", true);
 		}
 		else {
 			logger.info("학급 가입 요청 실패");
 			rAttr.addFlashAttribute("result","applyFailed");
 		}
-
 		return mav;
 	}
 

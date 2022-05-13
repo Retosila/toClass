@@ -20,15 +20,75 @@
 
 	// 회원가입 버튼 클릭 시 실행
 	function modInfo() {
-		// 우선 핸드폰 번호 유효성 확인
-		if ( pwValidCheck && pwConfirmCheck && phoneValidCheck) {
-			// 왜 제이쿼리 $("#frmRegister").submit(); 사용할 때는 아무런 일이 일어나지 않는지 모르겠다.			
+		// 각 항목의 유효성 확인
+		if (pwValidCheck == false) {
+			alert("사용할 수 없는 비밀번호입니다.");			
+			return;
+		}
+		else if (pwConfirmCheck == false) {
+			alert("비밀번호가 일치하지 않습니다.");			
+			return;
+		}
+		else if (phoneValidCheck == false) {
+			alert("잘못된 전화번호 형식입니다.");			
+			return;
+		}
+		// 전 항목이 true일 시 submit
+		else if (pwValidCheck && pwConfirmCheck && phoneValidCheck) {
 			document.frmModInfo.submit();
 		}
 		else {
 			alert("입력된 정보가 유효하지 않습니다.");
 		}
 	}
+	
+	$(document).ready(function(){
+		// 비밀번호 정규식 및 검증 스크립트 (개발단계에서는 사용 안 함)
+	   	// 비밀번호가 8~20자 & 숫자, 문자, 특수문자를 모두 포함하는지 체크
+	 	$("#member_pw").on("keyup", function() {
+			var num = /[0-9]/;	// 숫자 
+		   	var eng = /[a-zA-Z]/;	// 문자 
+		   	var spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
+			var pw = $("#member_pw").val();
+		   	if (num.test(pw) && eng.test(pw) && spc.test(pw) && pw.length >= 8 && pw.length <= 20) {
+		   		$("#msgPwValid").text("사용가능한 비밀번호입니다.");
+		   		pwValidCheck = true;
+		   	}
+		   	else {
+		   		$("#msgPwValid").text("유효하지 않은 비밀번호입니다.");
+		   		pwValidCheck = false;
+		   	}
+			console.log(pwValidCheck);
+	   	});
+		
+		// 비밀번호 확인 검증
+		$("#member_pw_check").on("keyup", function() {
+			var member_pw = $("#member_pw").val();
+			var member_pw_check = $("#member_pw_check").val();
+			if (member_pw == member_pw_check) {
+				$("#msgPwConfirm").text("비밀번호 확인이 완료되었습니다.");
+				pwConfirmCheck = true;
+			}
+			else {
+				$("#msgPwConfirm").text("비밀번호가 일치하지 않습니다.");
+				pwConfirmCheck = false;
+			}
+			console.log(pwConfirmCheck);
+		});
+		
+		// 전화번호 검증
+		$("#member_phone").on("keyup", function() {
+			var phone = $("#member_phone").val();
+			if (phoneRegex.test(phone)) {
+				phoneValidCheck = true;
+			}
+			else {
+				phoneValidCheck = false;
+			}
+			console.log(phoneValidCheck);
+		});
+		
+	});
 	
 </script>
 
@@ -37,57 +97,17 @@
 <h4>내 정보 수정</h4>
 
 <form name="frmModInfo" method="post" action="${contextPath}/member/modMember.do">
-           
-	       
-	이메일 : <input id="member_email" name="member_email" type="text" value="${member.member_email }"readonly/>
+	<input id="member_email" name="member_email" type="hidden" value="${member.member_email}"/>
+	이메일 : <input id="show_member_email" name="show_member_email" type="text" value="${member.member_email }" readonly disabled/>
 	<b><span id="msgEmailValid" style="font-size:0.6em"></span><br></b>
+	
 	새비밀번호 : <input id="member_pw" name="member_pw" type="password" required/><b><span id="msgPwValid" style="font-size:0.6em"></span></b><br>
 	<span style="font-size:0.6em"><b>비밀번호는 영문+숫자+특수문자를 혼합하여 8자~20자 이용이 가능합니다.</b></span><br>
-	<script>
-	// 비밀번호 정규식 및 검증 스크립트 (개발단계에서는 사용 안 함)
-   	// 비밀번호가 8~20자 & 숫자, 문자, 특수문자를 모두 포함하는지 체크
- 	$("#member_pw").on("keyup", function() {
-		var num = /[0-9]/;	// 숫자 
-	   	var eng = /[a-zA-Z]/;	// 문자 
-	   	var spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
-		var pw = $("#member_pw").val();
-	   	if (num.test(pw) && eng.test(pw) && spc.test(pw) && pw.length >= 8 && pw.length <= 20) {
-	   		$("#msgPwValid").text("사용가능한 비밀번호입니다.");
-	   		pwValidCheck = true;
-	   	}
-	   	else {
-	   		$("#msgPwValid").text("유효하지 않은 비밀번호입니다.");
-	   	}
-		console.log(pwValidCheck);
-   	});
-	</script>
-	새비밀번호 확인 : <input id="member_pw_check" name="member_pw_check" type="password"/><b><span id="msgPwConfirm" style="font-size:0.6em"></span></b><br>
-	<script>
-	$("#member_pw_check").on("keyup", function() {
-		var member_pw = $("#member_pw").val();
-		var member_pw_check = $("#member_pw_check").val();
-		if (member_pw == member_pw_check) {
-			$("#msgPwConfirm").text("비밀번호 확인이 완료되었습니다.");
-			pwConfirmCheck = true;
-		}
-		else {
-			$("#msgPwConfirm").text("비밀번호가 일치하지 않습니다.");
-		}
-		console.log(pwConfirmCheck);
-	});
-	</script>
+	
+	새비밀번호 확인 : <input id="member_pw_check" name="member_pw_check" type="password"/><b>
+	<span id="msgPwConfirm" style="font-size:0.6em"></span></b><br>
 	
 	새연락처 : <input id="member_phone" name="member_phone" type="tel" required placeholder="010-0000-0000"/><br>
-	<script>
-	$("#member_phone").on("keyup", function() {
-		var phone = $("#member_phone").val();
-		if (phoneRegex.test(phone)) {
-			phoneValidCheck = true;
-		}
-		else {}
-		console.log(phoneValidCheck);
-	});
-	</script>
 	
 	<button type="button" onclick="modInfo()">수정하기</button>
 </form>

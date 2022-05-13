@@ -253,7 +253,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 
 			<c:when test="${member.currentClass == null}">
 				<p><b>***소속 학급이 존재하지 않습니다.***</b></p>
-				<p>생성된 학급에 가입해주세요!</p>
+				<p id="status_msg">생성된 학급에 가입해주세요!</p>
 				<form method="post" action="${contextPath}/member/applyClass.do">
 					<input id="code_input" type="text" name="class_code" placeholder="가입코드를 입력해주세요."/>
 					<br>
@@ -262,9 +262,22 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 					<button id="apply_button" type="submit" class="btn btn-secondary" disabled>학급 가입 신청</button>
 				</form>
 					<br>
-				<c:if test="${isPending == true}">
-					<h3>현재 선생님의 가입 승인을 기다리고 있는 중입니다!</h3>
-				</c:if>
+				
+				<c:choose>
+					<c:when test="${isPending == true}">
+						<script>
+							$("#status_msg").text("현재 선생님의 가입 승인을 기다리고 있는 중입니다!");
+							$("#code_input").hide();
+							$("#apply_button").hide();
+							console.log("대기 중인 요청 존재");
+						</script>
+					</c:when>
+					<c:when test="${isRejected == true}">
+						<script>
+							alert("학급 가입 요청이 거부되었습니다.");
+						</script>
+					</c:when>
+				</c:choose>
 
 				<c:choose>
 					<c:when test="${result eq 'applySuccess'}">
@@ -284,8 +297,15 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 			</c:when>
 		</c:choose>
 	</c:when>
-
 </c:choose>
+
+<c:if test="${msg != null}">
+	<script>
+		console.log("${msg}");
+		alert("${msg}");
+	</script>
+</c:if>
+
 </div>
 </body>
 </html>

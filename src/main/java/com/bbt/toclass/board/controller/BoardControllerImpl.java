@@ -226,13 +226,21 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	return resEnt;
   }
-@RequestMapping(value = "/board/articleForm.do", method =  RequestMethod.GET)
+  @RequestMapping(value = "/board/articleForm.do", method =  RequestMethod.GET)
 	private ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	ModelAndView mav = new ModelAndView();
 	mav.setViewName("/board/articleForm");
 	return mav;
 }
+  
+  	// 미구현 페이지 임시 매핑용
+	@RequestMapping(value={"/board/undefined"}, method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView temp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/listArticles");
+		return mav;
+	}
 
 
 

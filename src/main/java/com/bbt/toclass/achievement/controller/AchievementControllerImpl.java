@@ -43,7 +43,7 @@ public class AchievementControllerImpl implements AchievementController {
 		
 		String member_email = member.getMember_email();
 		
-		List<AchievementVO> avo = achievementService.getAchievement(member_email);
+		List<AchievementVO> avo = achievementService.getMyStudentAchievement(member_email);
 		
 		mav.addObject("achievement", avo);
 		

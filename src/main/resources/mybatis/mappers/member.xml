@@ -31,7 +31,8 @@
         <result property="name" column="member_name" />
         <result property="email" column="member_email" />
         <result property="phone" column="member_phone" />
-        <result property="regdate" column="class_applicant_regdate" />
+        <result property="regdate" column="class_applicant_regdate"/>
+        <result property="status" column="class_applicant_status"/>
 	</resultMap>
 
   <select id="loginByEmail"  resultMap="memResult"   parameterType="memberVO" >
@@ -114,7 +115,7 @@
         ]]>
   </select>
 
-    <select id="checkPw"  resultType="int" parameterType="hashMap" >
+  <select id="checkPw"  resultType="int" parameterType="hashMap" >
 	<![CDATA[
         select count(*) from member
         where member_email=#{member_email} and member_pw=#{member_pw}
@@ -139,8 +140,8 @@
 
   <insert id="addApplicant" parameterType="applicantVO" >
 	<![CDATA[
-		insert into class_applicant(class_applicant_id, class_id, member_name, member_email, member_phone)
-		values (lpad(to_char(class_applicant_seq.nextval), 10, '0'), #{class_id}, #{name}, #{email}, #{phone})
+		insert into class_applicant(class_applicant_id, class_id, member_name, member_email, member_phone, class_applicant_status)
+		values (lpad(to_char(class_applicant_seq.nextval), 10, '0'), #{class_id}, #{name}, #{email}, #{phone}, 'pending')
 	]]>
   </insert>
 
@@ -170,7 +171,14 @@
   <select id="checkIsPendingByEmail"  resultType="int" parameterType="String">
 	<![CDATA[
 		select count(*) from class_applicant
-		where member_email = #{member_email}
+		where member_email = #{member_email} AND class_applicant_status = 'pending'
+	]]>
+   </select>
+   
+  <select id="checkIsRejectedByEmail"  resultType="int" parameterType="String">
+	<![CDATA[
+		select count(*) from class_applicant
+		where member_email = #{member_email} AND class_applicant_status = 'rejected'
 	]]>
    </select>
 
@@ -202,10 +210,10 @@
 
   <select id="getApplicantListByClassId"  resultMap="applicantResult" parameterType="String">
 	<![CDATA[
-		select class_id, member_name, member_email, member_phone,
+		select class_id, member_name, member_email, member_phone, class_applicant_status,
 			to_char(class_applicant_regdate, 'YYYY-MM-dd HH24:MI') as class_applicant_regdate
 		from class_applicant
-		where class_id = #{class_id}
+		where class_id = #{class_id} AND class_applicant_status = 'pending'
 	]]>
   </select>
 
@@ -232,9 +240,33 @@
 
   <delete id="delApplicantByClassIdAndMemberEmail" parameterType="hashMap">
 	<![CDATA[
-		delete from class_applicant
+		delete from class_applicant 
 		where class_id = #{class_id} AND member_email = #{member_email}
 	]]>
   </delete>
 
+  <update id="rejectApplicantByClassIdAndMemberEmail" parameterType="hashMap">
+	<![CDATA[
+		update class_applicant 
+		set class_applicant_status = 'rejected',
+			class_applicant_moddate = sysdate
+		where class_id = #{class_id} AND member_email = #{member_email}
+	]]>
+  </update>
+  
+  <delete id="delApplicantByClassId" parameterType="String">
+	<![CDATA[
+		delete from class_applicant
+		where class_id=#{class_id}
+	]]>
+  </delete>
+  
+  <delete id="delApplicantByMemberEmail" parameterType="String">
+	<![CDATA[
+		delete from class_applicant 
+		where member_email = #{member_email}
+	]]>
+  </delete>
+  
+  
 </mapper>

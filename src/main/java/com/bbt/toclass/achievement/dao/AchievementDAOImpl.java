@@ -1,5 +1,6 @@
 package com.bbt.toclass.achievement.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +28,30 @@ public class AchievementDAOImpl implements AchievementDAO {
 		return avoList;
 	}
 	
+	@Override
+	public List<AchievementVO> getMyStudentAchievement(String member_email) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : 성적조회 -> " + member_email);
+		List<String> emailList = sqlSession.selectList("mapper.achievement.getMyStudentEmailByEmail", member_email);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info("추출한 레코드의 개수 : " + emailList.size());
+		for (String str : emailList) {
+			System.out.println("추출된 학생 이메일 : "+str);
+		}
+		
+		List<AchievementVO> avoList = new ArrayList<AchievementVO>();
+		for (String email : emailList) {
+			List<AchievementVO> temp = sqlSession.selectList("mapper.achievement.getAchievementByEmail", email);
+			for (AchievementVO avo : temp) {
+				avoList.add(avo);
+				System.out.println("입력된 학생 정보 : " + avo.getMember_email());
+				
+			}
+		}
+		logger.info("학생 정보 추출 및 통합 입력 완료");
+		logger.info("추출한 학생 정보 개수 : " + avoList.size());
+		
+		return avoList;
+	}
 	
 	
 }
