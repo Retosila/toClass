@@ -60,4 +60,54 @@
 		<beans:property name="maxInMemorySize" value="52428800"/>
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
+	
+		<!-- 로그온 확인 인터셉터 -->
+	<beans:bean id="logOnCheckInterceptor" class="com.bbt.toclass.common.interceptor.LogOnCheckInterceptor">
+	</beans:bean>
+
+	<!-- 클래스 확인 인터셉터 -->
+	<beans:bean id="classCheckInterceptor" class="com.bbt.toclass.common.interceptor.ClassCheckInterceptor">
+	</beans:bean>
+
+	<!-- 인터셉터 -->
+	<interceptors>
+
+	<!-- 우선순위 1 : 로그온 확인 -->
+		<interceptor>
+
+			<mapping path="/member/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/member/findAccount"/>
+			<exclude-mapping path="/member/findPw"/>
+			<exclude-mapping path="/member/register_0"/>
+			<exclude-mapping path="/member/register_1"/>
+			<exclude-mapping path="/member/register_2"/>
+			<exclude-mapping path="/member/register_3"/>
+			<exclude-mapping path="/member/policy"/>
+			<exclude-mapping path="/member/personal"/>
+			<exclude-mapping path="/member/login.do"/>
+			<exclude-mapping path="/member/sendAuthCode.do"/>
+			<exclude-mapping path="/member/checkEmailDuplicate.do"/>
+			<exclude-mapping path="/member/findAccount.do"/>
+			<exclude-mapping path="/member/findPw.do"/>
+			<exclude-mapping path="/member/register.do"/>
+			<exclude-mapping path="/member/logout.do"/>
+			<exclude-mapping path="/assets/**"/>
+			<exclude-mapping path="/fullcalendar/**"/>
+			<beans:ref bean="logOnCheckInterceptor"/>
+		</interceptor>
+
+	<!-- 우선순위 2 : 클래스 확인 -->
+		<interceptor>
+			<mapping path="/attendance/**"/>
+			<mapping path="/achievement/**"/>
+			<mapping path="/board/**"/>
+			<mapping path="/schedule/**"/>
+			<exclude-mapping path="/**.do"/>
+			<beans:ref bean="classCheckInterceptor"/>
+		</interceptor>
+
+	</interceptors>
+	
 </beans:beans>
