@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -129,7 +128,16 @@ public class BoardControllerImpl  implements BoardController{
 		System.out.printf(String.valueOf(mav));
 		return mav;
 	}
-
+	@RequestMapping(value="/board/modArticleForm" ,method = RequestMethod.GET)
+	public ModelAndView modArticleForm(@RequestParam("articleNO") int articleNO,
+							HttpServletRequest request, HttpServletResponse response) throws Exception {
+		articleVO=boardService.viewArticle(articleNO);
+		String viewName = (String)request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("article", articleVO);
+		return mav;
+	}
 
 	@RequestMapping(value="/board/bad.do" ,method = RequestMethod.GET)
 	public ModelAndView bad(@RequestParam("articleNO") int articleNO,
@@ -169,7 +177,6 @@ public class BoardControllerImpl  implements BoardController{
 		String name=(String)enu.nextElement();
 		String value=multipartRequest.getParameter(name);
 		articleMap.put(name,value);
-
 	}
 
 	String imageFileName= upload(multipartRequest);

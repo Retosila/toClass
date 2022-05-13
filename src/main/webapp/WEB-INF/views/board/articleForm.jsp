@@ -48,8 +48,7 @@ request.setCharacterEncoding("UTF-8");
                                       align="center"></textarea></td>
         </tr>
         <tr>
-            <td align="left"><input class="btn btn-secondary" type="button"
-                                    value="파일 추가" onClick="fn_addFile()" /></td>
+            <td align="left"><input type="file" name="imageFileName"  onchange="readURL(this);" /></td>
         </tr>
         <tr>
             <td colspan="4"><div id="d_file"></div></td>
@@ -93,12 +92,7 @@ request.setCharacterEncoding("UTF-8");
         obj.submit();
     }
 
-    var cnt = 1;
-    function fn_addFile() {
-        $("#d_file").append(
-            "<br>" + "<input type='file' name='file"+cnt+"' />");
-        cnt++;
-    }
+
 </script>
 
 </body>
