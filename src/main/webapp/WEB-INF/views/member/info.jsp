@@ -69,36 +69,36 @@
     </style>
 </head>
 <body>
-<div class="container pt-lg-4">
+<div class="container pt-lg-4" style="max-width: 830px; margin:0 auto;">
     <h3>${member.member_name}님의 정보</h3>
     <hr>
-    <table class="table table-bordered" id="infoMyClass" style="max-width: 830px;">
+    <table class="table table-bordered" id="infoMyClass">
         <tr>
-            <th>식별번호<font color="#CC0000">*</font></th>
+            <th>식별번호</th>
             <td>${member.member_id}</td>
             <th>이메일</th>
             <td>${member.member_email}</td>
         </tr>
         <tr>
-            <th>이름<font color="#CC0000">*</font></th>
+            <th>이름</th>
             <td>${member.member_name}</td>
             <th>핸드폰</th>
             <td>${member.member_phone}</td>
         </tr>
         <tr>
-            <th>회원 유형<font color="#CC0000">*</font></th>
+            <th>회원 유형</th>
             <td>${member.member_type}</td>
-            <th>현 소속학급<font color="#CC0000">*</font></th>
+            <th>현 소속학급</th>
             <td>${member.currentClass}</td>
         </tr>
         <tr>
-            <th>등록일<font color="#CC0000">*</font></th>
+            <th>등록일</th>
             <td>${member.member_regdate}</td>
             <th>수정일</th>
             <td>${member.member_moddate}</td>
         </tr>
     </table>
-    <div class="btnSet_center" style="max-width:830px;">
+    <div class="btnSet_center">
 
         <button id="unregister" type="button" class="wBtn03" onclick="unregister()">회원탈퇴</button>
         <button type="button" class="wBtn03"

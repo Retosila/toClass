@@ -91,16 +91,85 @@
 	});
 	
 </script>
+<style>
+        th {
+            font-size: 13px;
+            font-weight: 300;
+            background: rgb(241, 242, 244);
+            text-align: left;
+        }
+
+        td {
+            font-size: 13px;
+            background: #fff;
+        }
+        
+        td span {
+		    color: #a0702c;
+		    font-size: 11px;
+		}
+
+        .btnSet_center {
+            width: 100%;
+            padding: 20px 0px;
+            text-align: center;
+        }
+
+        button.bBtn06 {
+            height: 36px;
+            padding: 0px 20px 3px;
+            border: none;
+            background: url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px no-repeat,
+            url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100% 0px no-repeat,
+            url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png) repeat-x;
+            color: rgb(255, 255, 255);
+            font-size: 12px;
+            text-shadow: rgb(0 0 0) 0px 0px 2px;
+            letter-spacing: -0.5px;
+            box-sizing: border-box;
+        }
+    </style>
 
 </head>
 <body>
-<h4>내 정보 수정</h4>
+<div class="container pt-lg-4" style="max-width: 830px; margin:0 auto;">
 
+<h3>내 정보 수정</h3>
+<hr>
 <form name="frmModInfo" method="post" action="${contextPath}/member/modMember.do">
 	<input id="member_email" name="member_email" type="hidden" value="${member.member_email}"/>
+	
+	<table class="table table-bordered" id="infoMyClass">
+	<tr>
+	<th>이메일</th>
+	<td><input id="show_member_email" name="show_member_email" type="text" value="${member.member_email}" readonly disabled/></td>
+	</tr>
+	<tr>
+	<th>새비밀번호</th>
+	<td><input id="member_pw" name="member_pw" type="password" required/><span>*비밀번호는 영문+숫자+특수문자를 혼합하여 8자~20자 이용이 가능합니다.</span></td>
+	</tr>
+	<tr>
+	<th>새비밀번호 확인</th>
+	<td><input id="member_pw_check" name="member_pw_check" type="password"/></td>
+	</tr>
+	<tr>
+	<th>새연락처</th>
+	<td><input id="member_phone" name="member_phone" type="tel" required placeholder="010-0000-0000"/></td>
+	</tr>
+	
+	</table>
+	
+	<div class="btnSet_center">
+	<button type="button" class="bBtn06" onclick="modInfo()">수정하기</button>
+	</div>
+</form>
+</div>
+</body>
+</html>
+	<!--  
 	이메일 : <input id="show_member_email" name="show_member_email" type="text" value="${member.member_email }" readonly disabled/>
 	<b><span id="msgEmailValid" style="font-size:0.6em"></span><br></b>
-	
+	</tr>
 	새비밀번호 : <input id="member_pw" name="member_pw" type="password" required/><b><span id="msgPwValid" style="font-size:0.6em"></span></b><br>
 	<span style="font-size:0.6em"><b>비밀번호는 영문+숫자+특수문자를 혼합하여 8자~20자 이용이 가능합니다.</b></span><br>
 	
@@ -108,9 +177,4 @@
 	<span id="msgPwConfirm" style="font-size:0.6em"></span></b><br>
 	
 	새연락처 : <input id="member_phone" name="member_phone" type="tel" required placeholder="010-0000-0000"/><br>
-	
-	<button type="button" onclick="modInfo()">수정하기</button>
-</form>
-
-</body>
-</html>
+	-->

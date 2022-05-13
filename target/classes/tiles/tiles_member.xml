@@ -37,6 +37,18 @@
       <put-attribute name="title" value="회원가입" />
       <put-attribute name="body" value="/WEB-INF/views/member/register_0.jsp" />
    </definition>
+   <definition name="/member/register_1" extends="baseLayout">
+      <put-attribute name="title" value="회원가입" />
+      <put-attribute name="body" value="/WEB-INF/views/member/register_1.jsp" />
+   </definition>
+   <definition name="/member/register_2" extends="baseLayout">
+      <put-attribute name="title" value="회원가입" />
+      <put-attribute name="body" value="/WEB-INF/views/member/register_2.jsp" />
+   </definition>
+   <definition name="/member/register_3" extends="baseLayout">
+      <put-attribute name="title" value="회원가입" />
+      <put-attribute name="body" value="/WEB-INF/views/member/register_3.jsp" />
+   </definition>
 
    <definition name="info" extends="baseLayout">
       <put-attribute name="title" value="내 정보" />

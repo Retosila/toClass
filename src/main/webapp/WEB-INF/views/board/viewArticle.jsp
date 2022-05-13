@@ -101,7 +101,7 @@
                 <div class="col-md-5" style="text-align: right">
                     <a
                        href="${contextPath}/board/good.do?articleNO=${article.articleNO}"
-                       type="button" style="margin-right: 5px"><img src="/assets/img/good.PNG" class="card-img"
+                       type="button" style="margin-right: 5px"><img src="/assets/img/good.png" class="card-img"
                                                                     height="40"></a>
                 </div>
                 <div class="col-md-2">
@@ -110,7 +110,7 @@
                 <div class="col-md-5" style="text-align: left">
                     <a
                        href="${contextPath}/board/bad.do?articleNO=${article.articleNO}"
-                       type="button" style="margin-left: 5px"><img src="/assets/img/bad.PNG" class="card-img"
+                       type="button" style="margin-left: 5px"><img src="/assets/img/bad.png" class="card-img"
                                                                    height="40"></a>
                 </div>
             </div>
