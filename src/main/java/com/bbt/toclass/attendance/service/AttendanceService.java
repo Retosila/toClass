@@ -1,6 +1,8 @@
 package com.bbt.toclass.attendance.service;
 
 import com.bbt.toclass.attendance.vo.AttendDTO;
+import com.bbt.toclass.attendance.vo.AttendVO;
+import com.bbt.toclass.attendance.vo.MyAttendVO;
 import com.bbt.toclass.attendance.vo.ShowAttendVO;
 
 import java.util.List;
@@ -12,4 +14,6 @@ public interface AttendanceService {
 
 	//교사가 운영하는 학급에 속한 학생의 이메일 출력
 	public List<String> getClassMemberEmail(String member_email) throws Exception;
+
+	List<MyAttendVO> getAttendance(String member_email) throws Exception;
 }

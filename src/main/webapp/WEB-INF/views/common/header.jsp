@@ -12,8 +12,11 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>
-</title>
+    
+	<meta name="google-signin-scope" content="profile email"/>
+	<meta name="google-signin-client_id" content="408332240298-jf117fii2f1ee35ork3psdvslrjja94j.apps.googleusercontent.com"/>
+	
+<title></title>
 
 <!-- argon : css 라이브러리 -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -30,6 +33,9 @@
         min-height: calc(100vh - 100px);
     }
 </style>
+
+<!-- 구글 : js 라이브러리 -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <!-- argon : js 라이브러리 -->
 <script src="${contextPath}/assets/js/core/jquery.min.js" type="text/javascript"></script>
@@ -102,10 +108,28 @@
 
                         <span class="nav-link-inner--text">출결</span>
                     </a>
-                    <div class="dropdown-menu">
-                        <a href="${contextPath}/attendance/attendance"
-                           class="dropdown-item">출결입력</a>
-                    </div>
+                    
+                    <!-- 교사일때와 학생일 때 열람 페이지를 분기할 것 (or 컨트롤러 활용) -->
+                    <c:choose>
+						<c:when test="${member.member_type eq '교사'}">
+		                    <div class="dropdown-menu">
+		                        <a href="${contextPath}/attendance/attendance"
+		                           class="dropdown-item">출결입력</a>
+		                    </div>
+						</c:when>
+						<c:when test="${member.member_type eq '학생'}">
+		                    <div class="dropdown-menu">
+		                        <a href="${contextPath}/attendance/attendance_student"
+		                           class="dropdown-item">출결열람</a>
+		                    </div>
+						</c:when>
+						<c:otherwise>
+		                    <div class="dropdown-menu">
+		                        <a href="${contextPath}/attendance/attendance"
+		                           class="dropdown-item">출결입력</a>
+		                    </div>
+						</c:otherwise>
+					</c:choose>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">

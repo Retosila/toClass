@@ -13,7 +13,6 @@
 	<context:component-scan base-package="com.bbt.toclass" />
 
 	<!-- 정적 자원 매핑 관련 설정  -->
-
 	<resources mapping="/assets/**" location="/WEB-INF/static/assets/" />
 	<resources mapping="/fullcalendar/**" location="/WEB-INF/static/fullcalendar/" />
 
@@ -46,12 +45,6 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 	</beans:bean>
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/*/*.do"/>
-			<beans:bean class="com.bbt.toclass.common.interceptor.ViewNameInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
 
 	<!-- 멀티파트 리졸버 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -71,6 +64,23 @@
 	<!-- 회원정보 갱신 인터셉터 -->
 	<beans:bean id="renewMemberInterceptor" class="com.bbt.toclass.common.interceptor.RenewMemberInterceptor">
 	</beans:bean>
+	
+	
+	<!-- google Class Bean설정 추가 -->
+	
+    <!-- 클라이언트ID와 보안비밀 세팅 -->
+    <beans:bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+      <beans:constructor-arg value="796401158240-g15ijlm88t665s9t064jkvpr3faasetl.apps.googleusercontent.com" />
+      <beans:constructor-arg value="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" />
+    </beans:bean>
+	<!-- 
+        <beans:property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+	 -->    
+    <!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+    <beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+        <beans:property name="scope" value="https://www.googleapis.com/oauth2/v2/userinfo"/>
+         <beans:property name="redirectUri" value="http://localhost:8080/toclass/google/login.do"/>
+    </beans:bean>
 
 	<!-- 인터셉터 목록 -->
 	<interceptors>
@@ -96,6 +106,7 @@
 			<exclude-mapping path="/member/findPw.do"/>
 			<exclude-mapping path="/member/register.do"/>
 			<exclude-mapping path="/member/logout.do"/>
+			<exclude-mapping path="/google/**"/>
 			<exclude-mapping path="/assets/**"/>
 			<exclude-mapping path="/fullcalendar/**"/>
 			<beans:ref bean="logOnCheckInterceptor"/>
@@ -123,5 +134,7 @@
 		</interceptor>
 
 	</interceptors>
+	
+	
 
 </beans:beans>

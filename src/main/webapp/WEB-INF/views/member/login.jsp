@@ -9,8 +9,9 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-<html lang="en">
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<html lang="ko">
+
+
 <script>
 
 	//이메일 정규식
@@ -94,26 +95,20 @@
 	}
 	
 </script>
-
 <!-- login 페이지에서 enter 입력 시 submit 처리  -->
 <body onKeyDown="if(event.keyCode == 13) login()">
+
 	<div class="container pt-lg-7">
 		<div class="row justify-content-center">
 			<div class="col-lg-5">
 				<div class="card bg-secondary shadow border-0">
-					<div class="card-header bg-white pb-5">
-						<div class="text-muted text-center mb-3"><small>구글 계정으로 시작</small>
-						</div>
-						<div class="btn-wrapper text-center">
-							<a href="#" class="btn btn-neutral btn-icon g-signin2" data-onsuccess="onSignIn">
-								<span class="btn-inner--icon">
-									<img src="${contextPath}/assets/img/icons/common/google.svg">
-								</span>
-								<span class="btn-inner--text">Google</span>
-								<%--구글로그인--%>
-								<%--<div class="g-signin2" data-onsuccess="onSignIn"></div>--%>
-							</a>
-						</div>
+					<div style="margin: 0 auto;">
+					    <div id="g_id_onload"
+					         data-client_id="796401158240-g15ijlm88t665s9t064jkvpr3faasetl.apps.googleusercontent.com"
+					         data-ux_mode="redirect"
+					         data-login_uri="http://localhost:8080/toclass/google/login.do">
+					    </div>
+					    <div class="g_id_signin" data-type="standard" ></div>
 					</div>
 
 					<div class="card-body px-lg-5 py-lg-5">
@@ -189,17 +184,6 @@
 			
 		</div>
 	</div>
-	
-	<%--구글 로그인--%>
-	<%--<script>
-		function onSignIn(googleUser) {
-			var profile = googleUser.getBasicProfile();
-			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-			console.log('Name: ' + profile.getName());
-			console.log('Image URL: ' + profile.getImageUrl());
-			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		}
-	</script>--%>
 
 </body>
 </html>
