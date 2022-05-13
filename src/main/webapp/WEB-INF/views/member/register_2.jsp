@@ -120,20 +120,39 @@ request.setCharacterEncoding("UTF-8");
 			</table>
 		</div>
 		<br>
-		<div class="memberJoinRoll">
+		<div class="memberJoinRoll col-md-12">
 			<h4>회원타입 : ${member_type}</h4>
 			<br>
 			<form method="post" action="${contextPath}/member/register_3">
-				<input id="email" name="member_email" type="email"
-					placeholder="이메일 주소를 입력하세요" />
-				<button type="button" class="btn btn-primary" onclick="sendAuthCode()">인증번호 발송</button>
-				<br> <input id="authCodeInput" type="text"
-					placeholder="인증번호(6자리 숫자)" />
-				<button type="button" class="btn btn-primary" onclick="checkAuthCode()">인증</button>
+
+				<div class="row">
+					<div class="col-md-6">
+						<input id="email" name="member_email" class="form-control" type="email"
+							   placeholder="이메일 주소를 입력하세요" />
+					</div>
+					<div class="col-md-6">
+						<button type="button" class="btn btn-primary" onclick="sendAuthCode()">인증번호 발송</button>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-6">
+						<input id="authCodeInput" type="text" class="form-control"
+					</div>
+					<div class="col-md-6">
+						<button type="button" class="btn btn-primary my-1" onclick="checkAuthCode()">인증</button>
+					</div>
+				</div>
+
+				<br>
 				<br>
 				<p id="msg"></p>
 				<br>
-				<button id="next" type="submit" class="btn btn-primary" disabled>다음</button>
+				<div class="row">
+					<div class="col-md-12"><button id="next" type="submit" class="btn btn-primary" disabled>다음</button></div>
+
+				</div>
+
 			</form>
 		</div>
 		</div>

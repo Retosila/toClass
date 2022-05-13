@@ -1,9 +1,6 @@
 package com.bbt.toclass.attendance.dao;
 
-import com.bbt.toclass.attendance.vo.AttendDTO;
-import com.bbt.toclass.attendance.vo.AttendVO;
-import com.bbt.toclass.attendance.vo.AttendanceVO;
-import com.bbt.toclass.attendance.vo.NewAttendVO;
+import com.bbt.toclass.attendance.vo.*;
 import com.bbt.toclass.member.vo.ClassVO;
 import com.bbt.toclass.member.vo.MemberVO;
 
@@ -42,12 +39,24 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 			avo.setMember_name(member_name);
 			attendVOList.add(avo);
 		}
-		
-		
+
+
 		for (AttendVO avo : attendVOList) {
 			System.out.println(avo.getAttend_status());
 		}
 		return attendVOList;
+	}
+
+	@Override
+	public List<MyAttendVO> getAttendance(String member_email) throws Exception {
+		logger.info("DB에 getAttendanceByEmail 요청");
+		List<MyAttendVO> myAttendVOList = sqlSession.selectList("mapper.attendance.getAttendanceByEmail", member_email);
+
+		// 출결status에 따른 블록 색상 지정
+		for (MyAttendVO mavo : myAttendVOList) {
+			mavo.addSetting();
+		}
+		return myAttendVOList;
 	}
 
 	@Override
@@ -59,23 +68,23 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 		}
 		return memberEmailList;
 	}
-	
+
 	@Override
-	//회원이 소속되어 있는 학급 정보를 조회, 조회된 학급 정보가 존재할 시 해당 회원과 
+	//회원이 소속되어 있는 학급 정보를 조회, 조회된 학급 정보가 존재할 시 해당 회원과
 	//class_id가 같은 회원들을 조회
 	public ClassVO classInfo(AttendanceVO attendanceVO) throws Exception{
 		String member_email = attendanceVO.getMember_email();
 		logger.info("myBatis에게 쿼리 요청 : getClassIdByEmail : " + member_email);
 		String class_id = sqlSession.selectOne("mapper.attendance.getClassIdByEmail", member_email);
 		logger.info("소속 학급 정보 추출 성공 : " + class_id);
-		
+
 		ClassVO atvo = new ClassVO();
 		atvo.setClass_id(class_id);
-		
+
 		return atvo;
-		
+
 	}
-	
+
 	public ClassVO  getMyClassInfo(String class_id) throws DataAccessException{
 		logger.info("myBatis에게 쿼리 요청 : getMyClassInfoByClassId : " + class_id);
 		ClassVO cvo = sqlSession.selectOne("mapper.member.getMyClassInfoByClassId", class_id);
@@ -88,7 +97,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 		}
 
 		return cvo;
-		
+
 	}
 	/*
 	@Override
@@ -97,7 +106,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("member_name", member_name);
 		map.put("class_id", class_id);
-		
+
 		System.out.println("DB에 getClassMemberEmailByClassIdAndMember_name 요청");
 		List<MemberVO> memEmailList = sqlSession.selectList("mapper.attendance.getClassMemberEmailByClassIdAndMember_name", map);
 		for(MemberVO mvo : memEmailList) {
@@ -105,45 +114,45 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 		}
 		return memEmailList;
 	}
-	
+
 	@Override
 	//출석 정보 저장
-	public int insertAttend(NewAttendVO newAttendVO) throws DataAccessException {		
+	public int insertAttend(NewAttendVO newAttendVO) throws DataAccessException {
 		logger.info("DB에게 쿼리 요청 : insertAttendByMember_name : " + newAttendVO.getMember_name());
 		int result = sqlSession.insert("mapper.attendance.insertAttendByMember_name", newAttendVO);
 		logger.info("DB로부터 성공적으로 응답 수신");
 		logger.info(result + " 개의 출석 정보 추가 완료");
 		return result;
 	} */
-	
+
 	@Override
-	//출석 정보 DB에 insert 
+	//출석 정보 DB에 insert
 	public int insertAttend(NewAttendVO newAttend) throws DataAccessException {
-		
+
 		//class_id와 member_name을 사용하여 member_email 정보 추출
 		String member_name = newAttend.getMember_name();
 		String class_id = newAttend.getCurrentClass();
-			
+
 		logger.info(member_name);
 		logger.info(class_id);
-		
+
 		System.out.println("DB에 getClassMemberEmailByClassIdAndMember_name 요청");
 		String memberEmail = sqlSession.selectOne("mapper.attendance.getClassMemberEmailByClassIdAndMember_name", newAttend);
-		
+
 		logger.info("DB로부터 성공적으로 응답 수신");
 		logger.info(memberEmail + "의 학생 이메일 추출");
 		newAttend.setMember_email(memberEmail);
-		
+
 		int result = sqlSession.insert("mapper.attendance.insertAttendByMember_email", newAttend);
-		
-		
-		
-		
+
+
+
+
 //		logger.info("DB에게 쿼리 요청 : insertAttendByMember_email : " + member_email);
 //		int result = sqlSession.insert("mapper.attendance.insertAttendByMember_email", newAttendVO);
 //		logger.info("DB로부터 성공적으로 응답 수신");
 //		logger.info(result + " 개의 출석 정보 추가 완료");
-		
+
 		return result;
 	}
 }

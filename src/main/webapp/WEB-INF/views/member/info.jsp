@@ -75,7 +75,7 @@
     <div class="btnSet_center">
 
         <button id="unregister" type="button" class="btn btn-outline-primary" onclick="unregister()">회원탈퇴</button>
-        <button type="button" class="wBtn03"
+        <button type="button" class="btn btn-outline-primary"
                 onclick="location.href='${contextPath}/member/checkPw?id=${member.member_email}'">회원정보수정
         </button>
         <button id="myclass" type="button" class="btn btn-primary" onclick="location.href='${contextPath}/member/myClass'">내 학급

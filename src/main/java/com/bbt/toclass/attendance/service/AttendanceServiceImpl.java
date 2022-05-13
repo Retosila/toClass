@@ -1,10 +1,7 @@
 package com.bbt.toclass.attendance.service;
 
 import com.bbt.toclass.attendance.dao.AttendanceDAO;
-import com.bbt.toclass.attendance.vo.AttendDTO;
-import com.bbt.toclass.attendance.vo.AttendVO;
-import com.bbt.toclass.attendance.vo.AttendanceVO;
-import com.bbt.toclass.attendance.vo.NewAttendVO;
+import com.bbt.toclass.attendance.vo.*;
 import com.bbt.toclass.attendance.vo.ShowAttendVO;
 import com.bbt.toclass.member.dao.MemberDAO;
 import com.bbt.toclass.member.service.MemberServiceImpl;
@@ -22,14 +19,14 @@ import java.util.Map;
 @Service("attendanceService")
 public class AttendanceServiceImpl implements AttendanceService {
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
-	
+
 	@Autowired
 	AttendanceDAO attendanceDAO;
 	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
 	private AttendanceVO attendanceVO;
-	
+
 	@Override
 	public ShowAttendVO getAttendanceInfo(AttendDTO attendDTO) throws Exception {
 
@@ -40,7 +37,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		ShowAttendVO savo = new ShowAttendVO();
 
 		System.out.println("dao로부터 요청 수신 성공! : " + attendVOList.size() );
-		
+
 		if (attendVOList.size() > 0) {
 		// ShowAttendVO에 set하기 위한 변수들
 		String member_name = attendVOList.get(0).getMember_name();
@@ -57,12 +54,26 @@ public class AttendanceServiceImpl implements AttendanceService {
 			savo.setAttend_status(attend_status);
 			savo.setAttend_time(attend_time);
 		}
-		
+
 		System.out.println("서비스는 무죄야!");
 
 
 		return savo;
 	}
+
+	@Override
+	public List<MyAttendVO> getAttendance(String member_email) throws Exception {
+
+		// 이메일 정보를 바탕으로 로그인 학생의 출결정보 획득
+		logger.info("DAO에 출결 정보 요청");
+		logger.info("요청 학급원 : " + member_email);
+
+		List<MyAttendVO> myAttendVOList = attendanceDAO.getAttendance(member_email);
+		logger.info("DAO로부터 성공적으로 응답 수신");
+
+		return myAttendVOList;
+	}
+
 
 	//교사가 운영하는 학급에 속한 학생의 이메일 출력
 	@Override
@@ -80,7 +91,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		logger.info("service : getClassMemberEmail 무죄!");
 		return emailList;
 	}
-	
+
 	// 내 학급 정보 요청
 		@Override
 		public ClassVO getMyClassInfo(String class_id) throws Exception {
@@ -90,14 +101,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 			return cvo;
 		}
-		
+
 		@Override
-		//출석 정보 DB에 insert 
+		//출석 정보 DB에 insert
 		public int insertAttend(NewAttendVO newAttend) throws Exception {
 			logger.info("DAO에 출석 정보 저장 요청");
 			int result = attendanceDAO.insertAttend(newAttend);
-			
-			
+
+
 			return result;
 		}
 }
