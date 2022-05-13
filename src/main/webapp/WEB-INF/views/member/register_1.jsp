@@ -18,24 +18,6 @@ request.setCharacterEncoding("UTF-8");
 	text-align: center;
 }
 
-input.bBtn06 {
-	height: 36px;
-	padding: 0px 20px 3px;
-	border: none;
-	background:
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px
-		no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100%
-		0px no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png)
-		repeat-x;
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-	text-shadow: rgb(0, 0, 0) 0px 0px 2px;
-	letter-spacing: -0.5px;
-	box-sizing: border-box;
-}
-
 .joinTab table {
 	width: 100%;
 	height: 60px;
@@ -96,7 +78,7 @@ input.bBtn06 {
 			<br> 개인 정보 취급방침 동의 여부(필수) | <a
 				href="${contextPath}/member/personal" target="_blank">보기</a> &nbsp;
 			<input name="personal" type="checkbox" value="true" required /><br>
-			<br> <input type="submit" class="bBtn06" /><br>
+			<br> <input type="submit" class="btn btn-primary" /><br>
 		</form>
 	</div>
 	</div>

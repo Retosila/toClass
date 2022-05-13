@@ -36,7 +36,7 @@ request.setCharacterEncoding("UTF-8");
 					"member_email" : member_email
 				},
 				success : function(isDuplicate) {
-					// 사용할 수 있는 있는 이메일일 경우(중복된 이메일이 DB에 없는 경우) 
+					// 사용할 수 있는 있는 이메일일 경우(중복된 이메일이 DB에 없는 경우)
 					if (isDuplicate.check == "false") {
 						$("#msgEmailValid").text("사용가능한 이메일입니다.");
 						emailDuplicateCheck = true;
@@ -104,8 +104,8 @@ request.setCharacterEncoding("UTF-8");
 				$("#member_pw").on(
 						"keyup",
 						function() {
-							var num = /[0-9]/; // 숫자 
-							var eng = /[a-zA-Z]/; // 문자 
+							var num = /[0-9]/; // 숫자
+							var eng = /[a-zA-Z]/; // 문자
 							var spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
 							var pw = $("#member_pw").val();
 							if (num.test(pw) && eng.test(pw) && spc.test(pw)
@@ -165,24 +165,6 @@ request.setCharacterEncoding("UTF-8");
 	height: 33px;
 	vertical-align: top;
 	margin: 2px;
-}
-
-button.bBtn06 {
-	height: 36px;
-	padding: 0px 20px 3px;
-	border: none;
-	background:
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px
-		no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100%
-		0px no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png)
-		repeat-x;
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-	text-shadow: rgb(0, 0, 0) 0px 0px 2px;
-	letter-spacing: -0.5px;
-	box-sizing: border-box;
 }
 
 .joinTab table {
@@ -271,7 +253,7 @@ font {
 					<tbody>
 						<tr>
 							<th>이메일<font>*</font></th>
-    
+
 							<td><input id="member_email" name="member_email"
 								type="email" value="${member_email}" required />
 								<button type="button" class="bBtn06" onclick="checkEmailDuplicate()">이메일
@@ -307,7 +289,7 @@ font {
 						</tr>
 					</tbody>
 				</table>
-				<button type="button" class="bBtn06" onclick="register()">회원가입</button>
+				<button type="button" class="btn btn-primary" onclick="register()">회원가입</button>
 			</form>
 		</div>
 	</div>

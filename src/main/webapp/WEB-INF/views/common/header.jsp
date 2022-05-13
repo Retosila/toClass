@@ -139,11 +139,29 @@
                         class="ni ni-collection d-lg-none"></i> <span
                         class="nav-link-inner--text">성적</span>
                 </a>
-                    <div class="dropdown-menu">
-                        <a href="${contextPath}/achievement/s_achievement"
-                           class="dropdown-item">성적분석</a> <a href="${contextPath}/achievement/t_achievement"
-                                                             class="dropdown-item">성적분석</a>
-                    </div>
+
+                    <c:choose>
+                        <c:when test="${member.member_type eq '교사'}">
+                            <div class="dropdown-menu">
+                                <a href="${contextPath}/achievement/t_achievement"
+                                   class="dropdown-item">성적입력</a>
+                            </div>
+                        </c:when>
+                        <c:when test="${member.member_type eq '학생'}">
+                            <div class="dropdown-menu">
+                                <a href="${contextPath}/achievement/s_achievement"
+                                   class="dropdown-item">성적조회</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="dropdown-menu">
+                                <a href="${contextPath}/achievement/t_achievement"
+                                   class="dropdown-item">성적입력</a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
+
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">

@@ -40,32 +40,6 @@
             text-align: center;
         }
 
-        button.wBtn03 {
-            height: 36px;
-            padding: 0px 20px 3px;
-            border: none;
-            background: url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_1.png) 0px 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_3.png) 100% 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_2.png) repeat-x;
-            color: rgb(135, 135, 137);
-            font-size: 12px;
-            letter-spacing: -0.5px;
-            box-sizing: border-box;
-        }
-
-        button.bBtn06 {
-            height: 36px;
-            padding: 0px 20px 3px;
-            border: none;
-            background: url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100% 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png) repeat-x;
-            color: rgb(255, 255, 255);
-            font-size: 12px;
-            text-shadow: rgb(0 0 0) 0px 0px 2px;
-            letter-spacing: -0.5px;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 <body>
@@ -100,11 +74,11 @@
     </table>
     <div class="btnSet_center">
 
-        <button id="unregister" type="button" class="wBtn03" onclick="unregister()">회원탈퇴</button>
+        <button id="unregister" type="button" class="btn btn-outline-primary" onclick="unregister()">회원탈퇴</button>
         <button type="button" class="wBtn03"
                 onclick="location.href='${contextPath}/member/checkPw?id=${member.member_email}'">회원정보수정
         </button>
-        <button id="myclass" type="button" class="bBtn06" onclick="location.href='${contextPath}/member/myClass'">내 학급
+        <button id="myclass" type="button" class="btn btn-primary" onclick="location.href='${contextPath}/member/myClass'">내 학급
         </button>
     </div>
 </div>

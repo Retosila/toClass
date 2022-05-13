@@ -26,7 +26,7 @@ request.setCharacterEncoding("UTF-8");
 			// 6자리의 난수 생성 후 전역변수 authCode에 할당
 			authCode = String(Math.floor(Math.random() * 1000000)).padStart(6,
 					"0");
-			// 입력받은 이메일 주소로 authCode를 보내는 ajax 요청 
+			// 입력받은 이메일 주소로 authCode를 보내는 ajax 요청
 			$('#msg').text("인증번호 전송 중...");
 			$.ajax({
 				url : '${contextPath}/member/sendAuthCode.do',
@@ -66,37 +66,6 @@ request.setCharacterEncoding("UTF-8");
 	width: 100%;
 	padding: 20px 0px;
 	text-align: center;
-}
-
-button.wBtn03 {
-            height: 36px;
-            padding: 0px 20px 3px;
-            border: none;
-            background: url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_1.png) 0px 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_3.png) 100% 0px no-repeat,
-            url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_2.png) repeat-x;
-            color: rgb(135, 135, 137);
-            font-size: 12px;
-            letter-spacing: -0.5px;
-            box-sizing: border-box;
-        }
-
-button.bBtn06 {
-	height: 31px;
-	padding: 0px 20px 0px;
-	border: none;
-	background:
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px
-		no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100%
-		0px no-repeat,
-		url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png)
-		repeat-x;
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-	text-shadow: rgb(0, 0, 0) 0px 0px 2px;
-	letter-spacing: -0.5px;
-	box-sizing: border-box;
 }
 
 .joinTab table {
@@ -157,14 +126,14 @@ button.bBtn06 {
 			<form method="post" action="${contextPath}/member/register_3">
 				<input id="email" name="member_email" type="email"
 					placeholder="이메일 주소를 입력하세요" />
-				<button type="button" class="bBtn06" onclick="sendAuthCode()">인증번호 발송</button>
+				<button type="button" class="btn btn-primary" onclick="sendAuthCode()">인증번호 발송</button>
 				<br> <input id="authCodeInput" type="text"
 					placeholder="인증번호(6자리 숫자)" />
-				<button type="button" class="bBtn06" onclick="checkAuthCode()">인증</button>
+				<button type="button" class="btn btn-primary" onclick="checkAuthCode()">인증</button>
 				<br>
 				<p id="msg"></p>
 				<br>
-				<button id="next" type="submit" class="wBtn03" disabled>다음</button>
+				<button id="next" type="submit" class="btn btn-primary" disabled>다음</button>
 			</form>
 		</div>
 		</div>

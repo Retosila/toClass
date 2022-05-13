@@ -52,31 +52,7 @@ td {
     padding: 20px 0px;
     text-align: center;
 }
-button.wBtn03 {
-    height: 36px;
-    padding: 0px 20px 3px;
-    border: none;
-    background: url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_1.png) 0px 0px no-repeat,
-    url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_3.png) 100% 0px no-repeat,
-    url(http://toclass.smartschool.kr/LMS/images/btn_typeW3_2.png) repeat-x;
-    color: rgb(135, 135, 137);
-    font-size: 12px;
-    letter-spacing: -0.5px;
-    box-sizing: border-box;
-}
-button.bBtn06 {
-    height: 36px;
-    padding: 0px 20px 3px;
-    border: none;
-    background: url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_1.png) 0px 0px no-repeat,
-    url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_3.png) 100% 0px no-repeat,
-    url(http://toclass.smartschool.kr/LMS/images/btn_typeB6_2.png) repeat-x;
-    color: rgb(255, 255, 255);
-    font-size: 12px;
-    text-shadow: rgb(0 0 0) 0px 0px 2px;
-    letter-spacing: -0.5px;
-    box-sizing: border-box;
-}
+
 </style>
 </head>
 <body>
@@ -161,7 +137,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 				<div class="btnSet_center" style="max-width:830px;">
 				<form name="frmDelMyClass" method="POST" action="${contextPath}/member/delMyClass.do">
 					<input type="hidden" name="class_id" value="${myClass.class_id}"/>
-					<button type="button" class="bBtn06" onclick="delMyClass()">학급 폐쇄</button>
+					<button type="button" class="btn btn-primary" onclick="delMyClass()">학급 폐쇄</button>
 				</form>
 				</div>
 			</c:when>
@@ -173,7 +149,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 					<input type="text" name="class_name" placeholder="1학년 1반"/>
 					<br>
 					<br>
-					<button type="submit" class="bBtn06">새 학급 생성</button>
+					<button type="submit" class="btn btn-primary">새 학급 생성</button>
 				</form>
 			</c:when>
 		</c:choose>
@@ -262,7 +238,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 					<button id="apply_button" type="submit" class="btn btn-secondary" disabled>학급 가입 신청</button>
 				</form>
 					<br>
-				
+
 				<c:choose>
 					<c:when test="${isPending == true}">
 						<script>
