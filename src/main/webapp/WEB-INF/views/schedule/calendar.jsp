@@ -359,8 +359,6 @@ request.setCharacterEncoding("UTF-8");
     			// 서버단에서 RequestBody로 받기 위해서는 json데이터를 string타입으로 변환해줘야함
     			data: newSchedule,
     			// 서버 요청 데이터 타입
-    			//contentType : "application/json",
-    			// 서버 응답 데이터 타입
     			dataType: 'text',
     			success: function(msg) {
     				console.log(msg);

@@ -9,7 +9,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+
 <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -29,36 +30,72 @@
         text-align: center;
     }
 </style>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
 <script>
     $(document).ready(function () {
         $(".dropdown-item").on("click", function () {
             var status = $(this).text();
-        	console.log(status);
-            
             if (status == '출석') {
                 $(this).parent().prev().css('background', '#5e72e4');
-            } 
-            else if (status == '조퇴') {
+            } else if (status == '조퇴') {
                 $(this).parent().prev().css('background', '#2dce89');
-            } 
-            else if (status == '지각') {
+            } else if (status == '지각') {
                 $(this).parent().prev().css('background', '#ffd600');
-            } 
-            else if (status == '결석') {
+            } else if (status == '결석') {
                 $(this).parent().prev().css('background', '#EC431F');
-            } 
-            else {
+            } else {
             }
 
             $(this).parent().prev().text(status);
         });
     });
+
+    //출석 버튼 클릭 시 실행
+    $(document).ready(function(){
+    	$(".dropdown-item").on("click", function() {
+    		//attend_status, attend_time, member_name, currentClass 데이터 가져오기 
+    		var attend_status = $(this).text();
+    		var member_name = $(this).closest("tr").data("name");
+    		var currentClass = "${member.currentClass}";
+    		console.log(attend_status);
+    		console.log(member_name);
+    		console.log(currentClass);
+    		
+    		//버튼 누르면 출석 유형 나오면서 버튼은 사라짐
+    		var chosen = $("<p>" + attend_status + "</p>");
+    		var temp = $(this).closest(".dropdown");
+    		var temp2 = $(this).closest(".dropdown").children("button, div");
+    		
+    		// json 데이터
+			var newAttend = {
+					"attend_status" : attend_status,
+					"member_name" : member_name,
+					"currentClass" : currentClass,
+			};
+			
+			$.ajax({
+				url : '${contextPath}/attendance/insertAttend.do',
+				type : 'POST',
+				data : newAttend,
+				dataType : 'text',
+				success : function(msg) {
+					console.log(msg);
+					//버튼 누르면 출석 유형 나오면서 버튼은 사라짐
+		    		var chosen = $("<p>" + attend_status + "</p>");
+		    		temp.append(chosen);
+		    		temp2.remove();
+		    		console.log("chosen 확인용 : " + chosen);
+				},
+				error : function(error) {
+					console.log(JSON.stringify(error));
+				}
+				
+			});
+    	});
+    });
 </script>
-</head>
+
 <body>
-<div class="container">
+<div class="container pt-lg-5">
     <table class="table table-bordered">
         <tr>
             <th align='center'>오늘의 출석현황</th>
@@ -84,7 +121,7 @@
 						}
 						document.write(getTodayLabel())
 					</script> --%> ${t_day}</th>
-            <td width="20%">
+           <!--  <td width="20%">
                 <div class="progress-wrapper"
                      style="padding-top: 0px;">
                     <div class="progress-info">
@@ -92,13 +129,9 @@
                             <span>80%</span>
                         </div>
                     </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-toss" role="progressbar"
-                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
-                             style="width: 80%;"></div>
-                    </div>
+                    
                 </div>
-            </td>
+            </td> -->
             <td>0명</td>
             <td>28명</td>
             <td>2명</td>
@@ -182,7 +215,7 @@
             </tr>
             <c:forEach var="showAttendVO" items="${ShowAttendVOList}">
 
-                <tr>
+                <tr data-name="${showAttendVO.member_name}">
                     <td>${showAttendVO.member_name} </td>
                     <c:forEach var="attendVOStat" items="${showAttendVO.attend_status}">
 
@@ -193,84 +226,79 @@
                                         aria-haspopup="true" aria-expanded="false"
                                         style="border-color: rgb(255 255 255/ 50%) !important;">출석
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-text="${attendVOStat}">
                                     <a class="dropdown-item">출석</a>
                                     <a class="dropdown-item">조퇴</a>
                                     <a class="dropdown-item">지각</a>
                                     <a class="dropdown-item">결석</a>
                                 </div>
                             </div>
-                                ${attendVOStat}</td>
+                        </td>
+                  </c:forEach>
+                  <!-- 
+					 <td>
+                           <div class="dropdown">
+                               <button class="btn btn-primary dropdownMenuButton" type="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false"
+                                       style="border-color: rgb(255 255 255/ 50%) !important;">출석
+                               </button>
+                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                   <a class="dropdown-item">출석</a>
+                                   <a class="dropdown-item">조퇴</a>
+                                   <a class="dropdown-item">지각</a>
+                                   <a class="dropdown-item">결석</a>
+                               </div>
+                           </div>
+                       </td>
+                   -->
 
-                    </c:forEach>
+             </tr>
+         </c:forEach>
+     </table>
+        <!-- <button type="button" id="append_row"
+                class="btn btn-outline-primary btn-lg" onclick=addRow()>추가
+        </button> -->
+        <script type="text/javascript">
+            //버튼 클릭하면 추가
+            function fn_addFile() {
+                $("#d_file").append(
+                    "<br>" + "<input type='file' name='file" + cnt + "' />");
+                cnt++;
+            }
 
+            function addRow() {
+                var el = document.getElementById('attendanceBtn');
+            }
 
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdownMenuButton" type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"
-                                    style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">출석</a>
-                                <a class="dropdown-item">조퇴</a>
-                                <a class="dropdown-item">지각</a>
-                                <a class="dropdown-item">결석</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdownMenuButton" type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"
-                                    style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">출석</a>
-                                <a class="dropdown-item">조퇴</a>
-                                <a class="dropdown-item">지각</a>
-                                <a class="dropdown-item">결석</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdownMenuButton" type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"
-                                    style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">출석</a>
-                                <a class="dropdown-item">조퇴</a>
-                                <a class="dropdown-item">지각</a>
-                                <a class="dropdown-item">결석</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdownMenuButton" type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"
-                                    style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">출석</a>
-                                <a class="dropdown-item">조퇴</a>
-                                <a class="dropdown-item">지각</a>
-                                <a class="dropdown-item">결석</a>
-                            </div>
-                        </div>
-                    </td>
-
-                </tr>
-            </c:forEach>
-        </table>
+            $("#append_row").on("click", function () {
+                $("#list_table").append(
+                    $("<tr>").append(
+                        $("<td>").append($("#name").val()),
+                        $("<td>").append($("#dropdownMenuButton").val()),
+                        $("<td>").append($("#dropdownMenuButton2").val()),
+                        $("<td>").append($("#dropdownMenuButton3").val()),
+                        $("<td>").append($("#dropdownMenuButton4").val()),
+                        $("<td>").append($("#dropdownMenuButton5").val()),
+                        //<td><a href="#" class="delete-link">삭제</a></td>
+                        $("<td>").append($("<a>").prop("href", "#").addClass("delete-link").append("삭제")
+                        )
+                    )
+                );
+            });
+            //삭제
+            $("#list_table").on("click", ".delete-link", function () {
+                //a태그의 부모의 부모태그 (a-td-tr)
+                $(this).parent().parent().remove();
+            });
+        </script>
+        <!-- <input type="submit" value="저장하기"
+               class="btn btn-outline-primary btn-lg"/>
+		 -->
     </form>
+
 </div>
+
 
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:beans="http://www.springframework.org/schema/beans"
@@ -9,13 +8,14 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
 	<!-- MVC패턴 + 어노테이션 사용 -->
 	<annotation-driven />
 	<context:component-scan base-package="com.bbt.toclass" />
 
 	<!-- 정적 자원 매핑 관련 설정  -->
-	<resources mapping="/assets/**" location="/WEB-INF/static/assets/" />
-	<resources mapping="/fullcalendar/**" location="/WEB-INF/static/fullcalendar/" />
+
 	<resources mapping="/assets/**" location="/WEB-INF/static/assets/" />
 	<resources mapping="/fullcalendar/**" location="/WEB-INF/static/fullcalendar/" />
 
@@ -48,7 +48,12 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 	</beans:bean>
-
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*.do"/>
+			<beans:bean class="com.bbt.toclass.common.interceptor.ViewNameInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- 멀티파트 리졸버 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="52428800"/>

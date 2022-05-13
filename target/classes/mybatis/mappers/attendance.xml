@@ -10,17 +10,20 @@
         <result property="attend_time" column="attendance_regdate" />
         <result property="attend_status" column="attendance_status" />
     </resultMap>
-    
-    <resultMap id="myAttendResult" type="myAttendVO">
-        <result property="title" column="attendance_status" />
-        <result property="start" column="attendance_regdate" />
-    </resultMap>
-    
-    <resultMap id="memberEmailResult" type="attendDTO">
+    <resultMap id="memberEmailResult" type="attendDTO"> <!-- id는 mapper의 이름과 같아도 사용 가능 -->
         <result property="member_email" column="member_email" />
         <result property="monday" column="monday" />
         <result property="friday" column="friday" />
     </resultMap>
+    
+    <resultMap id="classResult" type="classVO">
+        <result property="class_id" column="class_id" />
+        <result property="class_name" column="class_name" />
+        <result property="class_code" column="class_code" />
+        <result property="class_regdate" column="class_regdate" />
+        <result property="class_moddate" column="class_moddate" />
+        <result property="class_maker" column="class_maker" />
+	</resultMap>
     
     <select id="getAttendanceInfoByDTO"  resultMap="attendResult" parameterType="attendDTO">
 	<![CDATA[
@@ -32,19 +35,62 @@
         ]]>
   </select>
   
-    <select id="getAttendanceByEmail"  resultMap="myAttendResult" parameterType="String">
-	<![CDATA[
-        select attendance_status, to_char(attendance_regdate, 'YYYY-MM-dd HH24:MI') as attendance_regdate
-        from attendance
-        where member_email = #{member_email}
-        ]]>
-  </select>
-  
-    <select id="getClassMemberEmail" resultMap="memberEmailResult" parameterType="string">
+    <select id="getClassMemberEmailByClassId" resultMap="memberEmailResult" parameterType="string">
 		<![CDATA[
         select i.member_email
         from info i inner join member m on(i.member_email = m.member_email)
-        where i.class_id = 'CLS000001' and m.member_type='학생'
+        where i.class_id = #{class_id} and m.member_type='학생'
+        ]]>
+	</select>
+	
+	 <select id="getClassIdByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select *
+		from (select class_id
+		      	from info
+		      	where member_email = #{member_email}
+		        order by info_regdate desc)
+	]]>
+  </select>
+  
+	 <select id="getMemberNameByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_name
+		from member
+		where member_email = #{member_email}
+	]]>
+  </select>
+  
+   <select id="getMyClassInfoByClassId"  resultMap="classResult" parameterType="String">
+	<![CDATA[
+		select class_id, class_name, class_code, class_regdate, class_moddate, class_maker
+		from class
+		where class_id = #{class_id}
+	]]>
+  </select>
+ 
+  <!-- 
+  <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_email
+		from (select m.member_email, i.class_id, m.member_type
+		        from member m, info i
+		        where m.member_email = i.member_email)
+		where class_id = #{class_id} and member_type <> '교사'
+	]]>
+  </select>
+   -->
+   
+  <insert id="insertAttendByMember_email" parameterType="newAttendVO">
+  	insert into attendance (attendance_id, attendance_status, class_id, member_email)
+  	values ((lpad(to_char(attendance_seq.nextval), 6, '0')), #{attend_status}, #{currentClass}, #{member_email})
+  </insert>
+  
+  <select id="getClassMemberEmailByClassIdAndMember_name" resultType="String" parameterType="newAttendVO">
+		<![CDATA[
+        select i.member_email
+        from info i inner join member m on(i.member_email = m.member_email)
+        where i.class_id = #{currentClass} and m.member_type='학생' and member_name = #{member_name}
         ]]>
 	</select>
 </mapper>
