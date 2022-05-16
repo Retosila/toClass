@@ -17,15 +17,17 @@ request.setCharacterEncoding("UTF-8");
 	var authCode; // 인증번호
 	var email; // 사용자가 입력한 이메일
 
+	var emailDuplicateCheck = false; // 이메일 중복 확인 여부 체크
+	var validatedEmail = "undefined"; // 이메일 중복 확인 체크 완료된 이메일
+	
 	// 인증번호 전송 버튼 클릭 시 실행
 	function sendAuthCode() {
-		email = $("#email").val();
+		email = $("#member_email").val();
 
 		// 이메일값이 이메일 정규식을 만족하는 경우
 		if (emailRegex.test(email)) {
 			// 6자리의 난수 생성 후 전역변수 authCode에 할당
-			authCode = String(Math.floor(Math.random() * 1000000)).padStart(6,
-					"0");
+			authCode = String(Math.floor(Math.random() * 1000000)).padStart(6,"0");
 			// 입력받은 이메일 주소로 authCode를 보내는 ajax 요청
 			$('#msg').text("인증번호 전송 중...");
 			$.ajax({
@@ -59,6 +61,74 @@ request.setCharacterEncoding("UTF-8");
 			$('#msg').text("유효하지 않은 인증번호입니다.");
 		}
 	}
+	
+	function checkEmailDuplicate() {
+		var member_email = $("#member_email").val();
+		console.log(member_email);
+		// 이메일 정규식 체크
+		if (emailRegex.test(member_email)) {
+			// 입력된 이메일의 중복 여부로 확인하는 ajax 요청
+			$.ajax({
+				url : '${contextPath}/member/checkEmailDuplicate.do',
+				type : 'post',
+				dataType : 'json',
+				data : {
+					"member_email" : member_email
+				},
+				success : function(isDuplicate) {
+					// 사용할 수 있는 있는 이메일일 경우(중복된 이메일이 DB에 없는 경우)
+					if (isDuplicate.check == "false") {
+						$("#msgEmailValid").text("사용가능한 이메일입니다.");
+						emailDuplicateCheck = true;
+						validatedEmail = member_email;
+						$('#sendAuthButton').prop("disabled", false).css("wBtn03");
+						console.log(isDuplicate.success);
+					}
+					// 해당 이메일값을 가진 회원이 존재하는 경우
+					else {
+						$("#msgEmailValid").text(
+								"이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.");
+						console.log(isDuplicate.success);
+					}
+				},
+				error : function(error) {
+					console.log(JSON.stringify(error));
+				}
+			});
+		} else {
+			alert("유효하지 않은 이메일 주소입니다.");
+		}
+	}
+	
+	function next() {
+		if (emailDuplicateCheck == false) {
+			frmValidate.submit();
+		}
+		else {
+			alert("이메일 중복 체크를 해주시기 바랍니다.");
+		}
+	}
+	
+	$(document).ready(function() {
+		// 이메일 중복확인 후 키입력 발생 시, 인증된 이메일과 입력되어있는 값이 같은지 2차 검증
+		$("#member_email").on("keyup", function() {
+			console.log("이메일 변경 감지");
+			var inputEmail = $(this).val();
+			if (inputEmail != validatedEmail) {
+				console.log("인증된 이메일과 불일치 : " + validatedEmail);
+				emailDuplicateCheck = false;
+				$('#next').prop("disabled", true);
+				$('#sendAuthButton').prop("disabled", true);
+			} else {
+				console.log("인증된 이메일과 일치");
+				emailDuplicateCheck = true;
+			}
+		});
+		
+		
+	});
+	
+	
 </script>
 
 <style>
@@ -123,21 +193,23 @@ request.setCharacterEncoding("UTF-8");
 		<div class="memberJoinRoll col-md-12">
 			<h4>회원타입 : ${member_type}</h4>
 			<br>
-			<form method="post" action="${contextPath}/member/register_3">
+			<form id="frmValidate" method="post" action="${contextPath}/member/register_3">
 
 				<div class="row">
 					<div class="col-md-6">
-						<input id="email" name="member_email" class="form-control" type="email"
+						<input id="member_email" name="member_email" class="form-control" type="email"
 							   placeholder="이메일 주소를 입력하세요" />
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="btn btn-primary" onclick="sendAuthCode()">인증번호 발송</button>
+						<button type="button" class="bBtn06" onclick="checkEmailDuplicate()">이메일 중복확인</button> 
+						<button id="sendAuthButton" type="button" class="btn btn-primary" onclick="sendAuthCode()" disabled>인증번호 발송</button><br>
+						<span id="msgEmailValid" style="font-size: 0.6em"></span>
 					</div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-md-6">
-						<input id="authCodeInput" type="text" class="form-control"
+						<input id="authCodeInput" type="text" class="form-control"/>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-primary my-1" onclick="checkAuthCode()">인증</button>

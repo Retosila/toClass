@@ -15,57 +15,15 @@ request.setCharacterEncoding("UTF-8");
 	var emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/; // 이메일 정규식
 	var phoneRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰 번호 정규식
 
-	var emailDuplicateCheck = false; // 이메일 중복 확인 여부 체크
-	var validatedEmail = "undefined"; // 이메일 중복 확인 체크 완료된 이메일
 	var pwValidCheck = false; // 패스워드 유효성 체크
 	var pwConfirmCheck = false; // 패스워드 확인 체크
 	var phoneValidCheck = false; // 핸드폰 번호 유효성 체크
 
-	// 이메일 중복 확인 버튼 클릭 시 실행
-	function checkEmailDuplicate() {
-		var member_email = $("#member_email").val();
-		console.log(member_email);
-		// 이메일 정규식 체크
-		if (emailRegex.test(member_email)) {
-			// 입력된 이메일의 중복 여부로 확인하는 ajax 요청
-			$.ajax({
-				url : '${contextPath}/member/checkEmailDuplicate.do',
-				type : 'post',
-				dataType : 'json',
-				data : {
-					"member_email" : member_email
-				},
-				success : function(isDuplicate) {
-					// 사용할 수 있는 있는 이메일일 경우(중복된 이메일이 DB에 없는 경우)
-					if (isDuplicate.check == "false") {
-						$("#msgEmailValid").text("사용가능한 이메일입니다.");
-						emailDuplicateCheck = true;
-						validatedEmail = member_email;
-						console.log(isDuplicate.success);
-					}
-					// 해당 이메일값을 가진 회원이 존재하는 경우
-					else {
-						$("#msgEmailValid").text(
-								"이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.");
-						console.log(isDuplicate.success);
-					}
-				},
-				error : function(error) {
-					console.log(JSON.stringify(error));
-				}
-			});
-		} else {
-			alert("유효하지 않은 이메일 주소입니다.");
-		}
-	}
 
 	// 회원가입 버튼 클릭 시 실행
 	function register() {
 		// 각 항목의 유효성 확인
-		if (emailDuplicateCheck == false) {
-			alert("이메일 중복확인을 해주시기 바랍니다.");
-			return;
-		} else if (pwValidCheck == false) {
+		if (pwValidCheck == false) {
 			alert("사용할 수 없는 비밀번호입니다.");
 			return;
 		} else if (pwConfirmCheck == false) {
@@ -76,16 +34,14 @@ request.setCharacterEncoding("UTF-8");
 			return;
 		}
 		// 전 항목이 true일 시 submit
-		else if (emailDuplicateCheck && pwValidCheck && pwConfirmCheck
-				&& phoneValidCheck) {
+		else if (pwValidCheck && pwConfirmCheck	&& phoneValidCheck) {
 			document.frmRegister.submit();
 		} else {
 			alert("입력된 정보가 유효하지 않습니다.");
 		}
 	}
 
-	$(document).ready(
-			function() {
+	$(document).ready(function() {
 				// 이메일 중복확인 후 키입력 발생 시, 인증된 이메일과 입력되어있는 값이 같은지 2차 검증
 				$("#member_email").on("keyup", function() {
 					console.log("이메일 변경 감지");
@@ -255,9 +211,9 @@ font {
 							<th>이메일<font>*</font></th>
 
 							<td><input id="member_email" name="member_email"
-								type="email" value="${member_email}" required />
-								<button type="button" class="bBtn06" onclick="checkEmailDuplicate()">이메일
-									중복확인</button> <span id="msgEmailValid" style="font-size: 0.6em"></span><br></td>
+								type="hidden" value="${member_email}"/>
+								<input id="show_member_email" name="show_member_email"
+								type="email" value="${member_email}" disabled/>
 						</tr>
 						<tr>
 							<th>비밀번호<font>*</font></th>
