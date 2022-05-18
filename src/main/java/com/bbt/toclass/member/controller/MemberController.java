@@ -27,7 +27,7 @@ public interface MemberController {
 	ModelAndView register_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPolicy(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	String registerPersonal(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	String main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
+	//String main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	// 로직
 	ModelAndView loginDo(@ModelAttribute MemberVO member,

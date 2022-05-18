@@ -2,27 +2,24 @@ package com.bbt.toclass.member.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.bbt.toclass.schedule.dao.ScheduleDAO;
+import com.bbt.toclass.schedule.vo.MenuDTO;
+import com.bbt.toclass.schedule.vo.ShowMenuVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.google.api.Google;
-import org.springframework.social.google.api.impl.GoogleTemplate;
-import org.springframework.social.google.api.plus.Person;
-import org.springframework.social.google.api.plus.PlusOperations;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.oauth2.AccessGrant;
-import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +54,7 @@ public class MemberControllerImpl implements MemberController {
 	private GoogleConnectionFactory googleConnectionFactory;
 	@Autowired
 	private OAuth2Parameters googleOAuth2Parameters;
+	private ScheduleDAO scheduleService;
 
 	/*
 	 *
@@ -117,7 +115,7 @@ public class MemberControllerImpl implements MemberController {
 
 		return mav;
 	}
-
+/*
 	// 메인페이지 (/main.jsp, /main_student.jsp, /main_teacher.jsp)
 	@SuppressWarnings("unused")
 	@RequestMapping(value = {"/", "/main"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -125,10 +123,13 @@ public class MemberControllerImpl implements MemberController {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		logger.info("메인 페이지 요청");
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		ModelAndView mav = new ModelAndView();
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		String member_type = null;
 		boolean logOn = false;
+
+//	}
 
 		// null처리
 		if (member != null) {
@@ -162,8 +163,10 @@ public class MemberControllerImpl implements MemberController {
 		else {
 			return "admin";
 		}
+		//return mav;
+	}*/
 
-	}
+
 
 	// 계정 찾기 페이지(/member/findAccount.jsp)
 	@RequestMapping(value = "/member/findAccount", method = RequestMethod.GET)
@@ -617,7 +620,7 @@ public class MemberControllerImpl implements MemberController {
 		session.invalidate();
 
 		// 로그인 화면으로 리다이렉트
-		ModelAndView mav = new ModelAndView("redirect:/");
+		ModelAndView mav = new ModelAndView("redirect:/login");
 
 		return mav;
 	}
@@ -855,60 +858,60 @@ public class MemberControllerImpl implements MemberController {
 
 		return mav;
 	}
-	
-	
+
+
 	// 구글 로그인
 	@RequestMapping(value = "/google/login.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView googleLogin(String idtoken, Model model) throws GeneralSecurityException, IOException {
 		ModelAndView mav = new ModelAndView("main");
-		
+
 		logger.info("googleLogin 요청성공");
 		logger.info("idtoken : " + idtoken);
-		
+
 		return mav;
-	    
+
 	}
-	
+
 
 //	/* 사용자가 인증 처리시 redirect 되는 함수. 따라서, 여기서 가입 처리와 로그인을 담당 */
 //    @RequestMapping(value = "/google/login.do", method = { RequestMethod.GET, RequestMethod.POST })
 //    public String googleRollin(HttpServletRequest request, HttpServletResponse response, HttpSession session,
 //                                Model model, @RequestParam String code) throws ServletException, IOException {
-//        
-//     
+//
+//
 //        OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 //        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(), null);
-//        
+//
 //        String accessToken = accessGrant.getAccessToken();
 //        Long expireTime = accessGrant.getExpireTime();
-//        
+//
 //        if (expireTime != null && expireTime < System.currentTimeMillis()) {
 //            accessToken = accessGrant.getRefreshToken();
 //            System.out.printf("accessToken is expired. refresh token = {}", accessToken);
 //        }
-//        
+//
 //        Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
 //        Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
-//        
+//
 //        PlusOperations plusOperations = google.plusOperations();
 //        Person profile = plusOperations.getGoogleProfile();
-//        
+//
 //        return "redirect:/";
 //    }
-	
+
 //	@RequestMapping("/google/login.do")
 //	public String doSessionAssignActionPage(HttpServletRequest request){
 //		System.out.println("/google/login.do");
 //		String code = request.getParameter("code");
 //		System.out.println("코드 : " + code);
-//		
+//
 //		String queryString = request.getQueryString();
 //		System.out.println("쿼리스트링 : " + queryString);
-//		
+//
 //		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 //		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(),
 //				null);
-//		
+//
 //		String accessToken = accessGrant.getAccessToken();
 //		Long expireTime = accessGrant.getExpireTime();
 //		if (expireTime != null && expireTime < System.currentTimeMillis()) {
@@ -917,14 +920,14 @@ public class MemberControllerImpl implements MemberController {
 //		}
 //		Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
 //		Google google = connection == null ? new GoogleTemplate(accessToken) : (GoogleTemplate) connection.getApi();
-//		
+//
 //		PlusOperations plusOperations = google.plusOperations();
 //		Person person = plusOperations.getGoogleProfile();
-//	
-		
+//
+
 //		return "redirect:/";
 //	}
-	
-	
+
+
 
 }

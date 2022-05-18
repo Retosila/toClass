@@ -164,19 +164,7 @@
 
                 </li>
             </ul>
-            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
-                <li class="nav-item dropdown"><a href="#" class="nav-link"
-                                                 data-toggle="dropdown" href="#" role="button"> <i
-                        class="ni ni-collection d-lg-none"></i> <span
-                        class="nav-link-inner--text">과제</span>
-                </a>
-                    <div class="dropdown-menu">
-
-                        <a href="${contextPath}/assignment/undefined" class="dropdown-item">과제현황</a>
-                    </div>
-                </li>
-            </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
                 <li class="nav-item dropdown"><a href="${contextPath}/schedule/calendar" class="nav-link"
@@ -189,7 +177,8 @@
                         <a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
 
                         <a href="${contextPath}/schedule/undefined" class="dropdown-item">수업시간표</a>
-                        <a href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
+                         <a
+                            href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
                     </div>
                 </li>
             </ul>
@@ -203,18 +192,9 @@
                 </a>
                     <div class="dropdown-menu">
                         <a href="${contextPath}/board/listArticles.do" class="dropdown-item">자유게시판</a>
-	                    <c:choose>
-	                     <c:when test="${member.member_type eq '교사'}">
-	                         	<a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a> 
-	                     </c:when>
-	                     <c:when test="${member.member_type eq '학생'}">
-	                         	<a href="${contextPath}/board/notice_student" class="dropdown-item">알림장 읽기</a> 
-	                     </c:when>
-	                     <c:otherwise>
-	                         	<a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a> 
-	                     </c:otherwise>
-	              		</c:choose>
-                        
+                        <a href="./examples/profile.html" class="dropdown-item">알림장</a>
+
+
                     </div>
                 </li>
             </ul>

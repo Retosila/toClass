@@ -35,7 +35,7 @@
 </head>
 <body>
 <h3>${member.member_name} 학우님 맛있는 식사하세요!</h3>
-<div class="container pt-lg-5">
+<div class="container">
     <table class="table table-bordered">
         <tr>
             <th align='center'>오늘 날짜</th>
@@ -56,14 +56,14 @@
 					</script> --%> ${t_day}</th>
 					        </tr>
     </table>
-	
-	
-					
+
+
+
 <form>
    <table class="table table-bordered" id="list_table">
-        
+
            <tr>
-                <th>공란</th>
+                <th></th>
                 <th>월 <fmt:parseDate value="${week}" var="dateValue" pattern="yyyy-MM-dd"/>
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
                 <th>화 <fmt:parseDate value="${week1}" var="dateValue" pattern="yyyy-MM-dd"/>
@@ -83,14 +83,11 @@
                         <td>
                             ${menu_content}
                         </td>
-                 	</c:forEach> 	
+                 	</c:forEach>
                   </tr>
-        </c:forEach> 
-      </table> 
+        </c:forEach>
+      </table>
       </form>
-
-                       
-                    
 
 </div>
 </body>

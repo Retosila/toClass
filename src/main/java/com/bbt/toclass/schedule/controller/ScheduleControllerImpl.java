@@ -198,14 +198,14 @@ public class ScheduleControllerImpl implements ScheduleController {
 
 	}
 
-	@RequestMapping(value = "/schedule/listMenu.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = {"/","/main","/schedule/listMenu.do"}, method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView listMenuDo(
 			String menu_date, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ModelAndView mav = new ModelAndView();
-
+		String member_type = null;
 		logger.info("주간 날짜 가져오기");
 		ArrayList<String> week = WeekDay();
 		request.setAttribute("week", week.get(0));
@@ -222,20 +222,20 @@ public class ScheduleControllerImpl implements ScheduleController {
 
 		logger.info(menu_date);
 		Date temp = new Date(sdf.parse("2022-05-09").getTime());
-		logger.info("확인용 1");
+
 		List<Date> dateList = scheduleService.getMenuDate(temp);
-		logger.info("확인용 2");
+
 
 //		for(int i = 0; i<dateList.size(); i++) {
 		MenuDTO menuDTO = new MenuDTO();
 
 		menuDTO.setMenu_date(dateList.get(0));
-		logger.info("확인용 3");
+
 
 		logger.info(week.get(0));
 		Date monday = new Date(sdf.parse(week.get(0)).getTime());
 		menuDTO.setMonday(monday);
-		logger.info("확인용 4 : " + menuDTO.getMenu_date());
+
 
 		Date friday = new Date(sdf.parse(week.get(4)).getTime());
 		menuDTO.setFriday(friday);
@@ -248,16 +248,30 @@ public class ScheduleControllerImpl implements ScheduleController {
 //		mav.setViewName("/schedule/menu_student");
 
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		String member_type = memberVO.getMember_type();
+		member_type = memberVO.getMember_type();
 
-		System.out.println(member_type);
 
-		if (member_type.equals("교사")) {
-			mav.setViewName("/schedule/menu_teacher");
+		if(request.getRequestURI().equals("/schedule/listMenu.do")){
+			if (member_type.equals("교사")) {
+				mav.setViewName("/schedule/menu_teacher");
+			}
+			else if (member_type.equals("학생")) {
+				mav.setViewName("/schedule/menu_student");
+			}
 		}
-		else if (member_type.equals("학생")) {
-			mav.setViewName("/schedule/menu_student");
+		else {
+			if (member_type == null){
+				mav.setViewName("/");
+			}
+			else if(member_type.equals("교사")) {
+				mav.setViewName("/main_teacher");
+			}
+			else if(member_type.equals("학생")) {
+				mav.setViewName("/main_student");
+			}
+
 		}
+
 
 		return mav;
 	}
@@ -270,6 +284,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 	private String toDay() {
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M월 d일 (E)");
+
 		String formatedNow = now.format(formatter);
 		System.out.println(formatedNow);
 		return formatedNow;
