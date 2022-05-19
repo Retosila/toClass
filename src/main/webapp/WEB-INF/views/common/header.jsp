@@ -189,8 +189,7 @@
                         <a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
 
                         <a href="${contextPath}/schedule/undefined" class="dropdown-item">수업시간표</a>
-                        <a href="${contextPath}/schedule/undefined" class="dropdown-item">알림장</a> <a
-                            href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
+                        <a href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
                     </div>
                 </li>
             </ul>
@@ -204,11 +203,18 @@
                 </a>
                     <div class="dropdown-menu">
                         <a href="${contextPath}/board/listArticles.do" class="dropdown-item">자유게시판</a>
-                        <a href="./examples/profile.html" class="dropdown-item">질의문의</a>
-                        <a href="${contextPath}/member/listMembers.do"
-                           class="dropdown-item">회원관리</a>
-                        <a href="./examples/login.html" class="dropdown-item">정보</a> <a
-                            href="./examples/register.html" class="dropdown-item">유머</a>
+	                    <c:choose>
+	                     <c:when test="${member.member_type eq '교사'}">
+	                         	<a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a> 
+	                     </c:when>
+	                     <c:when test="${member.member_type eq '학생'}">
+	                         	<a href="${contextPath}/board/notice_student" class="dropdown-item">알림장 읽기</a> 
+	                     </c:when>
+	                     <c:otherwise>
+	                         	<a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a> 
+	                     </c:otherwise>
+	              		</c:choose>
+                        
                     </div>
                 </li>
             </ul>

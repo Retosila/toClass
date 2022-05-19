@@ -75,8 +75,8 @@
 	]]>
   </select>
 
-  <!--
-  <select id="getClassMemberEmailByClassId"  resultType="String" parameterType="String">
+<!-- 추가! -->
+  <select id="getClassMemberEmailListByClassId"  resultType="String" parameterType="String">
 	<![CDATA[
 		select member_email
 		from (select m.member_email, i.class_id, m.member_type
@@ -85,7 +85,7 @@
 		where class_id = #{class_id} and member_type <> '교사'
 	]]>
   </select>
-   -->
+
 
   <insert id="insertAttendByMember_email" parameterType="newAttendVO">
   	insert into attendance (attendance_id, attendance_status, class_id, member_email)

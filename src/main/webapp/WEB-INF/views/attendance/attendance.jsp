@@ -2,10 +2,12 @@
          pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%
     request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="today" value="<%=new java.util.Date()%>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +62,7 @@
     		console.log(member_name);
     		console.log(currentClass);
     		
-    		//버튼 누르면 출석 유형 나오면서 버튼은 사라짐
+    		//버튼 누르면 출석 유형 나오면서 버튼 유지
     		var chosen = $("<p>" + attend_status + "</p>");
     		var temp = $(this).closest(".dropdown");
     		var temp2 = $(this).closest(".dropdown").children("button, div");
@@ -79,13 +81,15 @@
 				dataType : 'text',
 				success : function(msg) {
 					console.log(msg);
-					//버튼 누르면 출석 유형 나오면서 버튼은 사라짐
+					//버튼 누르면 출석 유형 나오면서 버튼은 유지
 		    		var chosen = $("<p>" + attend_status + "</p>");
 		    		temp.append(chosen);
 		    		temp2.remove();
+		    		temp2.toggleClass(".dropdown-menu").attr("disabled", true);
 		    		console.log("chosen 확인용 : " + chosen);
 				},
 				error : function(error) {
+					
 					console.log(JSON.stringify(error));
 				}
 				
@@ -99,7 +103,7 @@
     <table class="table table-bordered">
         <tr>
             <th align='center'>오늘의 출석현황</th>
-            <th align='center'>출석율</th>
+  
             <th align='center'>미정</th>
             <th align='center'>출석</th>
             <th align='center'>조퇴</th>
@@ -108,30 +112,7 @@
             <th align='center'>합계</th>
         </tr>
         <tr>
-            <th><%-- <c:set var="today" value="<%=new java.util.Date()%>" /> <!-- 현재날짜 -->
-					<c:set var="date">
-						<fmt:formatDate value="${today}" pattern="MM.dd" />
-					</c:set> <!-- 데이터 뿌릴때 --> <c:out value="${date}" /> <script>
-						function getTodayLabel() {
-							var week = new Array('(일)', '(월)', '(화)', '(수)',
-									'(목)', '(금)', '(토)');
-							var today = new Date().getDay();
-							var todayLabel = week[today];
-							return todayLabel;
-						}
-						document.write(getTodayLabel())
-					</script> --%> ${t_day}</th>
-           <!--  <td width="20%">
-                <div class="progress-wrapper"
-                     style="padding-top: 0px;">
-                    <div class="progress-info">
-                        <div class="progress-percentage">
-                            <span>80%</span>
-                        </div>
-                    </div>
-                    
-                </div>
-            </td> -->
+            <th>
             <td>0명</td>
             <td>28명</td>
             <td>2명</td>
@@ -143,62 +124,6 @@
 
     <form>
         <table class="table table-bordered" id="list_table">
-
-            <tr>
-                <th>주간 출결 기록</th>
-                <th>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck1"
-                               type="checkbox" name='Attendance' value='selectall'
-                               onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck1"> <span>일괄출석</span>
-                    </label>
-                    </div>
-                </th>
-                <th>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck2"
-                               type="checkbox" name='Attendance2' value='selectall2'
-                               onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck2"> <span>일괄출석</span>
-                    </label>
-                    </div>
-                </th>
-                <th>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck3"
-                               type="checkbox" name='Attendance3' value='selectall3'
-                               onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck3"> <span>일괄출석</span>
-                    </label>
-                    </div>
-                </th>
-                <th>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck4"
-                               type="checkbox" name='Attendance4' value='selectall4'
-                               onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck4"> <span>일괄출석</span>
-                    </label>
-                    </div>
-                </th>
-                <th>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck5"
-                               type="checkbox" name='Attendance5' value='selectall5'
-                               onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck5"> <span>일괄출석</span>
-                    </label>
-                    </div>
-                </th>
-                <!-- <th><div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="customCheck5"
-                            type="checkbox" name='Attendance5' value='selectall5'
-                            onclick='selectAll(this)'> <label
-                            class="custom-control-label" for="customCheck5"> <span>일괄출석</span>
-                        </label>
-                    </div></th> -->
-            </tr>
             <tr>
                 <th>이름</th>
                 <th>월 <fmt:parseDate value="${week}" var="dateValue" pattern="yyyy-MM-dd"/>
@@ -211,90 +136,75 @@
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
                 <th>금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                <!-- <th>행 삭제</th> -->
             </tr>
+            
             <c:forEach var="showAttendVO" items="${ShowAttendVOList}">
 
                 <tr data-name="${showAttendVO.member_name}">
+                
                     <td>${showAttendVO.member_name} </td>
-                    <c:forEach var="attendVOStat" items="${showAttendVO.attend_status}">
+                    
+                    <c:forEach var="attendVOStat" items="${showAttendVO.attend_status}" varStatus="status">
 
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdownMenuButton" type="button"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false"
-                                        style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-text="${attendVOStat}">
-                                    <a class="dropdown-item">출석</a>
-                                    <a class="dropdown-item">조퇴</a>
-                                    <a class="dropdown-item">지각</a>
-                                    <a class="dropdown-item">결석</a>
-                                </div>
-                            </div>
-                        </td>
-                  </c:forEach>
-                  <!-- 
-					 <td>
-                           <div class="dropdown">
-                               <button class="btn btn-primary dropdownMenuButton" type="button"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false"
-                                       style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                               </button>
-                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                   <a class="dropdown-item">출석</a>
-                                   <a class="dropdown-item">조퇴</a>
-                                   <a class="dropdown-item">지각</a>
-                                   <a class="dropdown-item">결석</a>
-                               </div>
-                           </div>
-                       </td>
-                   -->
+						<c:set var="attendVOTime" value="${showAttendVO.attend_time[status.index]}"/>
+						
+						<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy.MM.dd"/>
+						<fmt:parseDate var="temp" value="${attendVOTime}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate var="thisDay" type="date" value="${temp}" pattern="yyyy.MM.dd"/>
+						
+						<c:choose>
+							<c:when test="${fn:length(attendVOStat) != 0}">
+							
+		                        <td>
+		                         	${attendVOStat}
+		                        </td>
+		                        
+								<c:if test="${status.last}">
+									<c:if test="${thisDay != now}">
+										<td>
+				                           <div class="dropdown">
+				                               <button class="btn btn-primary dropdownMenuButton" type="button"
+				                                       data-toggle="dropdown"
+				                                       aria-haspopup="true" aria-expanded="false"
+				                                       style="border-color: rgb(255 255 255/ 50%) !important;">출석
+				                               </button>
+				                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				                                   <a class="dropdown-item">출석</a>
+				                                   <a class="dropdown-item">조퇴</a>
+				                                   <a class="dropdown-item">지각</a>
+				                                   <a class="dropdown-item">결석</a>
+				                               </div>
+				                           </div>
+	                     				</td>  
+									</c:if>
+								</c:if>
+							</c:when>
+							
+							<c:when test="${fn:length(attendVOStat) == 0}">
+								<td>
+		                           <div class="dropdown">
+		                               <button class="btn btn-primary dropdownMenuButton" type="button"
+		                                       data-toggle="dropdown"
+		                                       aria-haspopup="true" aria-expanded="false"
+		                                       style="border-color: rgb(255 255 255/ 50%) !important;">출석
+		                               </button>
+		                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		                                   <a class="dropdown-item">출석</a>
+		                                   <a class="dropdown-item">조퇴</a>
+		                                   <a class="dropdown-item">지각</a>
+		                                   <a class="dropdown-item">결석</a>
+		                               </div>
+		                           </div>
+                    			</td>  
+							</c:when>
+							
+						</c:choose>
+						
+                   </c:forEach>
 
              </tr>
          </c:forEach>
      </table>
-        <!-- <button type="button" id="append_row"
-                class="btn btn-outline-primary btn-lg" onclick=addRow()>추가
-        </button> -->
-        <script type="text/javascript">
-            //버튼 클릭하면 추가
-            function fn_addFile() {
-                $("#d_file").append(
-                    "<br>" + "<input type='file' name='file" + cnt + "' />");
-                cnt++;
-            }
-
-            function addRow() {
-                var el = document.getElementById('attendanceBtn');
-            }
-
-            $("#append_row").on("click", function () {
-                $("#list_table").append(
-                    $("<tr>").append(
-                        $("<td>").append($("#name").val()),
-                        $("<td>").append($("#dropdownMenuButton").val()),
-                        $("<td>").append($("#dropdownMenuButton2").val()),
-                        $("<td>").append($("#dropdownMenuButton3").val()),
-                        $("<td>").append($("#dropdownMenuButton4").val()),
-                        $("<td>").append($("#dropdownMenuButton5").val()),
-                        //<td><a href="#" class="delete-link">삭제</a></td>
-                        $("<td>").append($("<a>").prop("href", "#").addClass("delete-link").append("삭제")
-                        )
-                    )
-                );
-            });
-            //삭제
-            $("#list_table").on("click", ".delete-link", function () {
-                //a태그의 부모의 부모태그 (a-td-tr)
-                $(this).parent().parent().remove();
-            });
-        </script>
-        <!-- <input type="submit" value="저장하기"
-               class="btn btn-outline-primary btn-lg"/>
-		 -->
     </form>
 
 </div>

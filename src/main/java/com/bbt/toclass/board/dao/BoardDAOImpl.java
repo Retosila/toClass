@@ -1,8 +1,14 @@
 package com.bbt.toclass.board.dao;
 
+import com.bbt.toclass.board.service.BoardServiceImpl;
 import com.bbt.toclass.board.vo.ArticleVO;
 import com.bbt.toclass.board.vo.ImageVO;
+import com.bbt.toclass.board.vo.NoticeVO;
+import com.bbt.toclass.member.vo.MemberVO;
+
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -13,9 +19,61 @@ import java.util.Map;
 
 @Repository("boardDAO")
 public class BoardDAOImpl implements BoardDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
+	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Override
+	public List<MemberVO> getStudentInfo(String teacherEmail) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : getStudentInfoByEmail : " + teacherEmail);
+		List<MemberVO> studentList = sqlSession.selectList("mapper.board.getStudentInfoByEmail", teacherEmail);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info("조회된 학생 정보 : " + studentList.size());
+		
+		return studentList;
+	}
 
+	
+	@Override
+	public int insertNotice(NoticeVO nvo) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : insertNoticeByNoticeVO");
+		int result = sqlSession.insert("mapper.board.insertNoticeByNoticeVO", nvo);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info("DB에 입력한 알림장  : " + result);
+		
+		return result;
+		
+	}
+	
+	@Override
+	public String getTeacherName(String teacherEmail) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : getMemberNameByEmail");
+		String teacherName = sqlSession.selectOne("mapper.board.getMemberNameByEmail", teacherEmail);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info("선생님 이름  : " + teacherName);
+		
+		return teacherName;
+		
+	}
+	
+	@Override
+	public NoticeVO getRecentNotice(String studentEmail) throws DataAccessException {
+		logger.info("myBatis에게 쿼리 요청 : getRecentNoticeByEmail");
+		NoticeVO recentNotice = sqlSession.selectOne("mapper.board.getRecentNoticeByEmail", studentEmail);
+		logger.info("myBatis로부터 성공적으로 응답 수신");
+		logger.info("선생님 이름  : " + studentEmail);
+		
+		return recentNotice;
+		
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public List selectAllArticlesList() throws DataAccessException {
 

@@ -30,4 +30,5 @@ public interface AttendanceDAO {
 
 	//출석 정보 DB에 insert
 	public int insertAttend(NewAttendVO newAttend) throws DataAccessException;
+
 }

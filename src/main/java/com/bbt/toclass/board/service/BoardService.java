@@ -1,6 +1,8 @@
 package com.bbt.toclass.board.service;
 
 import com.bbt.toclass.board.vo.ArticleVO;
+import com.bbt.toclass.board.vo.NoticeVO;
+import com.bbt.toclass.member.vo.MemberVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,5 +21,13 @@ public interface BoardService {
 	public void removeArticle(int articleNO) throws Exception;
 	public ArticleVO bad(int articleNO) throws Exception;
 	public ArticleVO good(int articleNO) throws Exception;
+	
+	
+	
+	
+	
+	int sendNotice(NoticeVO nvo) throws Exception;
+	List<MemberVO> getStudentInfo(String teacherEmail) throws Exception;
+	NoticeVO getRecentNotice(String studentEmail) throws Exception;
 
 }

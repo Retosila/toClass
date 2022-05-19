@@ -21,6 +21,9 @@
 
 		<typeAlias type="com.bbt.toclass.board.vo.ArticleVO"  alias="articleVO" />
 		<typeAlias type="com.bbt.toclass.board.vo.ImageVO"  alias="imageVO" />
+		<typeAlias type="com.bbt.toclass.board.vo.NoticeVO"  alias="noticeVO" />
+		
+		
 		<typeAlias type="com.bbt.toclass.achievement.vo.AchievementVO"  alias="achievementVO" />
 
 	</typeAliases>

@@ -21,6 +21,28 @@
 	  <result property="articleNO" column="articleNO" />
 	  <result property="imageFileName" column="imageFileName" />
  </resultMap>
+ 
+ 	<resultMap id="memResult" type="memberVO">
+        <result property="member_id" column="member_id" />
+        <result property="member_email" column="member_email" />
+        <result property="member_pw" column="member_pw" />
+        <result property="member_name" column="member_name" />
+        <result property="member_phone" column="member_phone" />
+        <result property="member_type" column="member_type" />
+        <result property="member_regdate" column="member_regdate" />
+        <result property="member_moddate" column="member_moddate" />
+        <result property="currentClass" column="class_id" />
+	</resultMap>
+ 
+  <resultMap id="noticeResult" type="noticeVO">
+	  <result property="notice_id" column="notice_id" />
+	  <result property="notice_sender" column="notice_sender" />
+	  <result property="notice_title" column="notice_title" />
+	  <result property="notice_content" column="notice_content" />
+	  <result property="notice_regdate" column="notice_regdate" />
+	  <result property="notice_moddate" column="notice_moddate" />
+	  <result property="notice_receiver" column="notice_receiver" />
+ </resultMap>
 
   <select id="selectAllArticlesList" resultMap="articlesResult"   >
     <![CDATA[
@@ -127,4 +149,36 @@
     ]]>
   </select>
 
+  <select  id="getStudentInfoByEmail" resultMap="memResult" parameterType="String">
+    <![CDATA[
+      select member_email, m.member_name
+	  from info i inner join member m using(member_email)
+	  where class_id = (select class_id from class where class_maker = #{teacherEmail})
+ 	    AND member_type = '학생'
+    ]]>
+  </select>
+  
+  <insert  id="insertNoticeByNoticeVO" parameterType="noticeVO">
+    <![CDATA[
+	insert into notice (notice_id, notice_sender, notice_receiver, notice_title, notice_content)
+	values (lpad(to_char(notice_seq.nextval), 10, '0'), #{notice_sender}, #{notice_receiver}, #{notice_title}, #{notice_content})
+    ]]>
+  </insert>
+  
+  	 <select id="getMemberNameByEmail"  resultType="String" parameterType="String">
+	<![CDATA[
+		select member_name
+		from member
+		where member_email = #{member_email}
+	]]>
+  </select>
+  
+  	 <select id="getRecentNoticeByEmail"  resultMap="noticeResult" parameterType="String">
+	<![CDATA[
+	select notice_sender, notice_title, notice_content, to_char(notice_regdate, 'YYYY-MM-dd HH24:MI') as notice_moddate
+	from notice
+	where notice_receiver = #{studentEmail}
+	]]>
+  </select>
+  
 </mapper>

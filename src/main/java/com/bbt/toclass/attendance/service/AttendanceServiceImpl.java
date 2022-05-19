@@ -91,6 +91,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		logger.info("service : getClassMemberEmail 무죄!");
 		return emailList;
 	}
+	
 
 	// 내 학급 정보 요청
 		@Override

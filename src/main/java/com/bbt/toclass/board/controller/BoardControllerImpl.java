@@ -2,6 +2,7 @@ package com.bbt.toclass.board.controller;
 
 import com.bbt.toclass.board.service.BoardService;
 import com.bbt.toclass.board.vo.ArticleVO;
+import com.bbt.toclass.board.vo.NoticeVO;
 import com.bbt.toclass.member.vo.MemberVO;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
@@ -40,6 +41,129 @@ public class BoardControllerImpl  implements BoardController{
 	private BoardService boardService;
 	@Autowired
 	private ArticleVO articleVO;
+	
+	
+	// 알림장(교사)
+	@RequestMapping(value = {"/board/notice_teacher"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView notice_teacher(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("notice_teacher 페이지 요청");
+		ModelAndView mav = new ModelAndView("/board/notice_teacher");
+		
+		MemberVO mvo = (MemberVO)session.getAttribute("member");
+		String teacherEmail = mvo.getMember_email();
+		
+		// 수신자 선택 드롭다운 리스트에 넣을 학생 목록 정보 바인딩
+		logger.info("비즈니스 로직 요청 : getStudentInfo");
+		List<MemberVO> studentList = boardService.getStudentInfo(teacherEmail); 
+		logger.info("비즈니스 로직 요청 성공");
+		mav.addObject("studentList", studentList);
+		
+		return mav;
+	}
+	
+	// 알림장(학생)
+	@RequestMapping(value = {"/board/notice_student"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView notice_student(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("notice_student 페이지 요청");
+		ModelAndView mav = new ModelAndView("/board/notice_student");
+		
+		MemberVO mvo = (MemberVO)session.getAttribute("member");
+		String studentEmail = mvo.getMember_email();
+		
+		// 가장 최근에 받은 알림장 정보 바인딩
+		logger.info("비즈니스 로직 요청 : getRecentNotice");
+		NoticeVO recentNotice = boardService.getRecentNotice(studentEmail); 
+		logger.info("비즈니스 로직 요청 성공");
+		mav.addObject("recentNotice", recentNotice);
+		
+		return mav;
+	}
+	
+	
+	/*
+	 * 
+	 * 
+	 * 로직 요청 (*.do)
+	 * 
+	 * 
+	 */
+	
+		
+	
+	
+	
+	@RequestMapping(value = "/board/sendNotice.do", method = {RequestMethod.POST})
+	public ModelAndView sendNoticeDO(@ModelAttribute NoticeVO nvo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("redirect:/board/notice_teacher");
+		
+		logger.info("controller : 알림 보내기 요청 수신");
+		logger.info("요청 정보 parsing...");
+		
+		logger.info("제목 : " + nvo.getNotice_title());
+		logger.info("수신자 이메일 : " + nvo.getNotice_receiver());
+		logger.info("수신자 이름 : " + nvo.getNotice_receiver_name());
+		logger.info("발신자 : " + nvo.getNotice_sender());
+		logger.info("내용 : " + nvo.getNotice_content());
+		
+		logger.info("controller : sendNotice 메소드 실행");
+		int result = boardService.sendNotice(nvo);
+		
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	@RequestMapping(value={"/board/listArticles.do"}, method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listArticles(HttpServletRequest request, HttpServletResponse response) throws Exception {

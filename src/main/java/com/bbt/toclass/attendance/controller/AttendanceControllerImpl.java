@@ -58,7 +58,6 @@ public class AttendanceControllerImpl implements AttendanceController{
 		request.setAttribute("week2", week.get(2));
 		request.setAttribute("week3", week.get(3));
 		request.setAttribute("week4", week.get(4));
-		//request.setAttribute("week5", week.get(5));
 
 		System.out.println(week);
 
@@ -119,38 +118,6 @@ public class AttendanceControllerImpl implements AttendanceController{
 		return mav;
 
 	}
-
-	// ajax : 일정 정보 가져오기
-	// produces 속성은 한글 깨짐 방지용
-	@RequestMapping(value = {"/schedule/getAttendance.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
-	@ResponseBody
-	public String getAttendanceDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String member_email = (String)param.get("member_email");
-
-		// 한글 깨짐 방지용
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-
-		logger.info("ajax 요청 : " + member_email + "의 출결 정보");
-		// 서비스 객체를 통해 출결 데이터를 list 방식으로 저장
-		List<MyAttendVO> mavoList = attendanceService.getAttendance(member_email);
-		for (MyAttendVO mavo : mavoList) {
-			logger.info("title : " + mavo.getTitle());
-			logger.info("start : " + mavo.getStart());
-		}
-
-		// list 형식의 일정 데이터 json 데이터로 변환
-		JSONArray result = JSONArray.fromObject(mavoList);
-		// 배열 형식의 json 데이터를 한줄의 문자열로 변환
-		String resp = result.toString();
-		logger.info(resp);
-
-		// ajax 요청에 대해 resp 객체를 응답
-		return resp;
-	}
-
-
-
 
 	//출석 정보 Ajax로 DB에 저장
 	@RequestMapping(value = {"/attendance/insertAttend.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
