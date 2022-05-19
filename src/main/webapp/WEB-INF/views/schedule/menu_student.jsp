@@ -34,8 +34,9 @@
 <title>학생 식단표</title>
 </head>
 <body>
-<h3>${member.member_name} 학우님 맛있는 식사하세요!</h3>
+
 <div class="container">
+    <h3>${member.member_name} 학우님 맛있는 식사하세요!</h3>
     <table class="table table-bordered">
         <tr>
             <th align='center'>오늘 날짜</th>

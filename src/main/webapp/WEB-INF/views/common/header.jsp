@@ -47,7 +47,10 @@
 <script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
 <script src="${contextPath}/assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
 <script	src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script src="<https://unpkg.com/typeit@8.5.4/dist/index.umd.js>"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
     function scrollToDownload() {
         if ($('.section-download').length != 0) {
@@ -84,7 +87,9 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a class="navbar-brand">
-                        	<img src="${contextPath}/assets/img/brand/logo3.png" style="height: 60px;">
+                            <div class="navbar-brand" style="color: #0065FF; font-family: 'Product sans bold';" onclick="location.href='${contextPath}/'">
+                                <i class="ni ni-chat-round"></i> <a>to</a><a style="font-size: 1px">Cla</a><a>ss</a>
+                            </div>
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -104,7 +109,7 @@
                     <a href="#" class="nav-link"
 
                        data-toggle="dropdown" href="#" role="button">
-                        <i class="ni ni-collection d-lg-none"></i>
+
 
                         <span class="nav-link-inner--text">출결</span>
                     </a>
@@ -135,8 +140,7 @@
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
                 <li class="nav-item dropdown"><a href="#" class="nav-link"
-                                                 data-toggle="dropdown" href="#" role="button"> <i
-                        class="ni ni-collection d-lg-none"></i> <span
+                                                 data-toggle="dropdown" href="#" role="button"> <span
                         class="nav-link-inner--text">성적</span>
                 </a>
 
@@ -168,15 +172,14 @@
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
                 <li class="nav-item dropdown"><a href="${contextPath}/schedule/calendar" class="nav-link"
-                                                 data-toggle="dropdown" href="#" role="button"> <i
-                        class="ni ni-collection d-lg-none"></i> <span
+                                                 data-toggle="dropdown" href="#" role="button"> <span
                         class="nav-link-inner--text">일정</span>
                 </a>
                     <div class="dropdown-menu">
 
                         <a href="${contextPath}/schedule/calendar" class="dropdown-item">학사캘린더</a>
 
-                        <a href="${contextPath}/schedule/undefined" class="dropdown-item">수업시간표</a>
+                        <a href="${contextPath}/schedule/time_table" class="dropdown-item">수업시간표</a>
                          <a
                             href="${contextPath}/schedule/listMenu.do" class="dropdown-item">식단표</a>
                     </div>
@@ -186,13 +189,12 @@
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
 
                 <li class="nav-item dropdown"><a href="#" class="nav-link"
-                                                 data-toggle="dropdown" href="#" role="button"> <i
-                        class="ni ni-collection d-lg-none"></i> <span
+                                                 data-toggle="dropdown" href="#" role="button"> <span
                         class="nav-link-inner--text">커뮤니티</span>
                 </a>
                     <div class="dropdown-menu">
                         <a href="${contextPath}/board/listArticles.do" class="dropdown-item">자유게시판</a>
-                        <a href="./examples/profile.html" class="dropdown-item">알림장</a>
+
 
 
                     </div>
@@ -231,5 +233,27 @@
     </div>
 </nav>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

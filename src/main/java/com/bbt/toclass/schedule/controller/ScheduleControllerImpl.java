@@ -197,7 +197,23 @@ public class ScheduleControllerImpl implements ScheduleController {
 		}
 
 	}
+	@RequestMapping(value = "/schedule/time_table", method = RequestMethod.GET)
+	public ModelAndView time_table(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		ModelAndView mav = new ModelAndView("/schedule/time_table");
+		ArrayList<String> week = WeekDay();
+		request.setAttribute("week", week.get(0));
+		request.setAttribute("week1", week.get(1));
+		request.setAttribute("week2", week.get(2));
+		request.setAttribute("week3", week.get(3));
+		request.setAttribute("week4", week.get(4));
+		System.out.println(week);
 
+		String t_day = toDay();
+		request.setAttribute("t_day", t_day);
+		return mav;
+	}
 	@RequestMapping(value = {"/","/main","/schedule/listMenu.do"}, method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView listMenuDo(
 			String menu_date, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -206,7 +222,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ModelAndView mav = new ModelAndView();
 		String member_type = null;
-		logger.info("주간 날짜 가져오기");
+
 		ArrayList<String> week = WeekDay();
 		request.setAttribute("week", week.get(0));
 		request.setAttribute("week1", week.get(1));

@@ -68,23 +68,23 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 	<c:when test="${member.member_type eq '교사'}">
 		<c:choose>
 			<c:when test="${member.currentClass != null}">
-			<h4>나의 학급 정보</h4>
+			<h4>${member.member_name} 학급 정보</h4>
 			<hr>
 			<table class="table table-bordered" id="infoMyClass" style="max-width: 830px;">
 				<tr>
-					<th>담당 학급ID<font color="#CC0000">*</font></th>
+					<th>담당 학급ID</th>
 					<td colspan="3">${myClass.class_id}</td>
 				</tr>
 				<tr>
-					<th>담당 학급명<font color="#CC0000">*</font></th>
+					<th>담당 학급명</th>
 					<td colspan="3">${myClass.class_name}</td>
 				</tr>
 				<tr>
-					<th>담당 학급접속 코드<font color="#CC0000">*</font></th>
+					<th>담당 학급접속 코드</th>
 					<td colspan="3">${myClass.class_code}</td>
 				</tr>
 				<tr>
-					<th>담당 학급생성일<font color="#CC0000">*</font></th>
+					<th>담당 학급생성일</th>
 					<td>${myClass.class_regdate}</td>
 					<th>담당 학급수정일</th>
 					<td>${myClass.class_moddate}</td>
@@ -143,7 +143,10 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 			</c:when>
 
 			<c:when test="${member.currentClass == null}">
-				<p><b>***담당 학급이 존재하지 않습니다.***</b></p>
+				<h3>${member.member_name}님의 학급 정보</h3>
+				<hr>
+				<div style="max-width: 830px;">
+				<p><b>담당 학급이 존재하지 않습니다.</b></p>
 				<p>새 학급을 생성해주세요!</p>
 				<form method="post" action="${contextPath}/member/createClass.do">
 					<input type="text" name="class_name" placeholder="1학년 1반"/>
@@ -151,6 +154,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 					<br>
 					<button type="submit" class="btn btn-primary">새 학급 생성</button>
 				</form>
+				</div>
 			</c:when>
 		</c:choose>
 
@@ -202,23 +206,23 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 				<hr>
 				<table class="table table-bordered" id="infoMyClass" style="max-width: 830px;">
 				<tr>
-					<th>소속 학급ID<font color="#CC0000">*</font></th>
+					<th>소속 학급ID</th>
 					<td colspan="3">${myClass.class_id}</td>
 				</tr>
 				<tr>
-					<th>소속 학급명<font color="#CC0000">*</font></th>
+					<th>소속 학급명</th>
 					<td colspan="3">${myClass.class_name}</td>
 				</tr>
 				<tr>
-					<th>소속 학급접속 코드<font color="#CC0000">*</font></th>
+					<th>소속 학급접속 코드</th>
 					<td colspan="3">${myClass.class_code}</td>
 				</tr>
 				<tr>
-					<th>소속 학급생성자(교사이메일)<font color="#CC0000">*</font></th>
+					<th>소속 학급생성자(교사이메일)</th>
 					<td colspan="3">${myClass.class_maker}</td>
 				</tr>
 				<tr>
-					<th>소속 학급생성일<font color="#CC0000">*</font></th>
+					<th>소속 학급생성일</th>
 					<td>${myClass.class_regdate}</td>
 					<th>소속 학급수정일</th>
 					<td>${myClass.class_moddate}</td>
@@ -228,15 +232,19 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 			</c:when>
 
 			<c:when test="${member.currentClass == null}">
-				<p><b>***소속 학급이 존재하지 않습니다.***</b></p>
+				<h3>${member.member_name}님의 학급 정보</h3>
+				<hr>
+				<div style="max-width: 830px;">
+				<p><b>소속 학급이 존재하지 않습니다.</b></p>
 				<p id="status_msg">생성된 학급에 가입해주세요!</p>
 				<form method="post" action="${contextPath}/member/applyClass.do">
 					<input id="code_input" type="text" name="class_code" placeholder="가입코드를 입력해주세요."/>
 					<br>
 					<br>
 
-					<button id="apply_button" type="submit" class="btn btn-secondary" disabled>학급 가입 신청</button>
+					<button id="apply_button" type="submit" class="btn btn-primary" disabled>학급 가입 신청</button>
 				</form>
+				</div>
 					<br>
 
 				<c:choose>
@@ -279,6 +287,7 @@ JSTL 내부에 주석을 달 시 발생하는 오류로 인해 설명은 이곳�
 	<script>
 		console.log("${msg}");
 		alert("${msg}");
+
 	</script>
 </c:if>
 

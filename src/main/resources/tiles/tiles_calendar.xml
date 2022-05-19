@@ -16,5 +16,9 @@
       <put-attribute name="title" value="식단표" />
       <put-attribute name="body" value="/WEB-INF/views/schedule/menu_teacher.jsp" />
    </definition>
+   <definition name="/schedule/time_table" extends="baseLayout">
+      <put-attribute name="title" value="시간표" />
+      <put-attribute name="body" value="/WEB-INF/views/schedule/time_table.jsp" />
+   </definition>
 
 </tiles-definitions>

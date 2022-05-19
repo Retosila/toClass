@@ -19,7 +19,7 @@ request.setCharacterEncoding("UTF-8");
 
 	var emailDuplicateCheck = false; // 이메일 중복 확인 여부 체크
 	var validatedEmail = "undefined"; // 이메일 중복 확인 체크 완료된 이메일
-	
+
 	// 인증번호 전송 버튼 클릭 시 실행
 	function sendAuthCode() {
 		email = $("#member_email").val();
@@ -47,7 +47,8 @@ request.setCharacterEncoding("UTF-8");
 				}
 			});
 		} else {
-			alert("유효하지 않은 이메일 주소입니다.");
+			swal('이메일!', "유효하지 않은 이메일 주소입니다.", 'warning');
+
 		}
 	}
 
@@ -56,12 +57,12 @@ request.setCharacterEncoding("UTF-8");
 		// 생성된 난수와 일치하는 번호 입력 시 "다음" 버튼 활성화
 		if ($("#authCodeInput").val() == authCode) {
 			$('#msg').text("인증이 완료되었습니다.");
-			$('#next').prop("disabled", false).css("wBtn03");
+			$('#next').prop("disabled", false);
 		} else {
 			$('#msg').text("유효하지 않은 인증번호입니다.");
 		}
 	}
-	
+
 	function checkEmailDuplicate() {
 		var member_email = $("#member_email").val();
 		console.log(member_email);
@@ -96,19 +97,22 @@ request.setCharacterEncoding("UTF-8");
 				}
 			});
 		} else {
-			alert("유효하지 않은 이메일 주소입니다.");
+			swal('이메일!', "유효하지 않은 이메일 주소입니다.", 'warning');
+
 		}
 	}
-	
+
 	function next() {
 		if (emailDuplicateCheck == false) {
 			frmValidate.submit();
 		}
 		else {
-			alert("이메일 중복 체크를 해주시기 바랍니다.");
+			swal('이메일!', "중복체크 해주세요", 'warning');
+
+
 		}
 	}
-	
+
 	$(document).ready(function() {
 		// 이메일 중복확인 후 키입력 발생 시, 인증된 이메일과 입력되어있는 값이 같은지 2차 검증
 		$("#member_email").on("keyup", function() {
@@ -124,11 +128,11 @@ request.setCharacterEncoding("UTF-8");
 				emailDuplicateCheck = true;
 			}
 		});
-		
-		
+
+
 	});
-	
-	
+
+
 </script>
 
 <style>
@@ -198,10 +202,10 @@ request.setCharacterEncoding("UTF-8");
 				<div class="row">
 					<div class="col-md-6">
 						<input id="member_email" name="member_email" class="form-control" type="email"
-							   placeholder="이메일 주소를 입력하세요" />
+							   placeholder="이메일 주소를 입력하세요." />
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="bBtn06" onclick="checkEmailDuplicate()">이메일 중복확인</button> 
+						<button type="button" class="btn btn-primary" onclick="checkEmailDuplicate()">이메일 중복확인</button>
 						<button id="sendAuthButton" type="button" class="btn btn-primary" onclick="sendAuthCode()" disabled>인증번호 발송</button><br>
 						<span id="msgEmailValid" style="font-size: 0.6em"></span>
 					</div>
@@ -209,10 +213,10 @@ request.setCharacterEncoding("UTF-8");
 				<br>
 				<div class="row">
 					<div class="col-md-6">
-						<input id="authCodeInput" type="text" class="form-control"/>
+						<input id="authCodeInput" type="text" placeholder="인증번호를 입력하세요." class="form-control"/>
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="btn btn-primary my-1" onclick="checkAuthCode()">인증</button>
+						<button type="button" class="btn btn-primary" onclick="checkAuthCode()">인증</button>
 					</div>
 				</div>
 

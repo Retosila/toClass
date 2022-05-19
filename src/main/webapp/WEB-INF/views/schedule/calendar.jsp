@@ -100,7 +100,7 @@ request.setCharacterEncoding("UTF-8");
           			var details_time = $("<span class='details_time'>" + time + "</span><br>");
           			var details_writer = $("<span class='details_writer'>" + thisEventList[i].schedule_writer + "</span><br>");
           			var details_content = $("<span class='details_content'>" + thisEventList[i].schedule_content + "</span><br>");
-    				var deleteButton = $("<button class='eventBlockClose'>삭제</button>");
+    				var deleteButton = $("<button class='btn btn-outline-primary'>삭제</button>");
     				var deleteAll = $("<br>일괄삭제<input class='isForAllDelete' name='isForAllDelete' value='true' type='checkbox' checked/>");
     				// 일정 id 저장용
     				var eventId = $("<input class='eventId' value='" + thisEventList[i].id + "' style='display:none';/>");
@@ -189,7 +189,7 @@ request.setCharacterEncoding("UTF-8");
           			var details_time = $("<span class='details_time'>" + time + "</span><br>");
           			var details_writer = $("<span class='details_writer'>" + thisEventList[i].schedule_writer + "</span><br>");
           			var details_content = $("<span class='details_content'>" + thisEventList[i].schedule_content + "</span><br>");
-    				var deleteButton = $("<button class='eventBlockClose'>삭제</button>");
+    				var deleteButton = $("<button class='btn btn-outline-primary'>삭제</button>");
     				var deleteAll = $("<br>일괄삭제<input class='isForAllDelete' name='isForAllDelete' value='true' type='checkbox' checked/>");
     				// 일정 id 저장용
     				var eventId = $("<input class='eventId' value='" + thisEventList[i].id + "' style='display:none';/>");
@@ -377,7 +377,7 @@ request.setCharacterEncoding("UTF-8");
     	});
 
     	// 일정 삭제 버튼은 동적으로 생성된 DOM이기에 아래와 같은 방식으로 써주지않으면 인식 못함
-    	$(document).on("click", ".eventBlockClose", function() {
+    	$(document).on("click", ".btn btn-outline-primary", function() {
     		var thisEventBlock = $(this).parent();
     		// 삭제버튼이 속한 eventBlock의 일정 id값을 추출
     		var id = thisEventBlock.children(".eventId").val();
@@ -428,16 +428,18 @@ request.setCharacterEncoding("UTF-8");
 <style>
 	#eventModalDate {
 		width:360px;
-		background-color:#E2E2E2;
-		border:2px #868e96 solid;
+		color: #084298;
+		background-color:#e7f1ff;
+		border:2px #b6d4fe solid;
 		margin:20px auto;
 		text-align:center;
 	}
 
 	.eventBlock {
 		width:360px;
+		color: #084298;
 		background-color:#F8F9FA;
-		border:2px #868e96 solid;
+		border:2px #b6d4fe solid;
 		margin:20px auto;
 		text-align:center;
 	}
@@ -458,6 +460,7 @@ request.setCharacterEncoding("UTF-8");
 		left: 50%;
 		margin: -250px 0 0 -250px;
 		background-color: #f9fafb;
+		border:3px #b6d4fe solid;
 		z-index: 2;
 		text-align:center;
 	}
@@ -541,7 +544,7 @@ request.setCharacterEncoding("UTF-8");
 
 	</section>
 	<section>
-		<button id="addEvent">일정 추가창</button>
+		<button id="addEvent" class="btn btn-primary">일정 추가창</button>
 	</section>
 
 </div>
@@ -555,7 +558,7 @@ request.setCharacterEncoding("UTF-8");
     종료시간 : <input id="eventEndDate" type="date"/><input id="eventEndTime" type="time"/><br><br>
     일정 내용<br>
     <textarea id="eventContent" placeholder="일정 내용"/></textarea><br><br>
-    <button id="addEventButton" type="button">일정 추가하기</button><br>
+    <button id="addEventButton" type="button" class="btn btn-primary">일정 추가하기</button><br><br>
     <!-- 교사 회원일 경우 일괄 추가 기능을 지원 -->
     <c:if test="${member.member_type eq '교사'}">
 	    일괄 추가<input id="isForAll" name="isForAll" value="true" type="checkbox" checked/>

@@ -24,20 +24,27 @@ request.setCharacterEncoding("UTF-8");
 	function register() {
 		// 각 항목의 유효성 확인
 		if (pwValidCheck == false) {
-			alert("사용할 수 없는 비밀번호입니다.");
+			swal('사용할 수 없는 비밀번호입니다.', "", 'warning');
+
+
 			return;
 		} else if (pwConfirmCheck == false) {
-			alert("비밀번호가 일치하지 않습니다.");
+			swal('비밀번호가 일치하지 않습니다.', "", 'warning');
+
+
 			return;
 		} else if (phoneValidCheck == false) {
-			alert("잘못된 전화번호 형식입니다.");
+			swal('잘못된 전화번호 형식입니다.', "", 'warning');
+
+
 			return;
 		}
 		// 전 항목이 true일 시 submit
 		else if (pwValidCheck && pwConfirmCheck	&& phoneValidCheck) {
 			document.frmRegister.submit();
 		} else {
-			alert("입력된 정보가 유효하지 않습니다.");
+
+			swal('입력된 정보가 유효하지 않습니다.', "", 'warning');
 		}
 	}
 

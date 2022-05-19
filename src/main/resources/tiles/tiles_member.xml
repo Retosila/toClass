@@ -20,6 +20,7 @@
       <put-attribute name="title" value="tiles" />
    </definition>
 
+
    <definition name="admin" extends="baseLayout">
       <put-attribute name="title" value="관리자" />
       <put-attribute name="body" value="/WEB-INF/views/admin.jsp" />
@@ -71,5 +72,18 @@
       <put-attribute name="title" value="비밀번호 확인" />
       <put-attribute name="body" value="/WEB-INF/views/member/checkPw.jsp" />
    </definition>
+   <definition name="/member/checkPw" extends="baseLayout">
+      <put-attribute name="title" value="비밀번호 확인" />
+      <put-attribute name="body" value="/WEB-INF/views/member/checkPw.jsp" />
+   </definition>
 
+   <definition name="/member/findAccount" extends="baseLayout">
+      <put-attribute name="title" value="계정찾기" />
+      <put-attribute name="body" value="/WEB-INF/views/member/findAccount.jsp" />
+   </definition>
+
+   <definition name="/member/findPw" extends="baseLayout">
+      <put-attribute name="title" value="비밀번호 찾기" />
+      <put-attribute name="body" value="/WEB-INF/views/member/findPw.jsp" />
+   </definition>
 </tiles-definitions>

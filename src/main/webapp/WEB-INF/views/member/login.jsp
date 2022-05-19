@@ -67,17 +67,20 @@
 
 	    // 유효성 검증
 	    if(member_email.val() == ""){
-	        alert("이메일을 입력해주세요.");
+	        //alert("이메일을 입력해주세요.");
+			swal('이메일',"이메일 입력해주세요" , 'warning')
 	        member_email.focus();
 	        return;
 	    }
 	    else if(emailRegex.test(email) == false) {
-	        alert("유효하지 않은 이메일 주소입니다.");
+			swal('이메일',"유효하지 않은 이메일 주소입니다." , 'warning')
+
 	        member_email.focus();
 	        return;
 	    }
 	    else if(member_pw.val() == ""){
-	        alert("비밀번호를 입력해주세요.");
+
+			swal('비밀번호',"비밀번호를 입력해주세요." , 'warning')
 	        member_pw.focus();
 	        return;
 	    }
@@ -102,14 +105,7 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-5">
 				<div class="card bg-secondary shadow border-0">
-					<div style="margin: 0 auto;">
-					    <div id="g_id_onload"
-					         data-client_id="796401158240-g15ijlm88t665s9t064jkvpr3faasetl.apps.googleusercontent.com"
-					         data-ux_mode="redirect"
-					         data-login_uri="http://localhost:8080/toclass/google/login.do">
-					    </div>
-					    <div class="g_id_signin" data-type="standard" ></div>
-					</div>
+
 
 					<div class="card-body px-lg-5 py-lg-5">
 						<div class="text-center text-muted mb-4">
@@ -152,10 +148,12 @@
 
 				<div class="row mt-3">
 					<div class="col-4 text-left">
-						<a href="${contextPath}/member/findAccount" class="text-light"><small>계정찾기</small></a>
+						<a href="${contextPath}/member/findAccount" class="text-primary"><small>계정찾기</small></a>
 					</div>
 					<div class="col-4">
-						<a href="${contextPath}/member/findPw" class="text-light"><small>비밀번호 찾기</small></a>
+					</div>
+					<div class="col-4 text-right">
+						<a href="${contextPath}/member/findPw" class="text-primary"><small>비밀번호 찾기</small></a>
 					</div>
 				</div>
 
