@@ -176,8 +176,8 @@
   	 <select id="getRecentNoticeByEmail"  resultMap="noticeResult" parameterType="String">
 	<![CDATA[
 	select notice_sender, notice_title, notice_content, to_char(notice_regdate, 'YYYY-MM-dd HH24:MI') as notice_moddate
-	from notice
-	where notice_receiver = #{studentEmail}
+	from (select *from notice order by notice_regdate desc)
+	where notice_receiver = #{studentEmail} AND rownum = 1
 	]]>
   </select>
   

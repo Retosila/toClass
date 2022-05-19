@@ -63,7 +63,7 @@ public class BoardDAOImpl implements BoardDAO {
 		logger.info("myBatis에게 쿼리 요청 : getRecentNoticeByEmail");
 		NoticeVO recentNotice = sqlSession.selectOne("mapper.board.getRecentNoticeByEmail", studentEmail);
 		logger.info("myBatis로부터 성공적으로 응답 수신");
-		logger.info("선생님 이름  : " + studentEmail);
+		logger.info("학생 이메일  : " + studentEmail);
 		
 		return recentNotice;
 		
