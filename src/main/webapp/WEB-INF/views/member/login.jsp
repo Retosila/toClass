@@ -105,12 +105,14 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-5">
 				<div class="card bg-secondary shadow border-0">
-
+					<div class="text-center">
+						<div class="navbar-brand" style="color: #0065FF; font-family: 'Product sans bold';" onclick="location.href='${contextPath}/'">
+							<i class="ni ni-chat-round"></i> <a>to</a><a style="font-size: 1px">Cla</a><a>ss</a>
+						</div>
+					</div>
 
 					<div class="card-body px-lg-5 py-lg-5">
-						<div class="text-center text-muted mb-4">
-							<small>이메일로 로그인</small>
-						</div>
+
 
 						<form id="frmLogin" name="frmLogin" role="form" method="post" action="${contextPath}/member/login.do">
 							<div class="form-group mb-3">

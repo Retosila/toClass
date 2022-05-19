@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import = "java.sql.*" %> <!-- jdbc를 활용하기 위해 선언 -->
+<%@ page import="java.sql.*"%>
+<!-- jdbc를 활용하기 위해 선언 -->
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -27,24 +28,17 @@ request.setCharacterEncoding("UTF-8");
 	}
 }
 
-table {
-	border: 1px solid black;
-	width: 110%;
-}
-
 th, td {
 	text-align: center;
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
 }
 
 input {
-	width: 100px;
+	width: 92px;
 	height: 30px;
 }
 
 select {
-	width: 100px;
+	width: 92px;
 	height: 30px;
 }
 </style>
@@ -52,21 +46,28 @@ select {
 
 <body>
 
-
 	<div class="container">
 		<form action="achievement" align="left">
-			<label for="studyName">이름</label> <input type="text" id="studyName">
-			<label for="studyYear">학년</label> <select id="studyYear">
-				<option value="" selected>전체</option>
+			<label for="studyName">이름</label> <select id="studyName">
+				<option value="" selected>이름</option>
+				<option value="요시">요시</option>
+				<option value="라라">라라</option>
+				<option value="레토">레토</option>
+				<option value="아야">아야</option>
+				<option value="토토로">토토로</option>
+				<option value="김민주">김민주</option>
+				<option value="이서후">이서후</option>
+			</select> <label for="studyYear">학년</label> <select id="studyYear">
+				<option value="" selected>학년</option>
 				<option value="3학년">3학년</option>
 				<option value="2학년">2학년</option>
 				<option value="1학년">1학년</option>
 			</select> <label for="semester">수강학기</label> <select id="semester">
-				<option value="" selected>전체</option>
+				<option value="" selected>학기</option>
 				<option value="1학기">1학기</option>
 				<option value="2학기">2학기</option>
 			</select> <label for="SubjectName">과목명</label> <select id="SubjectName">
-				<option value="" selected>전체</option>
+				<option value="" selected>과목명</option>
 				<option value="국어">국어</option>
 				<option value="영어">영어</option>
 				<option value="수학">수학</option>
@@ -75,22 +76,7 @@ select {
 			</select>
 		</form>
 		<br>
-		<table>
-			<colgroup>
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
-			</colgroup>
-
+		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th>이름</th>
@@ -102,25 +88,46 @@ select {
 					<th>평균</th>
 					<th>석차</th>
 					<th>등급</th>
-					<th>전체평균</th>
-					<th>수정 사유</th>
-					<th>추가 / 삭제</th>
+					<th>삭제</th>
 				</tr>
 			</thead>
+			<c:forEach var="achievement" items="${achievement}">
+				<tr>
+					<!-- 틀에 맞춰서 값이 나오게... -->
+					<td>레토</td>
+					<td>${achievement.achievement_year}</td>
+					<td>${achievement.achievement_semester}</td>
+					<td>${achievement.subject_name}</td>
+					<td>${achievement.achievement_mid}</td>
+					<td>${achievement.achievement_final}</td>
+					<td>${achievement.achievement_avg}</td>
+					<td>${achievement.achievement_rank}</td>
+					<td>${achievement.achievement_grade}</td>
+					<td><button type="button" onClick=scoreDel(this) class="btn btn-outline-primary me-2">삭제</button></td>
+				</tr>
+			</c:forEach>
 			<tbody class='scoreInfo'>
 				<tr>
-					<td><input type='text' class='input-data tableInEdit'
-						id="name" value='' class='form-control'></td>
+					<td><select id="name">
+							<option value="" selected>이름</option>
+							<option value="요시">요시</option>
+							<option value="라라">라라</option>
+							<option value="레토">레토</option>
+							<option value="아야">아야</option>
+							<option value="토토로">토토로</option>
+							<option value="김민주">김민주</option>
+							<option value="이서후">이서후</option>
+					</select></td>
 					<td><select id="studyYearlist">
 							<option value="" selected>학년</option>
-							<option value="3학년">3학년</option>
-							<option value="2학년">2학년</option>
-							<option value="1학년">1학년</option>
+							<option value="3">3학년</option>
+							<option value="2">2학년</option>
+							<option value="1">1학년</option>
 					</select></td>
 					<td><select id="semesterlist">
 							<option value="" selected>학기</option>
-							<option value="1학기">1학기</option>
-							<option value="2학기">2학기</option>
+							<option value="1">1학기</option>
+							<option value="2">2학기</option>
 					</select></td>
 					<td><select id="subjectNamelist">
 							<option value="" selected>과목명</option>
@@ -134,61 +141,33 @@ select {
 						id="midtest" value='' class='form-control'></td>
 					<td><input type='text' class='input-data tableInEdit'
 						id="lasttest" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit' id="avg"
-						value='' class='form-control'></td>
+					<td><input type='text' class='input-data tableInEdit'
+						id="avg" value='' class='form-control'></td>
 					<td><input type='text' class='input-data tableInEdit'
 						id="rank" value='' class='form-control'></td>
 					<td><input type='text' class='input-data tableInEdit'
 						id="score" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit'
-						id="total" value='' class='form-control'></td>
-					<td><input type='text' class='input-data tableInEdit' id="re"
-						value='' class='form-control'></td>
 					<td>
-						<button type="button" onclick="scoreAdd();"
-							class="btn btn-outline-primary me-2">추가</button>
+						<button type="button" onclick="scoreAdd();" class="btn btn-outline-primary me-2">추가</button>
 					</td>
 				</tr>
-								<c:forEach var="achievement" items="${achievement}">
-					<tr>
-					<!-- 틀에 맞춰서 값이 나오게... -->
-						<td>${achievement.member_name}</td>
-						<td>${achievement.achievement_year}</td>
-						<td>${achievement.achievement_semester}</td>
-						<td>${achievement.subject_name}</td>
-						<td>${achievement.achievement_mid}</td>
-						<td>${achievement.achievement_final}</td>
-						<td>${achievement.achievement_avg}</td>
-						<td>${achievement.achievement_rank}</td>
-						<td>${achievement.achievement_grade}</td>
-					</tr>
-				</c:forEach>
 			</tbody>
-		</table>
-		<br>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적
-			입력</button>
-		<button class="btn btn-outline-primary btn-lg" type="submit">성적
-			조회</button>
 
+
+
+		</table>
 	</div>
 
-	<!-- /.container -->
-	<hr class="featurette-divider">
-	<!--             <script src="http://code.jquery.com/jquery.js"></script> -->
 	<script>
 		var rowCnt = 0
 		$(function() {
-			$(document)
-					.on(
-							"dblclick",
-							".editable",
-							function() {
-								var value = $(this).text();
-								var input = "<input type='text' class='input-data tableInEdit' value='"+value+"' class='form-control'>";
-								$(this).html(input);
-								$(this).removeClass("editable");
-							});
+			$(document).on("dblclick", ".editable",
+				function() {
+					var value = $(this).text();
+					var input = "<input type='text' class='input-data tableInEdit' value='"+value+"' class='form-control'>";
+					$(this).html(input);
+					$(this).removeClass("editable");
+				});
 		})
 
 		function scoreDel(tar) {
@@ -206,8 +185,6 @@ select {
 			var avg = $("#avg").val();
 			var rank = $("#rank").val();
 			var score = $("#score").val();
-			var total = $("#total").val();
-			var re = $("#re").val();
 
 			var resultStr = "<tr id=row" + rowCnt + ">";
 			rowCnt++;
@@ -248,14 +225,6 @@ select {
 			resultStr += "</td>";
 
 			resultStr += "<td>";
-			resultStr += total;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += re;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
 			resultStr += '<button type="button" onClick=scoreDel(this) class="btn btn-outline-primary me-2">삭제</button>';
 			resultStr += "</td>";
 			resultStr += "</tr>";
@@ -274,9 +243,6 @@ select {
 			$("#re").val('');
 		}
 	</script>
-
-
-
 </body>
 </html>
 

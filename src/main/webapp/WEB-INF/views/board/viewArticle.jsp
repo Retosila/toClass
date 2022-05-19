@@ -66,7 +66,7 @@
 
             <div class="col-md-6"><p style="margin-bottom:5px;padding-top: 5px; text-align: right;font-size: 0.9em;">조회 ${article.views}
                 추천 ${article.good+article.bad}
-                댓글 ${article.views}</p></div>
+                </p></div>
         </div>
         <div style="border-color: #F9FAFB;">
 

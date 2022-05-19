@@ -446,7 +446,12 @@
         }
 
     </script>
-
+    <script src="<https://unpkg.com/typeit@8.5.4/dist/index.umd.js>"></script>
+    <script>
+        new TypeIt("#myElement", {
+            strings: "This is what will be typed!",
+        }).go();
+    </script>
     <!-- 내부 스타일시트 -->
     <style>
         #eventModalDate {
@@ -536,63 +541,48 @@
 </head>
 <body>
 <div class="container col-md-6">
-    <h3>${member.member_name} 학우님 환영합니다!</h3>
-    <br>
+
+
     <div class="row">
+
+        <!-- Simple slider -->
         <div class="col-md-6">
+            <h3>${member.member_name} 학우님 환영합니다!</h3>
+            <br>
+            <div class="row">
+                <div class="col-md-8">
+                    <div>
 
-            <table class="table table-bordered">
-                <tr>
-                    <th align='center'>오늘 날짜</th>
-                </tr>
-                <tr>
-                    <th><%-- <c:set var="today" value="<%=new java.util.Date()%>" /> <!-- 현재날짜 -->
-					<c:set var="date">
-						<fmt:formatDate value="${today}" pattern="MM.dd" />
-					</c:set> <!-- 데이터 뿌릴때 --> <c:out value="${date}" /> <script>
-						function getTodayLabel() {
-							var week = new Array('(일)', '(월)', '(화)', '(수)',
-									'(목)', '(금)', '(토)');
-							var today = new Date().getDay();
-							var todayLabel = week[today];
-							return todayLabel;
-						}
-						document.write(getTodayLabel())
-					</script> --%> ${t_day}</th>
-                </tr>
-            </table>
+                        <i class="ni ni-calendar-grid-58"></i>
+                        <span>Today</span>
+                        <h3>${t_day}</h3>
 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <br>
+                    <button type="button" onclick="location.href='${contextPath}/attendance/attendance_student'"
+                            style="color:white;background-color: #0065FF;" class="btn btn-secondary">출결
+                    </button>
+                </div>
 
-            <form>
-                <table class="table table-bordered" id="list_table">
+            </div>
+            <br>
+            <div class="col-md-12" >
+                <div style="background-color:#204a40; border: .5em solid saddlebrown; min-height: 230px; color: #F4F4F5">
+                    <h3 id="title" style="color: #F4F4F5">금주의 주번<br>레토</h3>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            new TypeIt('#title') //
+                                .pause(1000)
+                                .delete(2, { delay: 1000 })
+                                .type('아야')
+                                .go();
+                        });
+                    </script>
 
-                    <tr style="font-size: .6em">
-                        <th></th>
-                        
-                        <th style="width: 20%">월 <fmt:parseDate value="${week}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">화 <fmt:parseDate value="${week1}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">수 <fmt:parseDate value="${week2}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">목 <fmt:parseDate value="${week3}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <!-- <th>행 삭제</th> -->
-                    </tr>
-                    <c:forEach var="showMenuVO" items="${ShowMenuVOList}">
-                        <tr>
-                            <td>메뉴</td>
-                            <c:forEach var="menu_content" items="${showMenuVO.menu_content}">
-                                <td style="font-size: .5em">
-                                        ${menu_content}
-                                </td>
-                            </c:forEach>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </form>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div id="calendar"></div>
@@ -635,6 +625,88 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            <h4>식단표</h4>
+
+            <form>
+                <table class="table table-bordered" id="list_table">
+
+                    <tr style="font-size: .6em">
+                        <th></th>
+
+                        <th style="width: 20%">월 <fmt:parseDate value="${week}" var="dateValue" pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                        <th style="width: 20%">화 <fmt:parseDate value="${week1}" var="dateValue" pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                        <th style="width: 20%">수 <fmt:parseDate value="${week2}" var="dateValue" pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                        <th style="width: 20%; background-color: #FAF1E6">목 <fmt:parseDate value="${week3}"
+                                                                                           var="dateValue"
+                                                                                           pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                        <th style="width: 20%">금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                        <!-- <th>행 삭제</th> -->
+                    </tr>
+                    <c:forEach var="showMenuVO" items="${ShowMenuVOList}">
+                        <tr>
+                            <td>메뉴</td>
+                            <c:forEach var="menu_content" items="${showMenuVO.menu_content}">
+                                <td style="font-size: .5em">
+                                        ${menu_content}
+                                </td>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="bd-example" data-example-id="">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2" class="active"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <img class="d-block w-100"
+                                 data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide"
+                                 alt="First slide [800x400]" src="${contextPath}\assets\img\2.png"
+                                 data-holder-rendered="true">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100"
+                                 data-src="holder.js/800x400?auto=yes&amp;bg=666&amp;fg=444&amp;text=Second slide"
+                                 alt="Second slide [800x400]" src="${contextPath}\assets\img\1.png"
+                                 data-holder-rendered="true">
+                        </div>
+                        <div class="carousel-item active">
+                            <img class="d-block w-100"
+                                 data-src="holder.js/800x400?auto=yes&amp;bg=555&amp;fg=333&amp;text=Third slide"
+                                 alt="Third slide [800x400]" src="${contextPath}\assets\img\3.png"
+                                 data-holder-rendered="true">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 

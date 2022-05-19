@@ -50,8 +50,6 @@ select {
 
 
 <body>
-
-
 	<div class="container">
 		<form action="achievement" align="left">
 			<label for="studyYear">학년</label> <select id="studyYear">
@@ -73,10 +71,8 @@ select {
 			</select>
 		</form>
 		<br>
-		<table>
+		<table class="table table-bordered">
 			<colgroup>
-				<col style="width: 2%; height: 10%;">
-				<col style="width: 2%; height: 10%;">
 				<col style="width: 2%; height: 10%;">
 				<col style="width: 2%; height: 10%;">
 				<col style="width: 2%; height: 10%;">
@@ -91,143 +87,45 @@ select {
 			<thead>
 				<tr>
 					<th>이름</th>
+					<th>학년</th>
+					<th>학기</th>
 					<th>교과명</th>
 					<th>중간고사</th>
 					<th>기말고사</th>
 					<th>평균</th>
 					<th>석차</th>
 					<th>등급</th>
-					<th>학년</th>
-					<th>학기</th>
-
 				</tr>
 			</thead>
 			<tbody class='scoreInfo'>
+			<tr>
+				<td>레토</td>
+				<td>1</td>
+				<td>2</td>
+				<td>과학</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+			</tr>
 				<c:forEach var="achievement" items="${achievement}">
 					<tr>
 					<!-- 틀에 맞춰서 값이 나오게... -->
 						<td>${member.member_name}</td>
+						<td>${achievement.achievement_year}</td>
+						<td>${achievement.achievement_semester}</td>
 						<td>${achievement.subject_name}</td>
 						<td>${achievement.achievement_mid}</td>
 						<td>${achievement.achievement_final}</td>
 						<td>${achievement.achievement_avg}</td>
 						<td>${achievement.achievement_rank}</td>
 						<td>${achievement.achievement_grade}</td>
-						<td>${achievement.achievement_year}</td>
-						<td>${achievement.achievement_semester}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<br>
-
 	</div>
-
-	<!-- /.container -->
-	<hr class="featurette-divider">
-	<!--             <script src="http://code.jquery.com/jquery.js"></script> -->
-	<script>
-		var rowCnt = 0
-		$(function() {
-			$(document)
-					.on(
-							"dblclick",
-							".editable",
-							function() {
-								var value = $(this).text();
-								var input = "<input type='text' class='input-data tableInEdit' value='"+value+"' class='form-control'>";
-								$(this).html(input);
-								$(this).removeClass("editable");
-							});
-		})
-
-		function scoreDel(tar) {
-			var targetId = $($(tar).parent()).parent()[0].id;
-			$("#" + targetId).remove();
-		}
-
-		function scoreAdd() {
-			var name = $("#name").val();
-			var studyYearlist = $("#studyYearlist").val();
-			var semesterlist = $("#semesterlist").val();
-			var subjectNamelist = $("#subjectNamelist").val();
-			var midtest = $("#midtest").val();
-			var lasttest = $("#lasttest").val();
-			var avg = $("#avg").val();
-			var rank = $("#rank").val();
-			var score = $("#score").val();
-			var total = $("#total").val();
-			var re = $("#re").val();
-
-			var resultStr = "<tr id=row" + rowCnt + ">";
-			rowCnt++;
-			resultStr += "<td>";
-			resultStr += name;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += studyYearlist;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += semesterlist;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += subjectNamelist;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += midtest;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += lasttest;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += avg;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += rank;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += score;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += total;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += re;
-			resultStr += "</td>";
-
-			resultStr += "<td>";
-			resultStr += '<button type="button" onClick=scoreDel(this) class="btn btn-outline-primary me-2">삭제</button>';
-			resultStr += "</td>";
-			resultStr += "</tr>";
-			$(".scoreInfo").before(resultStr);
-
-			$("#name").val('');
-			$("#studyYearlist").val('');
-			$("#semesterlist").val('');
-			$("#subjectNamelist").val('');
-			$("#midtest").val('');
-			$("#lasttest").val('');
-			$("#avg").val('');
-			$("#rank").val('');
-			$("#score").val('');
-			$("#total").val('');
-			$("#re").val('');
-		}
-	</script>
-
-
-						<button class="btn btn-outline-primary btn-lg" type="submit">성적
-			조회</button>
 </body>
 </html>
 

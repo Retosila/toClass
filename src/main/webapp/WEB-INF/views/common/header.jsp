@@ -47,7 +47,7 @@
 <script src="${contextPath}/assets/js/plugins/moment.min.js"></script>
 <script src="${contextPath}/assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
 <script	src="${contextPath}/assets/js/plugins/bootstrap-datepicker.min.js"></script>
-    <script src="<https://unpkg.com/typeit@8.5.4/dist/index.umd.js>"></script>
+    <script src="https://unpkg.com/typeit@8.3.3/dist/index.umd.js"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

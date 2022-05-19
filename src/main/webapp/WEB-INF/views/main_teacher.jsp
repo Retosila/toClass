@@ -570,14 +570,16 @@
             <br>
             <div class="col-md-12" >
                 <div style="background-color:#204a40; border: .5em solid saddlebrown; min-height: 230px; color: #F4F4F5">
-                    <h1 id="myElement" style="color: #F4F4F5"></h1>
-                 <%--   <script>
-                        document.addEventListener('DOMContentLoaded',()=>{
-                            new TypeIt('#board')//
+                    <h3 id="title" style="color: #F4F4F5">금주의 주번<br>레토</h3>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            new TypeIt('#title') //
                                 .pause(1000)
+                                .delete(2, { delay: 1000 })
+                                .type('아야')
                                 .go();
                         });
-                    </script>--%>
+                    </script>
 
                 </div>
             </div>
