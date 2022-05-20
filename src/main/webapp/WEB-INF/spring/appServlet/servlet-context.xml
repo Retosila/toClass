@@ -90,6 +90,8 @@
          <beans:property name="redirectUri" value="http://localhost:8080/toclass/google/login.do"/>
     </beans:bean>
 
+
+
 	<!-- 인터셉터 목록 -->
 	<interceptors>
 

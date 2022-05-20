@@ -277,7 +277,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 		}
 		else {
 			if (member_type == null){
-				mav.setViewName("/");
+				mav.setViewName("/login");
 			}
 			else if(member_type.equals("교사")) {
 				mav.setViewName("/main_teacher");

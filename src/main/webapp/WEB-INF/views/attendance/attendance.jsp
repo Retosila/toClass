@@ -135,11 +135,11 @@
                 </div>
             </td> -->
             <td>0명</td>
-            <td>5명</td>
-            <td>2명</td>
-            <td>0명</td>
-            <td>0명</td>
             <td>7명</td>
+            <td>1명</td>
+            <td>1명</td>
+            <td>0명</td>
+            <td>9명</td>
         </tr>
     </table>
 
@@ -155,19 +155,19 @@
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
                 <th>수 <fmt:parseDate value="${week2}" var="dateValue" pattern="yyyy-MM-dd"/>
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                <th style="background-color: #98a2ac;color: #ffffff">목 <fmt:parseDate value="${week3}" var="dateValue" pattern="yyyy-MM-dd"/>
+                <th >목 <fmt:parseDate value="${week3}" var="dateValue" pattern="yyyy-MM-dd"/>
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                <th>금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
+                <th style="background-color: #98a2ac;color: #ffffff">금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
                     <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
                 <!-- <th>행 삭제</th> -->
             </tr>
-            <c:forEach var="showAttendVO" items="${ShowAttendVOList}">
+            <c:forEach var="showAttendVO" items="${ShowAttendVOList}" >
 
                 <tr data-name="${showAttendVO.member_name}">
                     <td>${showAttendVO.member_name} </td>
 
-                    <c:forEach var="attendVOStat" items="${showAttendVO.attend_status}">
-
+                    <c:forEach var="attendVOStat" items="${showAttendVO.attend_status}" varStatus="status">
+                        <c:if test="${status.count<6}">
                         <td>
                               <div class="dropdown">
                                   <c:choose>
@@ -200,27 +200,17 @@
                                 </div>
                             </div>
                         </td>
+
+                    </c:if>
+
                   </c:forEach>
 
-					  <td>
-                           <div class="dropdown">
-                               <button class="btn btn-primary dropdownMenuButton" type="button"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false"
-                                       style="border-color: rgb(255 255 255/ 50%) !important;">출석
-                               </button>
-                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                   <a class="dropdown-item">출석</a>
-                                   <a class="dropdown-item">조퇴</a>
-                                   <a class="dropdown-item">지각</a>
-                                   <a class="dropdown-item">결석</a>
-                               </div>
-                           </div>
-                       </td>
+
 
 
              </tr>
          </c:forEach>
+
      </table>
         <!-- <button type="button" id="append_row"
                 class="btn btn-outline-primary btn-lg" onclick=addRow()>추가

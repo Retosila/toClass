@@ -52,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
 		prop.put("mail.smtp.host", "smtp.gmail.com");
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.port", "587");
+		prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
 		Authenticator auth = new AuthVO();
 		Session session = Session.getDefaultInstance(prop, auth);
@@ -250,17 +251,17 @@ public class MemberServiceImpl implements MemberService {
 	public boolean checkPwDo(String member_email, String member_pw) {
 		return memberDAO.checkPw(member_email,member_pw);
 	}
-	
+
 	/*
-	 * 
-	 * 
-	 *  
+	 *
+	 *
+	 *
 	 *  학급 관리
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 */
-	
+
 	// 내가 담당 중인 학급원 명단 요청
 	@Override
 	public List<MemberVO> getMyStudentList(String class_id) throws Exception {
@@ -422,6 +423,6 @@ public class MemberServiceImpl implements MemberService {
 
 		return result;
 	}
-	
-	
+
+
 }

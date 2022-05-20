@@ -568,14 +568,14 @@
 
             </div>
             <br>
-            <div class="col-md-12" >
+            <div class="col-md-12">
                 <div style="background-color:#204a40; border: .5em solid saddlebrown; min-height: 230px; color: #F4F4F5">
                     <h3 id="title" style="color: #F4F4F5">금주의 주번<br>레토</h3>
                     <script>
                         document.addEventListener('DOMContentLoaded', () => {
                             new TypeIt('#title') //
                                 .pause(1000)
-                                .delete(2, { delay: 1000 })
+                                .delete(2, {delay: 1000})
                                 .type('아야')
                                 .go();
                         });
@@ -627,44 +627,57 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-md-6">
+        <div class="blur--hover col-md-6">
+            <a href="${contextPath}/schedule/listMenu.do" rel="nofollow">
+                <div class="icons-container blur-item mt-5 on-screen" data-toggle="on-screen">
+                    <div class="col-md-12">
 
+                        <h4>식단표</h4>
 
-            <h4>식단표</h4>
+                        <form>
+                            <table class="table table-bordered" id="list_table">
 
-            <form>
-                <table class="table table-bordered" id="list_table">
+                                <tr style="font-size: .6em">
+                                    <th></th>
 
-                    <tr style="font-size: .6em">
-                        <th></th>
+                                    <th style="width: 20%">월 <fmt:parseDate value="${week}" var="dateValue"
+                                                                            pattern="yyyy-MM-dd"/>
+                                        <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                                    <th style="width: 20%">화 <fmt:parseDate value="${week1}" var="dateValue"
+                                                                            pattern="yyyy-MM-dd"/>
+                                        <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                                    <th style="width: 20%">수 <fmt:parseDate value="${week2}" var="dateValue"
+                                                                            pattern="yyyy-MM-dd"/>
+                                        <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                                    <th style="width: 20%;">목 <fmt:parseDate value="${week3}"
+                                                                                                       var="dateValue"
+                                                                                                       pattern="yyyy-MM-dd"/>
+                                        <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                                    <th style="width: 20%;background-color: #FAF1E6">금 <fmt:parseDate value="${week4}" var="dateValue"
+                                                                            pattern="yyyy-MM-dd"/>
+                                        <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
+                                    <!-- <th>행 삭제</th> -->
+                                </tr>
+                                <c:forEach var="showMenuVO" items="${ShowMenuVOList}">
+                                    <tr>
+                                        <td>메뉴</td>
+                                        <c:forEach var="menu_content" items="${showMenuVO.menu_content}">
+                                            <td style="font-size: .5em">
+                                                    ${menu_content}
+                                            </td>
+                                        </c:forEach>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </form>
+                    </div>
 
-                        <th style="width: 20%">월 <fmt:parseDate value="${week}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">화 <fmt:parseDate value="${week1}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">수 <fmt:parseDate value="${week2}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%; background-color: #FAF1E6">목 <fmt:parseDate value="${week3}"
-                                                                                           var="dateValue"
-                                                                                           pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <th style="width: 20%">금 <fmt:parseDate value="${week4}" var="dateValue" pattern="yyyy-MM-dd"/>
-                            <fmt:formatDate value="${dateValue}" pattern="MM.dd"/></th>
-                        <!-- <th>행 삭제</th> -->
-                    </tr>
-                    <c:forEach var="showMenuVO" items="${ShowMenuVOList}">
-                        <tr>
-                            <td>메뉴</td>
-                            <c:forEach var="menu_content" items="${showMenuVO.menu_content}">
-                                <td style="font-size: .5em">
-                                        ${menu_content}
-                                </td>
-                            </c:forEach>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </form>
+                </div>
+                <span class="blur-hidden h5 text-success">식단표 바로가기</span>
+            </a>
         </div>
+
+
         <div class="col-md-6">
             <div class="bd-example" data-example-id="">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
