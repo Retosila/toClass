@@ -12,13 +12,13 @@ request.setCharacterEncoding("UTF-8");
 <title>알림장(학생)</title>
 </head>
 <body>
-
+<div class="container">
 <h4>최근에 받은 알림</h4>
 
 <p>발신자 : ${recentNotice.notice_sender} </p>
 <p>수정일 : ${recentNotice.notice_moddate} </p>
 <p>제목 : ${recentNotice.notice_title} </p>
-<p>내용 : ${recentNotice.notice_content} </p>
-
+<p style="float:left">내용 : ${recentNotice.notice_content} </p>
+</div>
 </body>
 </html>

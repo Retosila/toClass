@@ -30,4 +30,11 @@ public interface BoardService {
 	List<MemberVO> getStudentInfo(String teacherEmail) throws Exception;
 	NoticeVO getRecentNotice(String studentEmail) throws Exception;
 
+
+
+	int sendNotice(NoticeVO nvo) throws Exception;
+	List<MemberVO> getStudentInfo(String teacherEmail) throws Exception;
+	NoticeVO getRecentNotice(String studentEmail) throws Exception;
+
+
 }

@@ -19,11 +19,10 @@
 		<typeAlias type="com.bbt.toclass.schedule.vo.MenuDTO"  alias="menuDTO" />
 		<typeAlias type="com.bbt.toclass.schedule.vo.ShowMenuVO"  alias="showMenuVO" />
 
+		<typeAlias type="com.bbt.toclass.board.vo.NoticeVO"  alias="noticeVO" />
 		<typeAlias type="com.bbt.toclass.board.vo.ArticleVO"  alias="articleVO" />
 		<typeAlias type="com.bbt.toclass.board.vo.ImageVO"  alias="imageVO" />
-		<typeAlias type="com.bbt.toclass.board.vo.NoticeVO"  alias="noticeVO" />
-		
-		
+
 		<typeAlias type="com.bbt.toclass.achievement.vo.AchievementVO"  alias="achievementVO" />
 
 	</typeAliases>

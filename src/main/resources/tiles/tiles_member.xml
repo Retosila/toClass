@@ -19,7 +19,10 @@
       <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
       <put-attribute name="title" value="tiles" />
    </definition>
-
+   <definition name="*/*/*" extends="baseLayout">
+      <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+      <put-attribute name="title" value="tiles" />
+   </definition>
 
    <definition name="admin" extends="baseLayout">
       <put-attribute name="title" value="관리자" />

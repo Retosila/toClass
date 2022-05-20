@@ -3,7 +3,6 @@ package com.bbt.toclass.board.dao;
 import com.bbt.toclass.board.vo.ArticleVO;
 import com.bbt.toclass.board.vo.NoticeVO;
 import com.bbt.toclass.member.vo.MemberVO;
-
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -23,8 +22,11 @@ public interface BoardDAO {
 	void addViews(int articleNO) throws DataAccessException;
 	void bad(int articleNO) throws DataAccessException;
 	void good(int articleNO) throws DataAccessException;
+
 	List<MemberVO> getStudentInfo(String teacherEmail) throws DataAccessException;
 	int insertNotice(NoticeVO nvo) throws DataAccessException;
 	String getTeacherName(String teacherEmail) throws DataAccessException;
 	NoticeVO getRecentNotice(String studentEmail) throws DataAccessException;
+
+
 }

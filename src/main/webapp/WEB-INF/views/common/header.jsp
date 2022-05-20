@@ -194,9 +194,17 @@
                 </a>
                     <div class="dropdown-menu">
                         <a href="${contextPath}/board/listArticles.do" class="dropdown-item">자유게시판</a>
-
-
-
+                        <c:choose>
+                            <c:when test="${member.member_type eq '교사'}">
+                                <a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a>
+                            </c:when>
+                            <c:when test="${member.member_type eq '학생'}">
+                                <a href="${contextPath}/board/notice_student" class="dropdown-item">알림장 읽기</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${contextPath}/board/notice_teacher" class="dropdown-item">알림장 보내기</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </li>
             </ul>
