@@ -1,14 +1,12 @@
 package com.bbt.toclass.attendance.service;
 
 import com.bbt.toclass.attendance.vo.AttendDTO;
-import com.bbt.toclass.attendance.vo.AttendanceVO;
 import com.bbt.toclass.attendance.vo.MyAttendVO;
 import com.bbt.toclass.attendance.vo.NewAttendVO;
 import com.bbt.toclass.attendance.vo.ShowAttendVO;
 import com.bbt.toclass.member.vo.ClassVO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface AttendanceService {
 

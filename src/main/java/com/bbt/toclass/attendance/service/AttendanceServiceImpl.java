@@ -2,11 +2,9 @@ package com.bbt.toclass.attendance.service;
 
 import com.bbt.toclass.attendance.dao.AttendanceDAO;
 import com.bbt.toclass.attendance.vo.*;
-import com.bbt.toclass.attendance.vo.ShowAttendVO;
 import com.bbt.toclass.member.dao.MemberDAO;
 import com.bbt.toclass.member.service.MemberServiceImpl;
 import com.bbt.toclass.member.vo.ClassVO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service("attendanceService")
 public class AttendanceServiceImpl implements AttendanceService {
@@ -91,7 +88,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 		logger.info("service : getClassMemberEmail 무죄!");
 		return emailList;
 	}
-	
 
 	// 내 학급 정보 요청
 		@Override

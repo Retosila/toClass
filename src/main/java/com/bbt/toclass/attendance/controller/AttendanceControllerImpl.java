@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -143,17 +144,140 @@ public class AttendanceControllerImpl implements AttendanceController{
 		newAttend.setCurrentClass(currentClass);
 
 		int result = attendanceService.insertAttend(newAttend);
-
+		
 		if(result > 0) {
-			logger.info(result + "개의 출결 insert 완료");
-			String msg = "" + result+"개의 출결 insert 완료";
-			return msg;
+			logger.info(result + "개의 출결 데이터 처리 완료");
 		}
 		else {
-			logger.info("출석 insert 실패");
-			String msg = "출석 insert 실패";
-			return msg;
+			logger.info("출결 데이터 처리 실패");
 		}
+		
+		// 갱신된 출결 데이터 불러오기
+		ArrayList<String> week = WeekDay();
+		request.setAttribute("week", week.get(0));
+		request.setAttribute("week1", week.get(1));
+		request.setAttribute("week2", week.get(2));
+		request.setAttribute("week3", week.get(3));
+		request.setAttribute("week4", week.get(4));
+
+		String t_day = toDay();
+		request.setAttribute("t_day", t_day);
+
+		//currentClass가 null이 아닐 때, 데이터 가져오기
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		String currentClass2 = "";
+		if(member.getCurrentClass() != null) {
+			currentClass2 = member.getCurrentClass();
+		 }
+
+		List<ShowAttendVO> savoList = new ArrayList<ShowAttendVO>();
+		List<String> emailList = attendanceService.getClassMemberEmail(currentClass2);
+		for(int i = 0; i< emailList.size(); i++) {
+			  AttendDTO attendDTO = new AttendDTO();
+
+			  String email = emailList.get(i);
+			  attendDTO.setMember_email(email);
+			  attendDTO.setMonday(week.get(0));
+
+			  attendDTO.setFriday(week.get(5));
+
+			  ShowAttendVO savo = attendanceService.getAttendanceInfo(attendDTO);
+			  savoList.add(savo);
+		} 
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		String strToday = sdf.format(c1.getTime());
+		
+		int pendency = 0;
+		int attend = 0;
+		int absence = 0;
+		int leaveEarly = 0;
+		int lateness = 0;
+		int sum = 0;
+
+		pendency = savoList.size();
+		sum = savoList.size();
+		
+		for (int i = 0; i < savoList.size(); i++) {
+			List<String> attend_status2 = savoList.get(i).getAttend_status();
+			List<String> attend_time = savoList.get(i).getAttend_time();
+			for (int j = 0; j < attend_status2.size(); j++) {
+				
+				String thisTime = attend_time.get(j);
+				if (attend_time.get(j) == null) {
+					break;
+				}
+				
+				String thisStatus = attend_status2.get(j);
+				thisTime = thisTime.substring(0,10);
+				if (thisTime.equals(strToday)) {
+					if (thisStatus.equals("출석")) {
+						attend++;
+						pendency--;
+					}
+					else if (thisStatus.equals("조퇴")) {
+						leaveEarly++;
+						pendency--;
+					}
+					else if (thisStatus.equals("지각")) {
+						lateness++;
+						pendency--;
+					}
+					else if (thisStatus.equals("결석")) {
+						absence++;
+						pendency--;
+					}
+					else {}
+				}
+			}
+			
+		}  
+		
+		Map<String, Integer> temp = new HashMap<String, Integer>();
+		temp.put("pendency", pendency);
+		temp.put("attend", attend);
+		temp.put("absence", absence);
+		temp.put("leaveEarly", leaveEarly);
+		temp.put("lateness", lateness);
+		temp.put("sum", sum);
+		
+		JSONArray temp2 = JSONArray.fromObject(temp);
+		// 배열 형식의 json 데이터를 한줄의 문자열로 변환
+		String resp = temp2.toString();
+		  
+		return resp;  
+	}
+	
+	
+	// ajax : 일정 정보 가져오기
+	// produces 속성은 한글 깨짐 방지용
+	@RequestMapping(value = {"/schedule/getAttendance.do"}, method = {RequestMethod.POST}, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String getAttendanceDo(@RequestParam Map<String, String> param, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String member_email = (String)param.get("member_email");
+		
+		// 한글 깨짐 방지용
+		request.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+		
+		logger.info("ajax 요청 : " + member_email + "의 출결 정보");
+		// 서비스 객체를 통해 출결 데이터를 list 방식으로 저장
+		List<MyAttendVO> mavoList = attendanceService.getAttendance(member_email);
+		for (MyAttendVO mavo : mavoList) {
+			logger.info("title : " + mavo.getTitle());
+			logger.info("start : " + mavo.getStart());
+		}
+		
+		// list 형식의 일정 데이터 json 데이터로 변환
+		JSONArray result = JSONArray.fromObject(mavoList);
+		// 배열 형식의 json 데이터를 한줄의 문자열로 변환
+		String resp = result.toString();
+		logger.info(resp);
+		
+		// ajax 요청에 대해 resp 객체를 응답
+		return resp;
 	}
 
 

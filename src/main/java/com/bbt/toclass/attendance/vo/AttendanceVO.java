@@ -1,7 +1,8 @@
 package com.bbt.toclass.attendance.vo;
 
-import java.sql.Date;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
 
 @Component("attendanceVO")
 public class AttendanceVO {
@@ -11,14 +12,14 @@ public class AttendanceVO {
 	private String attendance_status;
 	private Date attendance_regdate;
 	private Date attendance_moddate;
-	
-	
-	
+
+
+
 	//생성자
 	public AttendanceVO() {
-		
+
 	}
-	
+
 	public AttendanceVO(String attendance_id, String class_id, String member_email,
 			String attendance_status,Date attendance_regdate, Date attendance_moddate) {
 		this.attendance_id = attendance_id;
@@ -28,8 +29,8 @@ public class AttendanceVO {
 		this.attendance_regdate = attendance_regdate;
 		this.attendance_moddate = attendance_moddate;
 	}
-	
-	
+
+
 	public String getAttendance_id() {
 		return attendance_id;
 	}
@@ -67,8 +68,8 @@ public class AttendanceVO {
 	public void setAttendance_moddate(Date attendance_moddate) {
 		this.attendance_moddate = attendance_moddate;
 	}
-	
-	
-	
+
+
+
 
 }

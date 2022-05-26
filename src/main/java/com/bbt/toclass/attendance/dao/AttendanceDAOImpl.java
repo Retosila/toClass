@@ -142,10 +142,26 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 		logger.info("DB로부터 성공적으로 응답 수신");
 		logger.info(memberEmail + "의 학생 이메일 추출");
 		newAttend.setMember_email(memberEmail);
-
-		int result = sqlSession.insert("mapper.attendance.insertAttendByMember_email", newAttend);
-
-
+		
+		// 이미 해당 날짜에 입력된 출결 데이터가 있는지 확인
+		int check = sqlSession.selectOne("mapper.attendance.checkExistAttendanceByMemberEmail", memberEmail);
+		logger.info("출결 데이터 확인 : " + check);
+		
+		int result = 0;
+		
+		if (check == 0) {
+			result = sqlSession.insert("mapper.attendance.insertAttendByMember_email", newAttend);
+			logger.info("기존 데이터 없음");
+			logger.info(result + "개의 새로운 출결 데이터 입력 완료");
+		}
+		
+		else {
+			logger.info("기존 데이터 있음");
+			result = sqlSession.update("mapper.attendance.updateAttendByMember_email", newAttend);
+			logger.info(result + "개의 새로운 출결 데이터 갱신 완료");
+			
+		}
+		
 
 
 //		logger.info("DB에게 쿼리 요청 : insertAttendByMember_email : " + member_email);

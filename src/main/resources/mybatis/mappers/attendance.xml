@@ -91,6 +91,14 @@
   	insert into attendance (attendance_id, attendance_status, class_id, member_email)
   	values ((lpad(to_char(attendance_seq.nextval), 6, '0')), #{attend_status}, #{currentClass}, #{member_email})
   </insert>
+  
+  <update id="updateAttendByMember_email" parameterType="newAttendVO">
+  	update attendance
+  	set attendance_status = #{attend_status},
+  		attendance_moddate = sysdate
+  	where member_email = #{member_email} AND to_char(attendance_regdate, 'YYYY-MM-dd') = to_char(sysdate, 'YYYY-MM-dd')
+  </update>
+  
 
   <select id="getClassMemberEmailByClassIdAndMember_name" resultType="String" parameterType="newAttendVO">
 		<![CDATA[
@@ -107,4 +115,16 @@
         where member_email = #{member_email}
         ]]>
   </select>
+  
+   <select id="checkExistAttendanceByMemberEmail"  resultType="int" parameterType="String">
+	<![CDATA[
+        select count(*)
+        from attendance
+        where member_email = #{memberEmail} AND to_char(attendance_regdate, 'YYYY-MM-dd') = to_char(sysdate, 'YYYY-MM-dd') 
+        ]]>
+  </select>
+  
+  
+  
+  
 </mapper>

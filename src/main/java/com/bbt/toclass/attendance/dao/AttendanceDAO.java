@@ -2,12 +2,9 @@ package com.bbt.toclass.attendance.dao;
 
 import com.bbt.toclass.attendance.vo.*;
 import com.bbt.toclass.member.vo.ClassVO;
-import com.bbt.toclass.member.vo.MemberVO;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.dao.DataAccessException;
 
 public interface AttendanceDAO {
 
@@ -30,5 +27,4 @@ public interface AttendanceDAO {
 
 	//출석 정보 DB에 insert
 	public int insertAttend(NewAttendVO newAttend) throws DataAccessException;
-
 }
